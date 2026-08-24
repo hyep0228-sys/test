@@ -10,7 +10,7 @@ export default function SignupPage() {
   const [state, formAction, isPending] = useActionState(signUp, initialState);
 
   return (
-    <main className="px-6 py-16">
+    <main className="px-6 py-16 max-w-md mx-auto">
       <h1 className="font-display text-3xl mb-1">회원가입</h1>
       <p className="text-mute mb-10">이름, 학번, 분반, 닉네임을 입력하세요</p>
 

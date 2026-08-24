@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(signIn, initialState);
 
   return (
-    <main className="px-6 py-16">
+    <main className="px-6 py-16 max-w-md mx-auto">
       <h1 className="font-display text-3xl mb-1">디자인사 아카이브</h1>
       <p className="text-mute mb-10">학번으로 로그인하세요</p>
 

@@ -15,7 +15,7 @@ export default async function AdminPage() {
 
   if (profile?.role !== "professor") {
     return (
-      <main className="px-6 py-16">
+      <main className="px-6 py-16 max-w-md mx-auto">
         <p className="text-mute">교수자만 접근할 수 있습니다.</p>
       </main>
     );
@@ -32,7 +32,7 @@ export default async function AdminPage() {
     .eq("role", "student");
 
   return (
-    <main className="px-6 py-16">
+    <main className="px-6 py-16 max-w-2xl mx-auto">
       <h1 className="font-display text-3xl mb-2">관리자</h1>
       <p className="text-mute mb-10">전체 학생 수: {studentCount ?? 0}명</p>
 
