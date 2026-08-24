@@ -5,7 +5,6 @@ import LectureMaterialButton from "@/components/LectureMaterialButton";
 export default function WeekActivityGrid({
   week,
   completedKeys,
-  materials,
   note,
   questions,
 }) {
@@ -21,7 +20,6 @@ export default function WeekActivityGrid({
 
       <LectureMaterialButton
         weekId={week.id}
-        materials={materials ?? []}
         initialNote={note ?? ""}
         initialQuestions={questions ?? []}
       />

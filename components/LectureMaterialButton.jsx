@@ -8,13 +8,13 @@ const questionInitialState = { submitted: null, error: null };
 
 export default function LectureMaterialButton({
   weekId,
-  materials,
   initialNote,
   initialQuestions,
 }) {
   const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState(0);
   const [panel, setPanel] = useState(null); // null | "note" | "question"
+  const [page, setPage] = useState(null);
+  const [pageCount, setPageCount] = useState(null);
   const [questions, setQuestions] = useState(initialQuestions ?? []);
   const questionFormRef = useRef(null);
 
@@ -34,31 +34,38 @@ export default function LectureMaterialButton({
     }
   }, [questionState]);
 
+  // The slide deck (served same-origin from /slides/index.html) posts its
+  // current position on every slide change so this modal can show a page
+  // count and attach page numbers to notes/questions.
+  useEffect(() => {
+    function onMessage(e) {
+      const data = e.data;
+      if (!data || data.source !== "design-history-deck") return;
+      if (Number(data.week) !== Number(weekId)) return;
+      if (data.page != null) setPage(data.page);
+      if (data.pageCount != null) setPageCount(data.pageCount);
+    }
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [weekId]);
+
   const close = useCallback(() => setOpen(false), []);
-  const goPrev = useCallback(() => setIndex((i) => Math.max(i - 1, 0)), []);
-  const goNext = useCallback(
-    () => setIndex((i) => Math.min(i + 1, materials.length - 1)),
-    [materials.length]
-  );
 
   useEffect(() => {
     if (!open) return;
     function onKey(e) {
       if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") goNext();
-      if (e.key === "ArrowLeft") goPrev();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, close, goNext, goPrev]);
+  }, [open, close]);
+
+  const src = `/slides/index.html?week=${weekId}`;
 
   return (
     <>
       <button
-        onClick={() => {
-          setIndex(0);
-          setOpen(true);
-        }}
+        onClick={() => setOpen(true)}
         className="w-full border border-line rounded p-3 text-sm text-center bg-white mb-6"
       >
         수업자료 다시보기
@@ -75,9 +82,7 @@ export default function LectureMaterialButton({
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-line shrink-0">
               <p className="text-sm text-mute">
-                {materials.length > 0
-                  ? `${index + 1} / ${materials.length}`
-                  : "수업자료"}
+                {pageCount ? `${page ?? 1} / ${pageCount}` : "수업자료"}
               </p>
               <div className="flex items-center gap-2">
                 <button
@@ -113,19 +118,11 @@ export default function LectureMaterialButton({
             </div>
 
             <div className="flex-1 flex min-h-0">
-              <div className="flex-1 flex items-center justify-center overflow-auto p-4">
-                {materials.length === 0 ? (
-                  <p className="text-mute text-sm">
-                    아직 등록된 수업자료가 없습니다.
-                  </p>
-                ) : (
-                  <img
-                    src={materials[index].image_url}
-                    alt={`수업자료 ${index + 1}페이지`}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                )}
-              </div>
+              <iframe
+                src={src}
+                title={`${weekId}주차 수업자료`}
+                className="flex-1 border-0"
+              />
 
               {panel && (
                 <div className="w-80 shrink-0 border-l border-line overflow-y-auto p-4">
@@ -178,7 +175,7 @@ export default function LectureMaterialButton({
                         <input
                           type="hidden"
                           name="page_no"
-                          value={materials.length > 0 ? index + 1 : ""}
+                          value={page ?? ""}
                         />
                         <textarea
                           name="question"
@@ -225,25 +222,6 @@ export default function LectureMaterialButton({
                 </div>
               )}
             </div>
-
-            {materials.length > 1 && (
-              <div className="flex items-center justify-between px-4 py-3 border-t border-line shrink-0">
-                <button
-                  onClick={goPrev}
-                  disabled={index === 0}
-                  className="text-sm px-3 py-1.5 border border-line rounded disabled:opacity-30"
-                >
-                  ← 이전
-                </button>
-                <button
-                  onClick={goNext}
-                  disabled={index === materials.length - 1}
-                  className="text-sm px-3 py-1.5 border border-line rounded disabled:opacity-30"
-                >
-                  다음 →
-                </button>
-              </div>
-            )}
           </div>
         </div>
       )}
