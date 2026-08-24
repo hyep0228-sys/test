@@ -36,16 +36,27 @@ export default async function WeekOverviewPage({ params }) {
     );
   }
 
-  const { data: completions } = await supabase
-    .from("completions")
-    .select("activity")
-    .eq("user_id", user.id)
-    .eq("week_id", week.id);
+  const [{ data: completions }, { data: materialRows }] = await Promise.all([
+    supabase
+      .from("completions")
+      .select("activity")
+      .eq("user_id", user.id)
+      .eq("week_id", week.id),
+    supabase
+      .from("lecture_materials")
+      .select("image_url")
+      .eq("week_id", week.id)
+      .order("order_no", { ascending: true }),
+  ]);
   const completedKeys = (completions ?? []).map((c) => c.activity);
 
   return (
     <main className="px-6 py-16">
-      <WeekActivityGrid week={week} completedKeys={completedKeys} />
+      <WeekActivityGrid
+        week={week}
+        completedKeys={completedKeys}
+        materials={materialRows ?? []}
+      />
     </main>
   );
 }
