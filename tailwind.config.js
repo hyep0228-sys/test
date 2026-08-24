@@ -14,8 +14,21 @@ module.exports = {
         accent: "#1E3FD0",
       },
       fontFamily: {
-        sans: ["Pretendard", "sans-serif"],
-        display: ["Instrument Serif", "serif"],
+        sans: [
+          "Pretendard Variable",
+          "Pretendard",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "system-ui",
+          "Roboto",
+          "sans-serif",
+        ],
+        display: [
+          "var(--font-instrument-serif)",
+          "Pretendard Variable",
+          "Pretendard",
+          "serif",
+        ],
       },
     },
   },

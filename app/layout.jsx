@@ -1,4 +1,13 @@
+import { Instrument_Serif } from "next/font/google";
 import "./globals.css";
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
 
 export const metadata = {
   title: "디자인사 아카이브",
@@ -7,8 +16,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko">
-      <body className="min-h-screen">
+    <html lang="ko" className={instrumentSerif.variable}>
+      <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
+        />
+      </head>
+      <body className="min-h-screen font-sans antialiased">
         <div className="mx-auto max-w-md min-h-screen">{children}</div>
       </body>
     </html>
