@@ -2,7 +2,13 @@ import Link from "next/link";
 import { ACTIVITIES } from "@/lib/activities";
 import LectureMaterialButton from "@/components/LectureMaterialButton";
 
-export default function WeekActivityGrid({ week, completedKeys, materials }) {
+export default function WeekActivityGrid({
+  week,
+  completedKeys,
+  materials,
+  note,
+  questions,
+}) {
   return (
     <>
       <p className="text-sm text-mute mb-1">
@@ -13,7 +19,12 @@ export default function WeekActivityGrid({ week, completedKeys, materials }) {
         <p className="text-mute mb-6">{week.key_question}</p>
       )}
 
-      <LectureMaterialButton materials={materials ?? []} />
+      <LectureMaterialButton
+        weekId={week.id}
+        materials={materials ?? []}
+        initialNote={note ?? ""}
+        initialQuestions={questions ?? []}
+      />
 
       {week.is_exam ? (
         <p className="border border-line rounded p-6 text-center text-mute">

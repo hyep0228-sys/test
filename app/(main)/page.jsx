@@ -18,8 +18,15 @@ export default async function HomePage() {
 
   let completedKeys = [];
   let materials = [];
+  let note = "";
+  let questions = [];
   if (user && week) {
-    const [{ data: completions }, { data: materialRows }] = await Promise.all([
+    const [
+      { data: completions },
+      { data: materialRows },
+      { data: noteRow },
+      { data: questionRows },
+    ] = await Promise.all([
       supabase
         .from("completions")
         .select("activity")
@@ -30,9 +37,23 @@ export default async function HomePage() {
         .select("image_url")
         .eq("week_id", week.id)
         .order("order_no", { ascending: true }),
+      supabase
+        .from("lecture_notes")
+        .select("text")
+        .eq("user_id", user.id)
+        .eq("week_id", week.id)
+        .maybeSingle(),
+      supabase
+        .from("lecture_questions")
+        .select("id, page_no, question")
+        .eq("user_id", user.id)
+        .eq("week_id", week.id)
+        .order("created_at", { ascending: false }),
     ]);
     completedKeys = (completions ?? []).map((c) => c.activity);
     materials = materialRows ?? [];
+    note = noteRow?.text ?? "";
+    questions = questionRows ?? [];
   }
 
   return (
@@ -46,6 +67,8 @@ export default async function HomePage() {
           week={week}
           completedKeys={completedKeys}
           materials={materials}
+          note={note}
+          questions={questions}
         />
       )}
     </main>
