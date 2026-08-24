@@ -28,7 +28,7 @@ async function assertProfessor() {
 
 const initialState = { results: null, error: null };
 
-// CSV 형식: 이름,학번,생년월일뒤2자리  (한 줄에 한 명)
+// CSV 형식: 이름,학번,생년월일뒤4자리  (한 줄에 한 명)
 export async function bulkCreateStudents(prevState, formData) {
   try {
     await assertProfessor();
@@ -51,15 +51,15 @@ export async function bulkCreateStudents(prevState, formData) {
 
   for (const line of lines) {
     const parts = line.split(",").map((p) => p.trim());
-    const [name, studentNo, birthLast2Raw] = parts;
+    const [name, studentNo, birthLast4Raw] = parts;
 
-    if (!name || !studentNo || !birthLast2Raw) {
-      results.push({ line, status: "실패", detail: "형식 오류 (이름,학번,생년월일뒤2자리)" });
+    if (!name || !studentNo || !birthLast4Raw) {
+      results.push({ line, status: "실패", detail: "형식 오류 (이름,학번,생년월일뒤4자리)" });
       continue;
     }
 
-    const birthLast2 = birthLast2Raw.padStart(2, "0");
-    const tempPassword = `${studentNo}${birthLast2}`;
+    const birthLast4 = birthLast4Raw.padStart(4, "0");
+    const tempPassword = `${studentNo}${birthLast4}`;
 
     const { error } = await supabase.auth.admin.createUser({
       email: studentNoToEmail(studentNo),

@@ -17,7 +17,7 @@ export default function BulkCreateForm() {
         <textarea
           name="csv"
           rows={10}
-          placeholder={"박지혜,20260001,07\n김민준,20260002,15"}
+          placeholder={"박지혜,20260001,0715\n김민준,20260002,1123"}
           className="w-full border border-line bg-white px-4 py-3 rounded text-sm font-mono"
         />
         {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
