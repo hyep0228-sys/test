@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
 function formatDate(iso) {
@@ -52,7 +53,12 @@ export default async function AdminPage() {
   return (
     <main className="px-6 py-16 max-w-2xl mx-auto">
       <h1 className="font-display text-3xl mb-2">관리자</h1>
-      <p className="text-mute mb-10">전체 학생 수: {studentCount ?? 0}명</p>
+      <p className="text-mute mb-4">전체 학생 수: {studentCount ?? 0}명</p>
+      <p className="mb-10">
+        <Link href="/admin/students" className="text-sm text-accent underline">
+          학생 계정 일괄 생성 →
+        </Link>
+      </p>
 
       <p className="text-sm font-medium mb-3">주차</p>
       <div className="space-y-2 mb-12">

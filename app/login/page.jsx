@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import Link from "next/link";
 import { signIn } from "@/app/actions/auth";
 
 const initialState = { error: null };
@@ -53,10 +52,8 @@ export default function LoginPage() {
       </form>
 
       <p className="text-sm text-mute mt-6">
-        계정이 없나요?{" "}
-        <Link href="/signup" className="text-accent underline">
-          회원가입
-        </Link>
+        계정은 교수님이 미리 만들어둡니다. 학번과 발급받은 임시 비밀번호로
+        로그인해주세요.
       </p>
     </main>
   );
