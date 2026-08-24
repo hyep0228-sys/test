@@ -1,5 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 
+function formatDate(iso) {
+  const d = new Date(iso);
+  return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(
+    d.getMinutes()
+  ).padStart(2, "0")}`;
+}
+
 export default async function AdminPage() {
   const supabase = await createClient();
 
@@ -21,22 +28,34 @@ export default async function AdminPage() {
     );
   }
 
-  const { data: weeks } = await supabase
-    .from("weeks")
-    .select("id, short_title, is_open, is_exam")
-    .order("id", { ascending: true });
+  const [{ data: weeks }, { count: studentCount }, { data: questions }] =
+    await Promise.all([
+      supabase
+        .from("weeks")
+        .select("id, short_title, is_open, is_exam")
+        .order("id", { ascending: true }),
+      supabase
+        .from("profiles")
+        .select("id", { count: "exact", head: true })
+        .eq("role", "student"),
+      supabase
+        .from("lecture_questions")
+        .select(
+          "id, week_id, page_no, question, created_at, profiles(name, nickname, section)"
+        )
+        .order("created_at", { ascending: false })
+        .limit(100),
+    ]);
 
-  const { count: studentCount } = await supabase
-    .from("profiles")
-    .select("id", { count: "exact", head: true })
-    .eq("role", "student");
+  const weekTitleById = new Map((weeks ?? []).map((w) => [w.id, w.short_title]));
 
   return (
     <main className="px-6 py-16 max-w-2xl mx-auto">
       <h1 className="font-display text-3xl mb-2">관리자</h1>
       <p className="text-mute mb-10">전체 학생 수: {studentCount ?? 0}명</p>
 
-      <div className="space-y-2">
+      <p className="text-sm font-medium mb-3">주차</p>
+      <div className="space-y-2 mb-12">
         {(weeks ?? []).map((w) => (
           <div
             key={w.id}
@@ -54,6 +73,32 @@ export default async function AdminPage() {
           </div>
         ))}
       </div>
+
+      <p className="text-sm font-medium mb-3">
+        학생 질문 {questions?.length ? `(${questions.length})` : ""}
+      </p>
+      {(questions ?? []).length === 0 ? (
+        <p className="text-mute text-sm">아직 등록된 질문이 없습니다.</p>
+      ) : (
+        <div className="space-y-2">
+          {questions.map((q) => (
+            <div key={q.id} className="border border-line rounded p-4 bg-white">
+              <div className="flex justify-between items-baseline mb-1.5 text-xs text-mute">
+                <span>
+                  WEEK {String(q.week_id).padStart(2, "0")} ·{" "}
+                  {weekTitleById.get(q.week_id) ?? ""}
+                  {q.page_no ? ` · ${q.page_no}페이지` : ""}
+                </span>
+                <span>{formatDate(q.created_at)}</span>
+              </div>
+              <p className="text-sm">{q.question}</p>
+              <p className="text-xs text-mute mt-1.5">
+                {q.profiles?.nickname ?? "익명"} · {q.profiles?.section}분반
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
