@@ -42,7 +42,7 @@ export default function LectureMaterialButton({ materials }) {
           onClick={close}
         >
           <div
-            className="bg-paper rounded-lg w-full max-w-3xl h-[85vh] flex flex-col overflow-hidden"
+            className="bg-paper rounded-lg w-[96vw] max-w-6xl h-[92vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-line shrink-0">
