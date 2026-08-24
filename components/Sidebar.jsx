@@ -100,13 +100,21 @@ export default function Sidebar({ weeks, isProfessor }) {
                 {isProfessor && (
                   <button
                     type="button"
+                    role="switch"
+                    aria-checked={w.is_open}
                     onClick={() => handleToggle(w.id, w.is_open)}
                     disabled={isPending}
-                    title={w.is_open ? "학생에게 닫기" : "학생에게 열기"}
-                    aria-label={w.is_open ? "학생에게 닫기" : "학생에게 열기"}
-                    className="shrink-0 w-8 h-8 flex items-center justify-center rounded text-sm hover:bg-white disabled:opacity-50"
+                    title={w.is_open ? "학생에게 공개중 · 누르면 닫기" : "학생에게 비공개 · 누르면 열기"}
+                    aria-label={w.is_open ? "학생에게 공개중, 누르면 닫기" : "학생에게 비공개, 누르면 열기"}
+                    className={`shrink-0 relative w-9 h-5 rounded-full transition-colors disabled:opacity-50 ${
+                      w.is_open ? "bg-accent" : "bg-line"
+                    }`}
                   >
-                    {w.is_open ? "🔓" : "🔒"}
+                    <span
+                      className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
+                        w.is_open ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    />
                   </button>
                 )}
               </div>
