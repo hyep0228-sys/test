@@ -3,14 +3,28 @@ import Sidebar from "@/components/Sidebar";
 
 export default async function MainLayout({ children }) {
   const supabase = await createClient();
-  const { data: weeks } = await supabase
-    .from("weeks")
-    .select("id, short_title, is_open, is_exam")
-    .order("id", { ascending: true });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const [{ data: weeks }, { data: profile }] = await Promise.all([
+    supabase
+      .from("weeks")
+      .select("id, short_title, is_open, is_exam")
+      .order("id", { ascending: true }),
+    supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user?.id)
+      .maybeSingle(),
+  ]);
+
+  const isProfessor = profile?.role === "professor";
 
   return (
     <div className="md:flex md:min-h-screen">
-      <Sidebar weeks={weeks ?? []} />
+      <Sidebar weeks={weeks ?? []} isProfessor={isProfessor} />
       <div className="flex-1 min-w-0">
         <div className="max-w-md mx-auto min-h-screen">{children}</div>
       </div>

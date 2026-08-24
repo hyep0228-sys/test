@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "@/app/actions/auth";
 
-export default function Sidebar({ weeks }) {
+export default function Sidebar({ weeks, isProfessor }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -52,7 +52,7 @@ export default function Sidebar({ weeks }) {
         <nav className="px-3 pb-4 pt-4 md:pt-0">
           {weeks.map((w) => {
             const active = w.id === activeWeekId;
-            const clickable = w.is_open;
+            const clickable = w.is_open || isProfessor;
             return (
               <Link
                 key={w.id}

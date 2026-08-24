@@ -10,11 +10,11 @@ export default async function WeekOverviewPage({ params }) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: week } = await supabase
-    .from("weeks")
-    .select("*")
-    .eq("id", weekId)
-    .maybeSingle();
+  const [{ data: week }, { data: profile }] = await Promise.all([
+    supabase.from("weeks").select("*").eq("id", weekId).maybeSingle(),
+    supabase.from("profiles").select("role").eq("id", user?.id).maybeSingle(),
+  ]);
+  const isProfessor = profile?.role === "professor";
 
   if (!week) {
     return (
@@ -24,7 +24,7 @@ export default async function WeekOverviewPage({ params }) {
     );
   }
 
-  if (!week.is_open) {
+  if (!week.is_open && !isProfessor) {
     return (
       <main className="px-6 py-16">
         <p className="text-sm text-mute mb-1">
