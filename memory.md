@@ -28,7 +28,7 @@
 
 ## 완료된 기능
 
-1. **인증**: 학번+비밀번호 (내부적으로 `{학번}@student.designhistory.app` 가짜 이메일 변환), 회원가입/로그인 실패 시 에러 메시지, 제출 중 버튼 비활성화.
+1. **인증**: 자유 회원가입 없음 — 교수자가 `/admin/students`에서 `이름,학번,생년월일뒤2자리` CSV를 붙여넣으면 계정이 일괄 생성됨(`app/actions/adminStudents.js`, Supabase Admin API 사용). 초기 비밀번호 = **학번+생년월일뒤2자리**. 학생은 학번+임시비번으로 로그인 → `profiles.onboarded=false`면 미들웨어가 무조건 `/onboarding`으로 보내서 새 비밀번호+닉네임+분반을 설정해야 앱을 쓸 수 있음(`app/actions/onboarding.js`). 학번→가짜 이메일 변환은 `{학번}@student.designhistory.app` 그대로 유지.
 2. **홈 `/` · 주차 `/week/[n]`**: 열린 주차의 QUIZ/BALANCE/THINK/MAKE 4버튼 그리드 + 완료 체크. `WeekActivityGrid` 컴포넌트로 공유.
 3. **사이드바** (`components/Sidebar.jsx`): 모바일은 슬라이드 드로어, 데스크톱은 고정. 15주 목록, 닫힌 주차는 학생에게 비활성. 교수자는 전체 열람 가능 + 각 주차 옆 토글 스위치로 즉시 열기/닫기(`app/actions/weeks.js`).
 4. **BALANCE** (`/week/[n]/balance`): A/B 선택 + 성향 태그 저장, 1주차↔14주차 `pair_key` 매칭으로 BEFORE/AFTER 자동 비교, 14주차엔 자기성찰 서술 질문 추가. (QUIZ/THINK/MAKE는 아직 플레이스홀더.)
@@ -38,7 +38,7 @@
 
 ## DB 스키마 (supabase/migrations/*.sql, 순서대로 적용됨)
 
-`profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions`.
+`profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경).
 Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketches`(MAKE용)는 아직 미생성.
 
 ## 아직 안 한 것
