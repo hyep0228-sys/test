@@ -3304,19 +3304,56 @@ body.export-clean main{inset:0;}
     prevBtn.disabled = idx===0;
     nextBtn.disabled = idx===total-1;
     try{ localStorage.setItem('dh-slide-index', String(idx)); }catch(e){}
+
+    var pageInWeek = (typeof weekFirstIndex!=='undefined' && weekFirstIndex[wk]!==undefined)
+      ? (idx - weekFirstIndex[wk] + 1) : null;
+
+    applyOverrideIfAny(s, wk, pageInWeek);
+
     // Notify an embedding parent (e.g. the course hub, iframing this deck same-origin)
     // which slide is showing, so it can track a page number for notes/questions.
     try{
       if(window.parent && window.parent !== window){
         var wkTotal = 0;
         for(var i=0;i<slides.length;i++){ if(slides[i].getAttribute('data-week')===wk) wkTotal++; }
-        var pageInWeek = (typeof weekFirstIndex!=='undefined' && weekFirstIndex[wk]!==undefined)
-          ? (idx - weekFirstIndex[wk] + 1) : null;
         window.parent.postMessage({
           source:'design-history-deck', week: Number(wk), page: pageInWeek,
           pageCount: wkTotal, globalIndex: idx, globalTotal: total
         }, '*');
       }
+    }catch(e){}
+  }
+
+  // Professor-edited slide text, fetched once from Supabase (public read via
+  // the anon key — matches the access level the deck itself already has as a
+  // same-origin static file). Overrides the slide's .stage content in place
+  // so small text fixes made in /admin/slides show up without a redeploy.
+  var slideOverrides = {};
+  var SUPABASE_URL = 'https://jsrszfulaxmymgoexuki.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_OIyNQz_zrQEkCuKxREO_9g_c_bOsDFT';
+
+  function applyOverrideIfAny(s, wk, pageInWeek){
+    if(s.dataset.overrideApplied) return;
+    var key = wk + '-' + pageInWeek;
+    if(Object.prototype.hasOwnProperty.call(slideOverrides, key)){
+      var stageEl = s.querySelector('.stage');
+      if(stageEl){ stageEl.innerHTML = slideOverrides[key]; }
+      s.dataset.overrideApplied = '1';
+    }
+  }
+
+  function loadOverrides(){
+    try{
+      var url = SUPABASE_URL + '/rest/v1/slide_overrides?select=week_id,slide_index,content_html';
+      fetch(url, { headers: { apikey: SUPABASE_ANON_KEY } })
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(rows){
+          (rows || []).forEach(function(row){
+            slideOverrides[row.week_id + '-' + row.slide_index] = row.content_html;
+          });
+          if(Object.keys(slideOverrides).length) render();
+        })
+        .catch(function(){});
     }catch(e){}
   }
 
@@ -3429,6 +3466,7 @@ body.export-clean main{inset:0;}
   });
 
   render();
+  loadOverrides();
 })();
 </script>
 

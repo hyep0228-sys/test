@@ -54,9 +54,14 @@ export default async function AdminPage() {
     <main className="px-6 py-16 max-w-2xl mx-auto">
       <h1 className="font-display text-3xl mb-2">관리자</h1>
       <p className="text-mute mb-4">전체 학생 수: {studentCount ?? 0}명</p>
-      <p className="mb-10">
+      <p className="mb-2">
         <Link href="/admin/students" className="text-sm text-accent underline">
           학생 계정 일괄 생성 →
+        </Link>
+      </p>
+      <p className="mb-10">
+        <Link href="/admin/slides" className="text-sm text-accent underline">
+          슬라이드 편집 →
         </Link>
       </p>
 
