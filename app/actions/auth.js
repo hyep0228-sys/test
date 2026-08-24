@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { studentNoToEmail } from "@/lib/auth";
 
-export async function signUp(formData) {
+export async function signUp(prevState, formData) {
   const name = formData.get("name")?.toString().trim();
   const studentNo = formData.get("student_no")?.toString().trim();
   const section = formData.get("section")?.toString();
@@ -36,7 +36,7 @@ export async function signUp(formData) {
   redirect("/");
 }
 
-export async function signIn(formData) {
+export async function signIn(prevState, formData) {
   const studentNo = formData.get("student_no")?.toString().trim();
   const password = formData.get("password")?.toString();
 

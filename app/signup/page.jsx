@@ -1,13 +1,20 @@
+"use client";
+
+import { useActionState } from "react";
 import Link from "next/link";
 import { signUp } from "@/app/actions/auth";
 
+const initialState = { error: null };
+
 export default function SignupPage() {
+  const [state, formAction, isPending] = useActionState(signUp, initialState);
+
   return (
     <main className="px-6 py-16">
       <h1 className="font-display text-3xl mb-1">회원가입</h1>
       <p className="text-mute mb-10">이름, 학번, 분반, 닉네임을 입력하세요</p>
 
-      <form action={signUp} className="space-y-4">
+      <form action={formAction} className="space-y-4">
         <div>
           <label className="block text-sm mb-1" htmlFor="name">
             이름
@@ -65,11 +72,17 @@ export default function SignupPage() {
             className="w-full border border-line bg-white px-4 py-3 rounded"
           />
         </div>
+
+        {state?.error && (
+          <p className="text-sm text-red-600">{state.error}</p>
+        )}
+
         <button
           type="submit"
-          className="w-full bg-accent text-white py-3 rounded font-medium"
+          disabled={isPending}
+          className="w-full bg-accent text-white py-3 rounded font-medium disabled:opacity-60"
         >
-          가입하기
+          {isPending ? "가입 중..." : "가입하기"}
         </button>
       </form>
 
