@@ -203,6 +203,11 @@ body.export-clean main{inset:0;}
 .compare > div{padding:1.2rem 1.4rem;}
 .compare > div:first-child{border-right:1px solid var(--rule); background:var(--paper-2);}
 .compare h4{font-family:var(--f-display); font-weight:700; font-size:1.05rem; margin-bottom:.7rem; color:var(--accent2);}
+.compare--photo > div{display:flex; flex-direction:column; gap:.75rem; padding:1rem;}
+.compare--photo figure{margin:0;}
+.compare--photo img{width:100%; height:330px; object-fit:contain; display:block; background:var(--paper-3);}
+.compare--photo .cap{font-family:var(--f-mono); font-size:.64rem; color:var(--ink-soft);}
+.compare--photo p{font-size:.88rem; line-height:1.55; color:var(--ink-soft);}
 
 .figure-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule);}
 .figure-card{background:var(--paper); padding:1.1rem 1.2rem;}
@@ -894,7 +899,7 @@ body.export-clean main{inset:0;}
       <figcaption>
         <div class="hp-main"><span class="hp-name">샤르트르 대성당</span><span class="hp-yr">1194~1220년</span></div>
         <div class="hp-credit">CC BY-SA 3.0</div>
-        <div class="hp-note">두 첨탑의 양식이 다른 이유는 <strong>세운 시기가 다르기 때문</strong>이다. 대성당은 한 사람의 작품이 아니라 여러 세대에 걸친 길드 장인들의 누적물이다.</div>
+        <div class="hp-note">두 첨탑의 양식이 다르다. 장식이 거의 없는 팔각뿔 첨탑은 1194년 대화재 이전에 세워진 <strong>로마네스크</strong>(1160년경)이고, 레이스처럼 뚫린 화려한 첨탑은 벼락으로 무너진 뒤 1507~13년에 다시 올린 <strong>플랑부아양 고딕</strong>이다. 두 첨탑 사이의 <strong>장미창</strong>은 13세기 고딕이다 — 한 건물 안에 <strong>350년의 양식 차이</strong>가 나란히 서 있는 셈이다. 대성당은 한 사람의 작품이 아니라 여러 세대에 걸친 길드 장인들의 누적물이다.</div>
       </figcaption>
     </figure>
   </div>
@@ -959,22 +964,73 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
-<section class="slide" data-era="origins" data-week="2" data-title="바로크에서 로코코로" data-dates="17세기 초~18세기 중반">
+<section class="slide" data-era="origins" data-week="2" data-title="첼리니의 소금그릇" data-dates="1540~1543">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--hero">
+    <figure class="hero-photo">
+      <img src="img/w02-hero-cellini.webp" alt="벤베누토 첼리니의 금제 소금그릇 살리에라" loading="lazy">
+      <figcaption>
+        <div class="hp-main"><span class="hp-name">살리에라 — 첼리니의 소금그릇</span><span class="hp-yr">1540~1543년</span></div>
+        <div class="hp-credit">CC0</div>
+        <div class="hp-note">금세공 장인 <strong>벤베누토 첼리니</strong>가 프랑스 왕 프랑수아 1세를 위해 만든 유광 금제 소금그릇이다. 바다의 신 넵투누스 옆의 배 모양 그릇에 <strong>소금</strong>을, 대지의 여신 케레스 옆 신전 모양 그릇에 <strong>후추</strong>를 담았다. 식탁 위의 조미료 통 하나에 신화와 건축과 보석 세공을 전부 밀어 넣은 셈이다 — <strong>장인의 기술이 예술가 개인의 이름과 결합한 정점</strong>이다.</div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="웨어의 대침대" data-dates="1590년경">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split img-left">
     <figure class="artifact-photo">
-      <img src="img/w02-rococo.webp" alt="뷔르츠부르크 레지덴츠의 거울 방" loading="lazy">
-      <figcaption><span class="who">뷔르츠부르크 레지덴츠의 거울 방, 1740년대</span><span>CC BY-SA 2.0</span></figcaption>
+      <img src="img/w02-bed-ware.webp" alt="웨어의 대침대" loading="lazy">
+      <figcaption><span class="who">웨어의 대침대, 1590년경 · V&amp;A</span><span>CC BY-SA 3.0</span></figcaption>
     </figure>
     <div>
-      <div class="section-head has-era"><div class="era-bar"><span class="era-name">바로크·로코코</span><span class="tag">ROCOCO</span><span class="spacer"></span></div><h3>무거움에서 가벼움으로</h3></div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">16세기 후반</span><span class="tag">PATTERN BOOK</span><span class="spacer"></span></div><h3>인쇄된 도안이 가구가 되다</h3></div>
       <ul class="bullet-list">
-        <li>17세기 초부터 18세기 중반까지 장식·응용예술 분야에서 <strong>대중의 각성</strong>이 일어났다. 바로크양식의 <strong>무거운 양감과 과장된 현란함</strong>은 공공연하게 여성적이고 화려한 <strong>로코코양식</strong>으로 대체되었다.</li>
-        <li>'로코코'라는 이름은 돌집과 분수를 장식하던 표면 껍질이나 조약돌을 뜻하는 프랑스어 <strong>'로카이유(rocaille)'</strong>에서 나왔다.</li>
-        <li>로코코는 바로크보다 전반적인 분위기가 가볍고, <strong>중국식 문양과 모티프</strong>를 자주 인용했다. 장식예술 분야에서 유행한 이른바 중국풍(시누아즈리)이다.</li>
-        <li>프랑스에서는 바로크가 1720년대 말 로코코로 이어진 뒤, <strong>1750년대 중반 로코코가 신고전주의에 완전히 자리를 내주었다.</strong></li>
+        <li>오크 목재를 깎아 만든 이 거대한 사주식 침대는 폭이 <strong>3.3미터</strong>에 이른다. 여관의 손님을 끌기 위한 일종의 광고물이었고, 셰익스피어의 희곡에까지 언급될 만큼 유명했다.</li>
+        <li>주목할 것은 머리판의 <strong>상감 패널</strong>이다. 네덜란드 디자이너 <strong>한스 프레드만 데 프리스</strong>가 펴낸 장식 도안집의 패턴을 그대로 옮겨 놓았다.</li>
+        <li>즉 이 침대는 <strong>인쇄된 도안이 실제 가구 제작으로 옮겨간 사례</strong>다. 장인이 스승에게 배운 것만 만들던 시대에서, <strong>책을 보고 만드는 시대</strong>로 넘어가고 있었다.</li>
+      </ul>
+      <div class="think-block"><span class="mk">THINK</span><p>구텐베르크(1450) → 프레드만 데 프리스의 도안집(16세기) → 치펜데일의 『지침서』(1754). <strong>인쇄술이 디자인을 유통시키는 경로</strong>가 이렇게 만들어진다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="바로크 — 압도하는 실내" data-dates="17세기~18세기 초">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--split img-left">
+    <figure class="artifact-photo">
+      <img src="img/w02-baroque-peterskirche.webp" alt="빈 성 베드로 성당 실내" loading="lazy">
+      <figcaption><span class="who">성 베드로 성당 실내, 빈 · 요한 루카스 폰 힐데브란트 설계</span><span>CC BY-SA 4.0</span></figcaption>
+    </figure>
+    <div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">바로크</span><span class="tag">BAROQUE</span><span class="spacer"></span></div><h3>무거운 양감과 과장된 현란함</h3></div>
+      <ul class="bullet-list">
+        <li>17세기 초부터 18세기 중반까지 장식·응용예술 분야에서 <strong>대중의 각성</strong>이 일어났다. 이 시기를 지배한 것이 <strong>바로크</strong>다.</li>
+        <li>오스트리아 빈의 성 베드로 성당은 웅장하고 극적인 바로크 양식의 훌륭한 사례다. 돔 프레스코, 금박 조각, 대리석 기둥이 <strong>시선을 한곳에 두지 못하게</strong> 몰아친다.</li>
+        <li>바로크의 특징은 <strong>무거운 양감과 과장된 현란함</strong>이다. 건축과 조각과 회화의 경계를 지우고 공간 전체로 관람자를 압도하려 한다.</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="로코코 — 가벼워진 장식" data-dates="1720년대~1750년대">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--split">
+    <div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">로코코</span><span class="tag">ROCOCO</span><span class="spacer"></span></div><h3>돌조각에서 따온 이름</h3></div>
+      <ul class="bullet-list">
+        <li>바로크의 무거운 양감과 과장된 현란함은 공공연하게 <strong>여성적이고 화려한 로코코양식</strong>으로 대체되었다.</li>
+        <li>'로코코'라는 이름은 돌집과 분수를 장식하던 표면 껍질이나 조약돌을 뜻하는 프랑스어 <strong>'로카이유(rocaille)'</strong>에서 나왔다.</li>
+        <li>로코코는 바로크보다 전반적인 분위기가 <strong>가볍고</strong>, <strong>중국식 문양과 모티프</strong>를 자주 인용했다. 이른바 중국풍(시누아즈리)이다.</li>
+        <li>독일 뷔르츠부르크 주교주택의 거울 방은 비대칭적 로카이유 형태의 활용을 보여주는 대표적인 로코코 인테리어다. 프랑스에서는 바로크가 1720년대 말 로코코로 이어진 뒤, <strong>1750년대 중반 로코코가 신고전주의에 완전히 자리를 내주었다.</strong></li>
+      </ul>
+    </div>
+    <figure class="artifact-photo">
+      <img src="img/w02-rococo.webp" alt="뷔르츠부르크 주교주택의 거울 방" loading="lazy">
+      <figcaption><span class="who">뷔르츠부르크 주교주택 거울 방, 1740년대</span><span>CC BY-SA 2.0</span></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -997,6 +1053,25 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
+<section class="slide" data-era="origins" data-week="2" data-title="프랑스 신고전주의" data-dates="1750년대~1790년대">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--split img-left">
+    <figure class="artifact-photo">
+      <img src="img/w02-riesener.webp" alt="베르사유 마리 앙투아네트의 금제 서재" loading="lazy">
+      <figcaption><span class="who">마리 앙투아네트의 금제 서재, 베르사유 · 리스네 가구</span><span>CC BY-SA 3.0</span></figcaption>
+    </figure>
+    <div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">프랑스</span><span class="tag">NEOCLASSICISM</span><span class="spacer"></span></div><h3>혁명 이전의 우아한 신고전주의</h3></div>
+      <ul class="bullet-list">
+        <li>초기 프랑스 신고전주의의 발전은 <strong>가구제작자의 작품</strong>이 잘 보여준다. 대표적으로 <strong>장-앙리 리스네</strong>, 아담 바이스바일러, 장-프랑수아 를루가 있다.</li>
+        <li>이들의 디자인은 고전적 모티프를 결합한 <strong>건축적 형태</strong>로, 세련된 <strong>쪽매붙임(마르케트리)</strong>과 금박을 입힌 우아한 가구를 만들어냈다. 리스네가 베르사유 궁전에 설계한 마리 앙투아네트 여왕의 가구가 그 정점이다.</li>
+        <li>프랑스혁명 이후 1790년대 중반의 <strong>디렉투아르 양식</strong>은 공화정 정서에 맞게 신고전주의를 평이하고 합리적으로 해석했다. 단명했으나 이후 나폴레옹의 <strong>제국양식</strong>을 예견했다.</li>
+        <li>신고전주의 양식은 모든 외관과 반복 패턴 속에 <strong>간소한 합리주의</strong>를 내재하고 있었다 — 새롭게 부상하던 경험주의 사고방식의 반영이다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section class="slide" data-era="origins" data-week="2" data-title="로버트 애덤과 토털 디자인" data-dates="1760~1780년대">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split img-left">
@@ -1013,6 +1088,31 @@ body.export-clean main{inset:0;}
         <li>애덤은 <strong>"토털디자인 룩"을 개척</strong>했다. 건물 설계뿐 아니라 벽난로와 문 부속물 같은 실내건축 부속물, 책장·옷장·안락의자·거울·받침대·가지 달린 촛대까지 <strong>양식적으로 통합된 모든 가구</strong>를 아울렀다.</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="귀족의 인테리어, 중산층의 가구" data-dates="18세기 후반">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage">
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">18세기 영국</span><span class="tag">CONTRAST</span><span class="spacer"></span></div><h3>어느 쪽이 모던 디자인으로 이어졌을까</h3></div>
+    <div class="compare compare--photo">
+      <div>
+        <figure><img src="img/w02-osterley.webp" alt="오스털리 공원 출입홀"></figure>
+        <h4>애덤의 "모던" 조지 양식</h4>
+        <p>고대 그리스·로마의 장식 모티프를 재해석한 <strong>양식적 작품</strong>. 귀족 후원자를 위한 토털디자인으로, 건물부터 촛대까지 하나의 미의식으로 통일했다.</p>
+        <div class="cap">오스털리 공원 출입홀 · CC BY 2.0</div>
+      </div>
+      <div>
+        <figure><img src="img/w02-george3-chair.webp" alt="조지 3세 시대 마호가니 방패등받이 의자"></figure>
+        <h4>조지 3세 시대의 마호가니 식탁의자</h4>
+        <p>상인과 전문직 계층을 위해 제작된 <strong>덜 비싼 가구</strong>. 불필요한 것을 모두 뺀 고전적 형식이 <strong>우아한 실용성</strong>으로 남았다.</p>
+        <div class="cap">영국 방패등받이 사이드체어, 1780년경 · Public Domain</div>
+      </div>
+    </div>
+    <ul class="bullet-list" style="margin-top:1.3rem;">
+      <li>교재의 판단은 분명하다. 애덤의 화려한 양식보다 <strong>훨씬 더 기능적인 측면이 있던 18세기 신고전주의 디자인이, 적절한 시점에 가서 모던 디자인의 발전에 더 큰 영향</strong>을 미치게 된다.</li>
+      <li>이유는 <strong>수요층</strong>에 있다. 귀족의 주문 제작은 한 채로 끝나지만, 상인·전문직 계층을 위한 가구는 <strong>반복 생산될 수 있는 형식</strong>을 요구했다. 장식을 덜어낸 고전적 비례만 남기면 그 형식은 얼마든지 복제된다.</li>
+    </ul>
   </div>
 </section>
 
