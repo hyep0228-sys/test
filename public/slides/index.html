@@ -254,6 +254,10 @@ body.export-clean main{inset:0;}
   font-family:var(--f-mono); font-size:clamp(.85rem,1.6vw,1.15rem); letter-spacing:.24em;
   color:var(--accent); margin-top:.7rem; text-transform:uppercase;
 }
+.cover-byline{margin-top:2.2rem; display:flex; flex-direction:column; align-items:center; gap:.35rem;}
+.cover-byline::before{content:""; width:44px; height:1px; background:var(--rule); margin-bottom:1rem;}
+.cover-byline .cb-org{font-family:var(--f-body); font-size:clamp(.95rem,1.5vw,1.15rem); color:var(--ink);}
+.cover-byline .cb-name{font-family:var(--f-mono); font-size:clamp(.78rem,1.2vw,.92rem); letter-spacing:.14em; color:var(--ink-soft);}
 .cover-sub{font-family:var(--f-body); font-size:clamp(1rem,1.6vw,1.25rem); color:var(--ink-soft); margin-top:1.1rem;}
 .cover-meta{
   margin-top:2.4rem; display:flex; justify-content:center; gap:2.2rem; flex-wrap:wrap;
@@ -389,6 +393,10 @@ body.export-clean main{inset:0;}
   <div class="stage stage--cover">
     <h1 class="cover-title">디자인사</h1>
     <div class="cover-title-en">DESIGN HISTORY</div>
+    <div class="cover-byline">
+      <div class="cb-org">홍익대학교 디자인컨버전스</div>
+      <div class="cb-name">Jeehye Park</div>
+    </div>
     <div class="mini-timeline" id="coverTimeline"></div>
   </div>
 </section>
