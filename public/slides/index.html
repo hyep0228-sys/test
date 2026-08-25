@@ -182,6 +182,11 @@ body.export-clean main{inset:0;}
 .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.4rem; flex-wrap:wrap;}
 .section-head h3{font-family:var(--f-display); font-weight:700; font-size:clamp(1.3rem,2.2vw,1.8rem); color:var(--ink);}
 .section-head .tag{font-family:var(--f-mono); font-size:.75rem; color:var(--paper); background:var(--accent); padding:.2rem .55rem;}
+.section-head.has-era{flex-direction:column; align-items:stretch; gap:.55rem;}
+.section-head.has-era .era-bar{display:flex; align-items:center; gap:.7rem; padding-bottom:.5rem; border-bottom:2px solid var(--ink);}
+.section-head.has-era .era-name{font-family:var(--f-display); font-weight:700; font-size:clamp(1.45rem,2.6vw,2.05rem); line-height:1.1; color:var(--ink); white-space:nowrap;}
+.section-head.has-era .spacer{flex:1;}
+.section-head.has-era h3{font-size:clamp(1.15rem,1.9vw,1.5rem); font-weight:600;}
 
 .bullet-list{list-style:none; padding:0; display:flex; flex-direction:column; gap:.85rem;}
 .bullet-list li{
@@ -662,7 +667,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="이집트 — 상징과 위계" data-dates="~기원전 30세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>형태가 곧 신분이었던 시대</h3><span class="tag">EGYPT</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">이집트</span><span class="tag">EGYPT</span><span class="spacer"></span></div><h3>형태가 곧 신분이었던 시대</h3></div>
     <ul class="bullet-list">
       <li><strong>정면성의 원리</strong> — 인체를 그릴 때 얼굴은 옆모습, 눈과 상체는 정면, 다리는 다시 옆모습으로 조합했다. 보이는 대로가 아니라 <strong>가장 알아보기 쉬운 각도들을 합성</strong>하는 규칙이었다.</li>
       <li><strong>위계적 크기 비례</strong> — 파라오는 가장 크게, 신하와 하인은 작게 그렸다. 크기가 실제 거리가 아니라 사회적 지위를 나타냈다.</li>
@@ -674,7 +679,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="그리스 — 비례와 이상" data-dates="~기원전 5세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>몸을 재는 척도가 곧 아름다움의 규칙</h3><span class="tag">GREECE</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">그리스</span><span class="tag">GREECE</span><span class="spacer"></span></div><h3>몸을 재는 척도가 곧 아름다움의 규칙</h3></div>
     <ul class="bullet-list">
       <li><strong>황금비(약 1:1.618)</strong> — 신전 건축과 조각의 비례에 반복적으로 등장한다. 파르테논 신전의 정면 비례가 대표적으로 언급된다.</li>
       <li><strong>건축 오더(Order)</strong> — 도리아(단순·육중), 이오니아(소용돌이 장식), 코린트(화려한 잎사귀 장식) 세 양식이 기둥의 비례와 장식을 규격화했다. 이후 서양 건축사 전체가 이 세 오더를 참조하게 된다.</li>
@@ -691,7 +696,7 @@ body.export-clean main{inset:0;}
       <figcaption><span class="who">진시황릉 병마용, 시안</span><span>CC BY-SA 3.0</span></figcaption>
     </figure>
     <div>
-      <div class="section-head"><h3>표준화라는 발상은 이미 있었다</h3><span class="tag">STANDARDIZATION</span></div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">중국·지중해</span><span class="tag">STANDARDIZATION</span><span class="spacer"></span></div><h3>표준화라는 발상은 이미 있었다</h3></div>
       <ul class="bullet-list">
         <li>화폐도 디자인된 대량생산품이다. 중국은 기원전 1100년경 <strong>상 왕조</strong> 때부터 주형으로 엽전을 주조했고, 그리스는 기원전 700년경 동전을, 로마 공화국은 기원전 300년경 통화 체계를 도입했다.</li>
         <li>율리우스 카이사르 시대 로마는 동전에 통치자의 초상을 새겨 권위를 전파했다 — 화폐가 <strong>선전(propaganda)의 도구</strong>로 쓰인 초기 사례다.</li>
@@ -705,7 +710,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="로마 — 실용과 표준화" data-dates="~기원후 2세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>제국을 지탱한 반복 가능한 기술</h3><span class="tag">ROME</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">로마</span><span class="tag">ROME</span><span class="spacer"></span></div><h3>제국을 지탱한 반복 가능한 기술</h3></div>
     <ul class="bullet-list">
       <li><strong>아치와 콘크리트(오푸스 카이멘티치움)</strong> — 아치는 하중을 옆으로 분산시켜 더 넓은 공간을 지붕 없이 덮을 수 있게 했고, 로마 콘크리트는 거푸집만 있으면 반복 시공이 가능했다.</li>
       <li><strong>표준 규격 벽돌·수도관·도로</strong> — 로마는 제국 전역에 같은 규격의 인프라를 반복 건설했다. 오늘날로 치면 '표준화된 부품 카탈로그'에 가깝다.</li>
@@ -718,7 +723,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split">
     <div>
-      <div class="section-head"><h3>무기부터 기름램프까지, 공장에서 찍어내다</h3><span class="tag">MASS PRODUCTION</span></div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">로마</span><span class="tag">MASS PRODUCTION</span><span class="spacer"></span></div><h3>무기부터 기름램프까지, 공장에서 찍어내다</h3></div>
       <ul class="bullet-list">
         <li>로마 군대는 <strong>글라디우스(gladius)</strong> 단검부터 투구·갑옷까지 표준화된 도안으로 무장을 대량생산했다. '검투사(gladiator)'라는 말도 이 검의 이름에서 나왔다. 균형 잡힌 성능과 공업적 표준화를 동시에 만족시킨 결과였다.</li>
         <li>기름램프(firmalampen)는 거푸집으로 찍어내 북이탈리아·남갈리아의 공장에서 생산되어 제국 전역에 수출됐다. 램프받침에 <strong>제조자의 각인</strong>이 찍힌 경우도 흔했다 — 오늘날의 제조사 로고에 해당한다.</li>
@@ -735,7 +740,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="이슬람 세계의 기하학" data-dates="8~15세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>형상 없이 무늬로 신성을 표현하다</h3><span class="tag">ISLAMIC WORLD</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">이슬람 세계</span><span class="tag">ISLAMIC WORLD</span><span class="spacer"></span></div><h3>형상 없이 무늬로 신성을 표현하다</h3></div>
     <ul class="bullet-list">
       <li>인물·동물 형상을 종교적으로 자제하는 전통 속에서, <strong>기하학적 반복 무늬(아라베스크)</strong>와 <strong>서예(캘리그래피)</strong>가 장식의 중심이 되었다.</li>
       <li>정다각형을 겹치고 회전시켜 끝없이 이어지는 패턴을 만드는 방식은, 오늘날 수학의 <strong>테셀레이션(tessellation)</strong> 개념과 정확히 일치한다.</li>
@@ -748,7 +753,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split">
     <div>
-      <div class="section-head"><h3>같은 시기, 다른 곳의 '길드'</h3><span class="tag">BEYOND EUROPE</span></div>
+      <div class="section-head has-era"><div class="era-bar"><span class="era-name">유럽 바깥</span><span class="tag">BEYOND EUROPE</span><span class="spacer"></span></div><h3>같은 시기, 다른 곳의 '길드'</h3></div>
       <ul class="bullet-list">
         <li>고려(918~1392)의 <strong>상감청자</strong>는 유약·태토·상감 기법이 국가가 관리하는 관영 가마(소)를 통해 전승됐다. 유럽 길드에 못지않게 정교한 분업·전승 체계의 산물이다.</li>
         <li>중국 송·원대 관요(官窯) 자기, 이슬람 세계의 타일·서예 공방도 마찬가지다. <strong>'디자인 이전의 장인 체계'는 유럽만의 이야기가 아니다.</strong></li>
@@ -765,7 +770,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="중세 길드의 사다리" data-dates="12~15세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>기술은 어떻게 대물림되었는가</h3><span class="tag">GUILD</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">중세 유럽</span><span class="tag">GUILD</span><span class="spacer"></span></div><h3>기술은 어떻게 대물림되었는가</h3></div>
     <div class="timeline-row">
       <div class="tl-item"><div class="yr">도제</div><div class="tt">7년 안팎 스승 밑에서 숙식하며 기초 기술을 배운다. 이 기간 임금은 없다.</div></div>
       <div class="tl-item"><div class="yr">직인</div><div class="tt">여러 공방을 옮겨 다니며 경험을 쌓는다. 임금을 받는 숙련 노동자.</div></div>
@@ -782,7 +787,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="르네상스 — 원근법이라는 도구" data-dates="15세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>공간을 수학으로 다시 그리다</h3><span class="tag">PERSPECTIVE</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">르네상스</span><span class="tag">PERSPECTIVE</span><span class="spacer"></span></div><h3>공간을 수학으로 다시 그리다</h3></div>
     <ul class="bullet-list">
       <li>필리포 브루넬레스키가 1415년경 <strong>선형 원근법</strong>을 실험으로 증명했고, 레온 바티스타 알베르티가 이를 저서 『회화론』(1435)으로 이론화했다.</li>
       <li>원근법은 예술적 재능이 아니라 <strong>소실점과 격자를 이용한 기하학적 절차</strong>였다. 배우면 누구나 재현 가능한 '기술'이라는 점에서, 도면(drawing)이라는 근대적 도구의 원형이다.</li>
@@ -794,7 +799,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="인쇄술이라는 전환점" data-dates="1450년경">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>같은 것을 정확히 반복하는 기술</h3><span class="tag">1450</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">르네상스</span><span class="tag">1450</span><span class="spacer"></span></div><h3>같은 것을 정확히 반복하는 기술</h3></div>
     <ul class="bullet-list">
       <li>요하네스 구텐베르크의 <strong>금속활자 인쇄술</strong>(1450년경, 마인츠)은 손으로 필사하던 책을 기계적으로 복제 가능한 물건으로 바꿨다.</li>
       <li>활자는 정해진 규격의 낱개 부품을 조합해 다시 쓰는 방식이다. <strong>표준화된 부품과 반복 생산</strong>이라는, 이후 산업혁명이 확장할 원리가 이미 여기 있다.</li>
@@ -806,7 +811,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="장인에서 예술가로" data-dates="15~16세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>이름이 남기 시작하다</h3><span class="tag">STATUS</span></div>
+    <div class="section-head has-era"><div class="era-bar"><span class="era-name">르네상스</span><span class="tag">STATUS</span><span class="spacer"></span></div><h3>이름이 남기 시작하다</h3></div>
     <ul class="bullet-list">
       <li>중세 장인은 대개 이름이 남지 않는 익명의 존재였다. 르네상스 후원 제도(메디치 가문 등) 아래에서 <strong>제작자의 이름과 개성이 처음으로 가치를 갖기 시작한다.</strong></li>
       <li>미켈란젤로·라파엘로 같은 이름이 작품과 함께 기억되는 것은, 이 시기부터 <strong>'만드는 사람'이 곧 '창작하는 사람'으로 재정의</strong>되었기 때문이다.</li>
