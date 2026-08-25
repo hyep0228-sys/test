@@ -312,6 +312,13 @@ body.export-clean main{inset:0;}
 .map-note{font-family:var(--f-mono); font-size:.75rem; color:var(--ink-soft); margin-top:1rem;}
 
 .table-wrap{overflow-x:auto; margin-top:1.4rem;}
+.grade-split{display:grid; grid-template-columns:0.85fr 1.15fr; gap:2.4rem; align-items:start; margin-top:1.3rem;}
+.grade-weights{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
+.grade-weights .gw{background:var(--paper); padding:1rem 1.1rem;}
+.grade-weights .pct{font-family:var(--f-display); font-weight:700; font-size:clamp(1.7rem,3vw,2.4rem); line-height:1; color:var(--ink);}
+.grade-weights .pct i{font-style:normal; font-size:.45em; margin-left:.1em; color:var(--ink-soft);}
+.grade-weights .lbl{font-size:.85rem; color:var(--ink-soft); margin-top:.4rem;}
+.grade-note{font-size:.86rem; line-height:1.6; color:var(--ink-soft); margin-top:1rem; padding-left:.9rem; border-left:2px solid var(--ink);}
 .data-table{width:100%; border-collapse:collapse;}
 .data-table th, .data-table td{text-align:left; padding:.65rem .9rem; border-bottom:1px solid var(--rule); font-size:.9rem; vertical-align:top; line-height:1.45;}
 .data-table th{font-family:var(--f-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); font-weight:500; white-space:nowrap;}
@@ -467,6 +474,33 @@ body.export-clean main{inset:0;}
         <tr><td class="wk">14</td><td class="tp"><b>AI 시대, 디자이너의 역할은 무엇인가?</b><span>디지털 전환에서 AI까지</span></td></tr>
         <tr class="is-exam"><td class="wk">15</td><td class="tp"><b>기말고사</b><span>9~14주차 종합 평가</span></td></tr>
       </table>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-era="intro" data-week="1" data-title="평가 방법" data-dates="Grading">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage">
+    <div class="section-head"><h3>학점 구성 및 평가기준</h3><span class="tag">GRADING</span></div>
+    <div class="grade-split">
+      <div>
+        <div class="grade-weights">
+          <div class="gw"><div class="pct">30<i>%</i></div><div class="lbl">중간고사</div></div>
+          <div class="gw"><div class="pct">40<i>%</i></div><div class="lbl">기말고사</div></div>
+          <div class="gw"><div class="pct">20<i>%</i></div><div class="lbl">출석</div></div>
+          <div class="gw"><div class="pct">10<i>%</i></div><div class="lbl">수업태도</div></div>
+        </div>
+        <p class="grade-note">이 수업은 <strong>중간고사를 한 번만</strong> 치르므로 위와 같이 구성한다. 발표 등 별도 과제가 추가되는 경우 <strong>비율이 일부 조정</strong>될 수 있다.</p>
+      </div>
+      <div class="table-wrap" style="margin-top:0;">
+        <table class="data-table">
+          <tr><td>학점 분포</td><td>A+/A0 20~30% · B+/B0 30~40% · C+/C0 20~30% · D+/D0 10~20%</td></tr>
+          <tr><td>시험 방식</td><td>객관식·서술형 혼합, 시험시간 1시간, closed book</td></tr>
+          <tr><td>과제</td><td>상시 부여하지 않으며, 수업 내용에 따라 필요할 때 부여할 수 있다.</td></tr>
+          <tr><td>F 학점</td><td>부정행위 / 결석 4회 초과 / 특별한 사유 없이 중간·기말고사 미응시</td></tr>
+          <tr><td>기타</td><td>F학점·출석 미달 학생은 상대평가 대상에서 제외될 수 있다. 재수강 시 취득 가능한 최고 평점은 B+로 제한된다.</td></tr>
+        </table>
+      </div>
     </div>
   </div>
 </section>
