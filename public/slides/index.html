@@ -313,6 +313,16 @@ body.export-clean main{inset:0;}
 .data-table th, .data-table td{text-align:left; padding:.65rem .9rem; border-bottom:1px solid var(--rule); font-size:.9rem; vertical-align:top; line-height:1.45;}
 .data-table th{font-family:var(--f-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); font-weight:500; white-space:nowrap;}
 .data-table td:first-child{font-weight:600; white-space:nowrap;}
+
+.schedule-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 2.4rem; margin-top:1.2rem;}
+.schedule-table{width:100%; border-collapse:collapse;}
+.schedule-table td{padding:.5rem 0; border-bottom:1px solid var(--rule); vertical-align:top; line-height:1.35;}
+.schedule-table .wk{font-family:var(--f-mono); font-size:.72rem; color:var(--accent); width:2.2rem; padding-top:.55rem; white-space:nowrap;}
+.schedule-table .tp{font-size:.85rem;}
+.schedule-table .tp b{display:block; font-weight:600; color:var(--ink);}
+.schedule-table .tp span{display:block; font-size:.76rem; color:var(--ink-soft); margin-top:.1rem;}
+.schedule-table tr.is-exam .tp b{color:var(--ink-soft);}
+@media (max-width:900px){ .schedule-grid{grid-template-columns:1fr;} }
 </style>
 
 <div class="chrome">
@@ -433,14 +443,28 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="intro" data-week="1" data-title="오리엔테이션" data-dates="Intro">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>15주 구성</h3><span class="tag">SCHEDULE</span></div>
-    <ul class="bullet-list tight">
-      <li><strong>1부 (2–7주)</strong> — 기원과 장인정신에서 산업혁명, 미술공예운동·아르누보를 거쳐 이론이 실천이 되기까지</li>
-      <li><strong>중간고사 (8주)</strong></li>
-      <li><strong>2부 (9–14주)</strong> — 미국식 소비문화, 모더니즘·아르데코, 전후 굿 디자인, 한국 근현대 디자인사, 그리고 동시대까지</li>
-      <li><strong>기말고사 (15주)</strong></li>
-    </ul>
-    <div class="mini-timeline" id="week1Timeline"></div>
+    <div class="section-head"><h3>15주 수업계획</h3><span class="tag">SCHEDULE</span></div>
+    <div class="schedule-grid">
+      <table class="schedule-table">
+        <tr><td class="wk">01</td><td class="tp"><b>오리엔테이션</b><span>디자인이란 무엇인가</span></td></tr>
+        <tr><td class="wk">02</td><td class="tp"><b>어디서부터 디자인으로 볼 것인가?</b><span>디자인의 초기 기원과 장인정신</span></td></tr>
+        <tr><td class="wk">03</td><td class="tp"><b>디자인은 언제부터 미술과 분리되었는가?</b><span>이성의 시대와 산업혁명</span></td></tr>
+        <tr><td class="wk">04</td><td class="tp"><b>기계 생산은 시각문화를 어떻게 변화시켰는가?</b><span>합리화된 생산과 만국박람회</span></td></tr>
+        <tr><td class="wk">05</td><td class="tp"><b>좋은 디자인이란 무엇인가?</b><span>개혁의 바람, 미술공예운동</span></td></tr>
+        <tr><td class="wk">06</td><td class="tp"><b>장식은 디자인의 본질인가?</b><span>아르누보</span></td></tr>
+        <tr><td class="wk">07</td><td class="tp"><b>이론은 어떻게 실천이 되는가?</b><span>이론에서 실천까지</span></td></tr>
+        <tr class="is-exam"><td class="wk">08</td><td class="tp"><b>중간고사</b><span>1~7주차 종합 평가</span></td></tr>
+      </table>
+      <table class="schedule-table">
+        <tr><td class="wk">09</td><td class="tp"><b>디자인이 소비를 만드는가, 소비가 디자인을 만드는가?</b><span>미국식 시스템과 포디즘</span></td></tr>
+        <tr><td class="wk">10</td><td class="tp"><b>형태는 의미를 대체할 수 있는가?</b><span>환원주의와 모더니즘</span></td></tr>
+        <tr><td class="wk">11</td><td class="tp"><b>양식은 어떻게 대중의 욕망이 되는가?</b><span>아르데코와 모던 스타일</span></td></tr>
+        <tr><td class="wk">12</td><td class="tp"><b>좋은 디자인은 무엇으로 정의되는가?</b><span>전쟁·전후 디자인과 굿 디자인</span></td></tr>
+        <tr><td class="wk">13</td><td class="tp"><b>한국 디자인은 어떻게 근대를 구성했는가?</b><span>한국 근현대 디자인사</span></td></tr>
+        <tr><td class="wk">14</td><td class="tp"><b>AI 시대, 디자이너의 역할은 무엇인가?</b><span>디지털 전환에서 AI까지</span></td></tr>
+        <tr class="is-exam"><td class="wk">15</td><td class="tp"><b>기말고사</b><span>9~14주차 종합 평가</span></td></tr>
+      </table>
+    </div>
   </div>
 </section>
 
