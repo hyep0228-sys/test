@@ -312,12 +312,23 @@ body.export-clean main{inset:0;}
 .map-note{font-family:var(--f-mono); font-size:.75rem; color:var(--ink-soft); margin-top:1rem;}
 
 .table-wrap{overflow-x:auto; margin-top:1.4rem;}
+.stage--hero{display:block;}
+.hero-photo{margin:0;}
+.hero-photo img{display:block; margin:0 auto; max-width:100%; max-height:72vh; width:auto; height:auto;}
+.hero-photo figcaption{display:grid; grid-template-columns:1fr auto; gap:.45rem 1.2rem; align-items:baseline; margin-top:1rem; border-top:2px solid var(--ink); padding-top:.7rem;}
+.hero-photo .hp-main{display:flex; align-items:baseline; gap:.85rem; flex-wrap:wrap;}
+.hero-photo .hp-name{font-family:var(--f-display); font-weight:700; font-size:clamp(1.25rem,2.2vw,1.75rem); color:var(--ink); line-height:1.15;}
+.hero-photo .hp-yr{font-family:var(--f-mono); font-size:.76rem; color:var(--ink-soft); white-space:nowrap;}
+.hero-photo .hp-credit{font-family:var(--f-mono); font-size:.64rem; color:var(--ink-soft); opacity:.75; white-space:nowrap;}
+.hero-photo .hp-note{grid-column:1/-1; font-size:.93rem; line-height:1.55; color:var(--ink-soft); max-width:88ch;}
 .grade-split{display:grid; grid-template-columns:0.85fr 1.15fr; gap:2.4rem; align-items:start; margin-top:1.3rem;}
-.grade-weights{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
-.grade-weights .gw{background:var(--paper); padding:1rem 1.1rem;}
-.grade-weights .pct{font-family:var(--f-display); font-weight:700; font-size:clamp(1.7rem,3vw,2.4rem); line-height:1; color:var(--ink);}
-.grade-weights .pct i{font-style:normal; font-size:.45em; margin-left:.1em; color:var(--ink-soft);}
-.grade-weights .lbl{font-size:.85rem; color:var(--ink-soft); margin-top:.4rem;}
+.grade-weights{display:flex; flex-direction:column; gap:.1rem; border-top:1px solid var(--rule);}
+.grade-weights .gw{display:grid; grid-template-columns:5.2rem 1fr 3.1rem; align-items:center; gap:.9rem; padding:.72rem .2rem; border-bottom:1px solid var(--rule);}
+.grade-weights .lbl{font-size:.92rem; color:var(--ink); font-weight:600; white-space:nowrap;}
+.grade-weights .bar{height:10px; background:var(--paper-3);}
+.grade-weights .bar i{display:block; height:100%; background:var(--ink);}
+.grade-weights .pct{font-family:var(--f-display); font-weight:700; font-size:1.25rem; color:var(--ink); text-align:right; font-variant-numeric:tabular-nums;}
+.grade-weights .pct span{font-size:.6em; color:var(--ink-soft); margin-left:.08em;}
 .grade-note{font-size:.86rem; line-height:1.6; color:var(--ink-soft); margin-top:1rem; padding-left:.9rem; border-left:2px solid var(--ink);}
 .data-table{width:100%; border-collapse:collapse;}
 .data-table th, .data-table td{text-align:left; padding:.65rem .9rem; border-bottom:1px solid var(--rule); font-size:.9rem; vertical-align:top; line-height:1.45;}
@@ -485,10 +496,11 @@ body.export-clean main{inset:0;}
     <div class="grade-split">
       <div>
         <div class="grade-weights">
-          <div class="gw"><div class="pct">30<i>%</i></div><div class="lbl">중간고사</div></div>
-          <div class="gw"><div class="pct">40<i>%</i></div><div class="lbl">기말고사</div></div>
-          <div class="gw"><div class="pct">20<i>%</i></div><div class="lbl">출석</div></div>
-          <div class="gw"><div class="pct">10<i>%</i></div><div class="lbl">수업태도</div></div>
+          <div class="gw"><div class="lbl">중간고사</div><div class="bar"><i style="width:30%"></i></div><div class="pct">30<span>%</span></div></div>
+          <div class="gw"><div class="lbl">수시평가</div><div class="bar"><i style="width:20%"></i></div><div class="pct">20<span>%</span></div></div>
+          <div class="gw"><div class="lbl">기말고사</div><div class="bar"><i style="width:30%"></i></div><div class="pct">30<span>%</span></div></div>
+          <div class="gw"><div class="lbl">출석</div><div class="bar"><i style="width:10%"></i></div><div class="pct">10<span>%</span></div></div>
+          <div class="gw"><div class="lbl">수업태도</div><div class="bar"><i style="width:10%"></i></div><div class="pct">10<span>%</span></div></div>
         </div>
         <p class="grade-note">이 수업은 <strong>중간고사를 한 번만</strong> 치르므로 위와 같이 구성한다. 발표 등 별도 과제가 추가되는 경우 <strong>비율이 일부 조정</strong>될 수 있다.</p>
       </div>
@@ -713,6 +725,20 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
+<section class="slide" data-era="origins" data-week="2" data-title="기자 피라미드" data-dates="기원전 2560년경">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--hero">
+    <figure class="hero-photo">
+      <img src="img/w02-hero-giza.webp" alt="기자의 피라미드군" loading="lazy">
+      <figcaption>
+        <div class="hp-main"><span class="hp-name">기자 피라미드</span><span class="hp-yr">기원전 2560년경</span></div>
+        <div class="hp-credit">CC BY 2.5</div>
+        <div class="hp-note">한 변이 약 230m인데 네 변의 길이 차이가 <strong>20cm 안쪽</strong>이다. 측량·채석·운반·시공을 통제한 조직과 규격이 이미 존재했다는 뜻이다.</div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
 <section class="slide" data-era="origins" data-week="2" data-title="그리스 — 비례와 이상" data-dates="~기원전 5세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split">
@@ -725,6 +751,20 @@ body.export-clean main{inset:0;}
     </ul>
     </div>
     <figure class="artifact-photo"><img src="img/w02-greece-orders.webp" alt="도리아·이오니아·코린트 오더 비교 도판" loading="lazy"><figcaption><span class="who">세 오더의 기둥과 엔타블러처 비교 도판</span><span>Public Domain</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="파르테논 신전" data-dates="기원전 447~432년">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--hero">
+    <figure class="hero-photo">
+      <img src="img/w02-hero-parthenon.webp" alt="파르테논 신전" loading="lazy">
+      <figcaption>
+        <div class="hp-main"><span class="hp-name">파르테논 신전</span><span class="hp-yr">기원전 447~432년</span></div>
+        <div class="hp-credit">Public Domain</div>
+        <div class="hp-note">곧아 보이는 이 건물에 <strong>완전한 직선은 거의 없다.</strong> 기단은 가운데가 살짝 솟고 기둥은 안쪽으로 기울며 배흘림이 들어간다 — 눈에 곧게 보이도록 계산해 넣은 보정이다.</div>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -776,6 +816,20 @@ body.export-clean main{inset:0;}
     <figure class="artifact-photo">
       <img src="img/w02-01-013.webp" alt="로마 시대 기름램프(firmalampen)" loading="lazy">
       <figcaption><span class="who">로마 기름램프(firmalampen), 대영박물관</span><span>CC BY-SA 3.0</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="콜로세움" data-dates="기원후 80년">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--hero">
+    <figure class="hero-photo">
+      <img src="img/w02-hero-colosseum.webp" alt="콜로세움" loading="lazy">
+      <figcaption>
+        <div class="hp-main"><span class="hp-name">콜로세움</span><span class="hp-yr">기원후 80년</span></div>
+        <div class="hp-credit">CC0</div>
+        <div class="hp-note">같은 아치를 층층이 반복해 5만 명을 수용했다. <strong>80개 출입구에 번호를 매겨</strong> 관객을 분산시킨 동선 설계까지 함께 있었다.</div>
+      </figcaption>
     </figure>
   </div>
 </section>
@@ -833,6 +887,20 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
+<section class="slide" data-era="origins" data-week="2" data-title="샤르트르 대성당" data-dates="1194~1220년">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--hero">
+    <figure class="hero-photo">
+      <img src="img/w02-hero-chartres.webp" alt="샤르트르 대성당 서쪽 정면" loading="lazy">
+      <figcaption>
+        <div class="hp-main"><span class="hp-name">샤르트르 대성당</span><span class="hp-yr">1194~1220년</span></div>
+        <div class="hp-credit">CC BY-SA 3.0</div>
+        <div class="hp-note">두 첨탑의 양식이 다른 이유는 <strong>세운 시기가 다르기 때문</strong>이다. 대성당은 한 사람의 작품이 아니라 여러 세대에 걸친 길드 장인들의 누적물이다.</div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
 <section class="slide" data-era="origins" data-week="2" data-title="르네상스 — 원근법이라는 도구" data-dates="15세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split">
@@ -845,6 +913,20 @@ body.export-clean main{inset:0;}
     </ul>
     </div>
     <figure class="artifact-photo"><img src="img/w02-renaissance-vitruvian.webp" alt="레오나르도 다빈치, 비트루비우스적 인간" loading="lazy"><figcaption><span class="who">레오나르도 다빈치, 「비트루비우스적 인간」, 1490년경</span><span>Public Domain</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="slide" data-era="origins" data-week="2" data-title="피렌체 두오모의 돔" data-dates="1420~1436년">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage stage--hero">
+    <figure class="hero-photo">
+      <img src="img/w02-hero-duomo.webp" alt="산타 마리아 델 피오레 대성당의 돔" loading="lazy">
+      <figcaption>
+        <div class="hp-main"><span class="hp-name">피렌체 두오모의 돔</span><span class="hp-yr">1420~1436년</span></div>
+        <div class="hp-credit">CC BY 2.5</div>
+        <div class="hp-note">지름 45m를 <strong>받침 구조물 없이</strong> 덮었다. 브루넬레스키는 벽돌을 헤링본으로 엮어 공사 중에도 스스로 버티게 만들었다 — 원근법을 증명한 그 사람이다.</div>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
