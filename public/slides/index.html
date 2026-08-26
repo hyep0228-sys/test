@@ -339,11 +339,16 @@ body.export-clean main{inset:0;}
 .timeline-row .yr{font-family:var(--f-mono); font-size:.78rem; color:var(--accent); font-weight:600;}
 .timeline-row .tt{font-size:.86rem; margin-top:.3rem; line-height:1.4; color:var(--ink);}
 
+/* 토론거리 표식. 회색 상자 안의 검은 THINK 라벨이었는데, 상자를 없애고
+   노란 원 안의 물음표로 바꿨다. 덱에서 유일한 유채색이라 이 자리만 눈에 걸린다. */
 .think-block{
-  margin-top:1.6rem; padding:1.1rem 1.3rem; border:1px solid var(--rule); background:var(--paper-2);
-  display:flex; gap:1rem; align-items:flex-start;
+  margin-top:1.6rem; display:flex; gap:1rem; align-items:center;
 }
-.think-block .mk{font-family:var(--f-mono); font-size:.72rem; color:var(--paper); background:var(--accent2); padding:.2rem .5rem; flex:none;}
+.think-block .mk{
+  font-family:var(--f-display); font-size:1.15rem; font-weight:700; line-height:1;
+  color:#241c00; background:#f2c230; border-radius:50%; flex:none;
+  width:2rem; height:2rem; display:flex; align-items:center; justify-content:center;
+}
 .think-block p{font-size:.95rem; line-height:1.55;}
 
 .map-note{font-family:var(--f-mono); font-size:.75rem; color:var(--ink-soft); margin-top:1rem;}
@@ -610,7 +615,7 @@ body.export-clean main{inset:0;}
       <span class="chip">신석기 혁명</span>
       <span class="chip">거석·초기 도시</span>
     </div>
-    <div class="think-block"><span class="mk">THINK</span><p>'디자인'을 산업 이후의 직업으로만 볼지, 의도된 형태 부여 행위 전체로 볼지 — 이 질문을 염두에 두고 이어지는 여섯 단계를 보자.</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>'디자인'을 산업 이후의 직업으로만 볼지, 의도된 형태 부여 행위 전체로 볼지 — 이 질문을 염두에 두고 이어지는 여섯 단계를 보자.</p></div>
   </div>
 </section>
 
@@ -660,7 +665,7 @@ body.export-clean main{inset:0;}
         <li><strong>형태</strong> — 좌우대칭, 균일한 두께. 필요한 정도 이상으로 다듬어져 있다.</li>
         <li><strong>의도</strong> — 특정 암석(고운 결의 규암·부싯돌)을 '선택'했다는 사실 자체가 재료에 대한 판단이 있었음을 보여준다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>기능만 있다면 도구, 형태에 대한 판단까지 있다면 디자인이라 부를 수 있을까? 이 경계는 어디에 있는가.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>기능만 있다면 도구, 형태에 대한 판단까지 있다면 디자인이라 부를 수 있을까? 이 경계는 어디에 있는가.</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w02-01-003.webp" alt="1797년 존 프리어가 도해한 아슐리안형 주먹도끼" loading="lazy">
@@ -761,7 +766,7 @@ body.export-clean main{inset:0;}
       <li>보통의 디자인사 수업은 산업혁명이나 미술공예운동에서 출발하고, 선사시대는 배경 설명 몇 줄로 지나간다. 하지만 여섯 단계를 나란히 놓으면, 오늘날 <strong>'디자인의 핵심 문제'</strong>라 부르는 기능·형태·생산·소통·소유·공공성이 <strong>'디자이너'라는 직업보다 수천 년 먼저</strong> 있었다는 게 보인다.</li>
       <li>달라진 건 도구와 어휘일 뿐, 문제의 본질은 아니다 — 이 관점이 이 수업 전체를 관통한다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>이 여섯 걸음이 다음 시간 다룰 고대 문명(이집트·그리스·로마)에서는 어떻게 더 정교한 규칙과 제도로 굳어지는지 살펴보자.</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>이 여섯 걸음이 다음 시간 다룰 고대 문명(이집트·그리스·로마)에서는 어떻게 더 정교한 규칙과 제도로 굳어지는지 살펴보자.</p></div>
   </div>
 </section>
 
@@ -849,7 +854,7 @@ body.export-clean main{inset:0;}
         <li>율리우스 카이사르 시대 로마는 동전에 통치자의 초상을 새겨 권위를 전파했다 — 화폐가 <strong>선전(propaganda)의 도구</strong>로 쓰인 초기 사례다.</li>
         <li>진시황(재위 기원전 221~210)의 병마용은 8천여 개의 실물 크기 병사·말 조각상으로, 표준화된 치수와 품질 관리 절차를 갖춘 생산 체계에서 만들어졌다. 석궁 방아쇠·화살촉 같은 부품도 서로 <strong>교체 가능하게</strong> 제작됐다 — '상호교환 가능한 부품'은 흔히 18~19세기 산업혁명의 발명으로 배우지만, 이미 기원전에 그 발상이 있었다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>표준화와 대량생산은 산업혁명이 아니라 문명 자체와 함께 시작된 것이 아닐까?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>표준화와 대량생산은 산업혁명이 아니라 문명 자체와 함께 시작된 것이 아닐까?</p></div>
     </div>
   </div>
 </section>
@@ -1055,7 +1060,7 @@ body.export-clean main{inset:0;}
         <li>주목할 것은 머리판의 <strong>상감 패널</strong>이다. 네덜란드 디자이너 <strong>한스 프레드만 데 프리스</strong>가 펴낸 장식 도안집의 패턴을 그대로 옮겨 놓았다.</li>
         <li>즉 이 침대는 <strong>인쇄된 도안이 실제 가구 제작으로 옮겨간 사례</strong>다. 장인이 스승에게 배운 것만 만들던 시대에서, <strong>책을 보고 만드는 시대</strong>로 넘어가고 있었다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>구텐베르크(1450) → 프레드만 데 프리스의 도안집(16세기) → 치펜데일의 『지침서』(1754). <strong>인쇄술이 디자인을 유통시키는 경로</strong>가 이렇게 만들어진다.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>구텐베르크(1450) → 프레드만 데 프리스의 도안집(16세기) → 치펜데일의 『지침서』(1754). <strong>인쇄술이 디자인을 유통시키는 경로</strong>가 이렇게 만들어진다.</p></div>
     </div>
   </div>
 </section>
@@ -1190,7 +1195,7 @@ body.export-clean main{inset:0;}
         <li>그리스 양식에서 영감을 받은 그의 디자인을 다른 가구제작자들이 광범위하게 응용하면서 <strong>"셰라튼 양식"</strong>이라는 용어가 생겼다.</li>
         <li>가구 제작보다 디자인으로 유명해진 셰라튼은, <strong>순수하게 디자인 개념만으로 취향과 유행을 선도하며 유명해진 디자이너의 최초 사례</strong>다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>만드는 사람과 설계하는 사람이 갈라지기 시작한다. 다음 주 산업혁명이 밀어붙일 <strong>'디자인과 제작의 분리'</strong>가 여기서 이미 예고된다.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>만드는 사람과 설계하는 사람이 갈라지기 시작한다. 다음 주 산업혁명이 밀어붙일 <strong>'디자인과 제작의 분리'</strong>가 여기서 이미 예고된다.</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w02-hepplewhite.webp" alt="헤플화이트 방패등받이 의자" loading="lazy">
@@ -1223,7 +1228,7 @@ body.export-clean main{inset:0;}
       <li>18세기에 등장한 이 합리적 사고는 신고전주의에서 양식적으로 구현되었고, <strong>궁극적으로는 산업혁명으로 이어졌다.</strong></li>
       <li>산업혁명은 이전까지 상상할 수 없던 규모의 <strong>노동 분업</strong>을 일으켰고, 이와 함께 <strong>산업디자인이라는 새로운 직업이 탄생</strong>하게 되었다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>여기까지가 '장인정신'의 시대다. 다음 주부터는 <strong>장인이 아니라 공장이</strong> 물건을 만든다.</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>여기까지가 '장인정신'의 시대다. 다음 주부터는 <strong>장인이 아니라 공장이</strong> 물건을 만든다.</p></div>
   </div>
 </section>
 
@@ -1284,7 +1289,7 @@ body.export-clean main{inset:0;}
         <li>호가드는 <strong>'구불구불한 곡선(serpentine line)'</strong>을 가장 아름다운 선으로 꼽았다. 그림 속 삼각기둥에 감긴 S자 곡선 옆에는 'VARIETY(다양성)'라는 단어가 적혀 있다.</li>
         <li>중요한 것은 결론이 아니라 태도다. 호가드는 <strong>형태와 기능의 상호관계</strong>를 따져 물은 최초의 사람 중 하나였다. 아름다움을 취향의 문제가 아니라 <strong>분석 가능한 대상</strong>으로 다루려 했다는 점에서, 계몽운동의 논리적·체계적 사고방식이 미학에 적용된 사례다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>아름다움에 규칙이 있다면, 그 규칙을 아는 사람은 아름다움을 '설계'할 수 있는가?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>아름다움에 규칙이 있다면, 그 규칙을 아는 사람은 아름다움을 '설계'할 수 있는가?</p></div>
     </div>
   </div>
 </section>
@@ -1361,7 +1366,7 @@ body.export-clean main{inset:0;}
       <div class="tl-item"><div class="yr">1776</div><div class="tt">애덤 스미스, 『국부론』 — 분업의 이론화</div></div>
       <div class="tl-item"><div class="yr">1785</div><div class="tt">에드먼드 카트라이트, 역직기(power loom)</div></div>
     </div>
-    <div class="think-block"><span class="mk">THINK</span><p>절반의 세기 만에 손의 속도가 기계의 속도로 대체되었다. 이 속도 변화는 '보기 좋은 것'의 기준도 바꾸었을까?</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>절반의 세기 만에 손의 속도가 기계의 속도로 대체되었다. 이 속도 변화는 '보기 좋은 것'의 기준도 바꾸었을까?</p></div>
   </div>
 </section>
 
@@ -1431,7 +1436,7 @@ body.export-clean main{inset:0;}
       <li>휘트워스는 <strong>100만분의 1인치</strong>까지 측정하는 마이크로미터도 설계했다. 그전까지 숙련 기계공이 기대할 수 있던 정확도는 16분의 1인치였다.</li>
       <li>이 정밀공작기계들이 있었기에 비로소 <strong>교환가능성(interchangeability)</strong>이 실현되었다. 부품이 정확히 같아야 조립라인이 성립하고, 조립라인이 있어야 대량생산이 성립한다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>대량생산의 진짜 전제조건은 기계가 아니라 <strong>측정</strong>이었다. 정확히 잴 수 없으면 똑같이 만들 수도 없다.</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>대량생산의 진짜 전제조건은 기계가 아니라 <strong>측정</strong>이었다. 정확히 잴 수 없으면 똑같이 만들 수도 없다.</p></div>
   </div>
 </section>
 
@@ -1552,7 +1557,7 @@ body.export-clean main{inset:0;}
         <li>조립되지 않은 상태로 포장해 <strong>36개를 단 1세제곱미터 상자</strong>에 담아 수출하고, 도착지에서 드라이버로 조립했다. 오늘날 플랫팩 가구의 원형이다.</li>
         <li>1860년 당시 이 의자의 제작비용은 <strong>와인 한 병보다 쌌다.</strong> 1891년까지 <strong>7,300만 개</strong>가 팔렸다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>토넷은 "디자인에서 새로운 경제 민주주의를 선도했다"고 평가받는다. 값이 싸다는 것도 디자인의 성취일까?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>토넷은 "디자인에서 새로운 경제 민주주의를 선도했다"고 평가받는다. 값이 싸다는 것도 디자인의 성취일까?</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w03-01-020.webp" alt="토넷 모델 14번 의자" loading="lazy">
@@ -1619,7 +1624,7 @@ body.export-clean main{inset:0;}
       <li><strong>233명 이상의 건축가</strong>가 계획안을 냈지만, 설계 요강과 맞아떨어지는 안은 하나도 없었다. 위원회가 직접 준비한 벽돌 건물 안은 "볼품없다"는 비난을 받고 비용 초과를 이유로 완전히 기각됐다.</li>
       <li>표류하던 프로젝트를 살려낸 사람은 <strong>"천재지만 건축가나 기술자가 아닌"</strong> 조지프 팩스턴이었다. 그는 데번셔 공작의 수석 정원사였다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>전문 건축가 233명이 못 푼 문제를 정원사가 풀었다. 문제를 다시 정의하면 답이 달라진다는 것을, 이 사례는 어떻게 보여주는가?</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>전문 건축가 233명이 못 푼 문제를 정원사가 풀었다. 문제를 다시 정의하면 답이 달라진다는 것을, 이 사례는 어떻게 보여주는가?</p></div>
   </div>
 </section>
 
@@ -1825,7 +1830,7 @@ body.export-clean main{inset:0;}
       <li>근본적인 문제는 따로 있었다. 장식은 <strong>저급한 기량을 가리거나 질 낮은 재료를 숨기기 위해</strong> 빈번하게 사용됐다. 제조업자들은 기계를 더 싸고 빠르게 상품을 찍어내는 수단으로만 보았고, 수공예를 피상적으로 모방했을 뿐 산업생산에 맞는 방식을 실현하지 못했다.</li>
       <li>"<strong>과도할수록 더 좋다</strong>"가 당시의 지배적 태도였고, 대중은 대체로 이를 잘 받아들였다. 비싼 수공예품처럼 보이지만 실제로는 공장 생산되어 살 만한 "사치스러운" 상품 앞에서, 신고전주의의 절제는 오히려 단조롭고 유행이 지난 것으로 보였다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>영국은 산업혁명을 가장 먼저 겪은 나라였지만, 그것을 잇는 <strong>산업디자인의 청사진</strong>은 갖지 못했다. 기술이 앞서면 디자인도 저절로 따라오는 것은 아니다.</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>영국은 산업혁명을 가장 먼저 겪은 나라였지만, 그것을 잇는 <strong>산업디자인의 청사진</strong>은 갖지 못했다. 기술이 앞서면 디자인도 저절로 따라오는 것은 아니다.</p></div>
   </div>
 </section>
 
@@ -1866,7 +1871,7 @@ body.export-clean main{inset:0;}
         <li>1801년 1월, 그는 애덤스 대통령과 제퍼슨 당선자 앞에서 <strong>나사드라이버 하나로 단일한 머스킷소총에 10개의 다른 잠금장치를 조립</strong>하며 부품호환성을 시연했다. 제퍼슨은 즉각 채택했다.</li>
         <li>그런데 <strong>그의 부품들은 기대만큼 호환되지 않았다.</strong> 잠금 부재에는 각기 특별한 표식이 있었는데, 호환이 제대로 됐다면 이런 표식이 불필요했을 것이다. 1만 개 납품에는 예상의 <strong>4배인 10년</strong>이 걸렸다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>그럼에도 휘트니의 기여는 전무후무하다고 평가된다. <strong>미숙련공이라도 숙련 장인의 품질에 필적할 제품을 만들 수 있는 체계</strong>를 고안했기 때문이다. 시연은 과장이었지만 방향은 옳았다 — 디자인사에서 이런 경우를 어떻게 평가해야 할까?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>그럼에도 휘트니의 기여는 전무후무하다고 평가된다. <strong>미숙련공이라도 숙련 장인의 품질에 필적할 제품을 만들 수 있는 체계</strong>를 고안했기 때문이다. 시연은 과장이었지만 방향은 옳았다 — 디자인사에서 이런 경우를 어떻게 평가해야 할까?</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w04-01-024.webp" alt="스프링필드 병기창 1861년 모델 머스킷소총" loading="lazy">
@@ -1885,7 +1890,7 @@ body.export-clean main{inset:0;}
       <li>미국 북부가 채택한 이 생산기법은 <strong>1861~65년 남북전쟁</strong>에서 북군에 더 풍부하고 믿을 만한 무기와 탄약을 공급하며 승리의 주요 동력이 되었다.</li>
       <li>동시에 인류사에 어두운 새 장을 열었다. <strong>미국 남북전쟁은 세계 최초의 산업화된 전쟁</strong>이었기 때문이다. 효율적으로 설계된 무기들의 도매제작은 군인들의 도매금 학살이라는 비극으로 이어졌다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>교재의 문장을 그대로 옮긴다. "<strong>디자인의 힘은 세심한 구축에 활용되던 만큼이나 때때로 무심한 파괴에도 활용되었다.</strong>" 잘 만든 디자인이 반드시 좋은 결과를 낳는가?</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>교재의 문장을 그대로 옮긴다. "<strong>디자인의 힘은 세심한 구축에 활용되던 만큼이나 때때로 무심한 파괴에도 활용되었다.</strong>" 잘 만든 디자인이 반드시 좋은 결과를 낳는가?</p></div>
   </div>
 </section>
 
@@ -2246,7 +2251,7 @@ body.export-clean main{inset:0;}
         <li>구스타프 스티클리는 모리스의 자유 의지적 비전이 준 교훈을 이렇게 요약했다. "민중을 위해 민중이 만든 진짜 예술은 삶을 미화할 뿐만 아니라 <strong>단순화함으로써</strong> 모든 종류의 관심과 인간조건을 통합할 수 있고, 결국에는 <strong>공익</strong>이란 단어의 의미를 실현할 수 있다."</li>
         <li>교재의 평가는 냉정하다. 모리스 자신은 기계화를 거부하면서 <strong>결국 진정한 민주적 디자인의 달성에 실패</strong>했다. 그가 근대운동에 영향을 준 이유는 노동자의 창조적 만족감을 믿어서라기보다 <strong>단순성을 윤리적인 힘으로 강조</strong>했기 때문이었다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>"미적·사회적·환경적 이유로 디자인과 제작의 보다 전일적 접근을 옹호한 모리스의 태도는 그 어느 때보다 <strong>오늘날의 탈산업시대에 시의성</strong>을 지닌다." 150년 전의 이 문제의식이 지금 어떤 형태로 돌아와 있을까?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>"미적·사회적·환경적 이유로 디자인과 제작의 보다 전일적 접근을 옹호한 모리스의 태도는 그 어느 때보다 <strong>오늘날의 탈산업시대에 시의성</strong>을 지닌다." 150년 전의 이 문제의식이 지금 어떤 형태로 돌아와 있을까?</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w05-01-033.webp" alt="모리스사 서섹스 의자, 1870년경" loading="lazy">
@@ -2285,7 +2290,7 @@ body.export-clean main{inset:0;}
         <li>제임스 딕슨 앤 선즈를 위한 <strong>모델 2274번 마름모꼴 찻주전자</strong>(1879)는 19세기 영국 은그릇 디자인에서 가장 획기적인 작품으로 꼽힌다. 담대한 형상과 단순화된 유미주의가 <strong>후기 근대운동의 엄격한 형태어휘를 예견</strong>했다.</li>
         <li><strong>윌리엄 모리스와는 달리 드레서는 기계를 불신하지 않고 완전히 포용</strong>했다. 소수보다 다수를 위해 아름답고 유용한 적정가 제품을 만들고자 대량생산의 잠재력을 활용했다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>드레서는 디자인 개혁 논쟁의 초점을 <strong>"예술을 위한 예술"에서 "산업을 위한 예술"로 옮겨놓았다.</strong> 다음 주 아르누보와 7주차 공작연맹은 이 이동 위에서 시작된다.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>드레서는 디자인 개혁 논쟁의 초점을 <strong>"예술을 위한 예술"에서 "산업을 위한 예술"로 옮겨놓았다.</strong> 다음 주 아르누보와 7주차 공작연맹은 이 이동 위에서 시작된다.</p></div>
     </div>
   </div>
 </section>
@@ -2479,7 +2484,7 @@ body.export-clean main{inset:0;}
       <li>잘 알려지지 않은 사실이 있다. 설리반은 <strong>초월주의를 신봉한 사람</strong>이었고, 자연에서 끌어온 이미지에 기반을 둔 <strong>"진실"하고 "시적인" 건축</strong>을 창조하려 했다. 이 문장은 장식을 없애라는 뜻이 아니었다.</li>
       <li>그는 오히려 건물에 <strong>정체성을 부여하는 것은 장식</strong>이라 주장했다. 다만 장식은 구조와 무관하게 덧붙여진 것이 아니라 <strong>구조의 꾸밈</strong>이어야 한다고 보았다. 적절한 장식은 <strong>자연과 과학, 유기적 세상과 비유기적 세상을 잇는 다리</strong>가 될 수 있다고 믿었다.</li>
     </ul>
-    <div class="think-block"><span class="mk">THINK</span><p>"형태는 기능을 따른다"는 흔히 장식 배제의 구호로 읽힌다. 하지만 정작 그 말을 한 사람은 장식의 옹호자였다. 문장 하나가 원래 맥락을 떠나 다르게 쓰이는 일은 왜 생길까?</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>"형태는 기능을 따른다"는 흔히 장식 배제의 구호로 읽힌다. 하지만 정작 그 말을 한 사람은 장식의 옹호자였다. 문장 하나가 원래 맥락을 떠나 다르게 쓰이는 일은 왜 생길까?</p></div>
   </div>
 </section>
 
@@ -2513,7 +2518,7 @@ body.export-clean main{inset:0;}
         <li>이 건물은 <strong>뉴 아트 운동과 만개한 모더니즘 사이의 전이적 작품</strong>으로 평가된다.</li>
         <li>결정적 사건은 출판이었다. 베를린의 출판가 <strong>에른스트 바스무트</strong>가 펴낸 라이트 작품 100선 2권짜리 책(1910~11)이 유럽에서 널리 읽혔고, 그 독자들이 <strong>근대 디자이너 1세대</strong>가 되었다.</li>
       </ul>
-      <div class="think-block"><span class="mk">THINK</span><p>교재는 이렇게 정리한다. "우리는 <strong>근대 운동이 미국의 미술공예 디자이너에게 그 뿌리가 있음</strong>을 보게 된다." 근대 디자인은 유럽에서 시작됐다는 통념과 어긋나는 이 주장을, 어떻게 받아들일 수 있을까?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>교재는 이렇게 정리한다. "우리는 <strong>근대 운동이 미국의 미술공예 디자이너에게 그 뿌리가 있음</strong>을 보게 된다." 근대 디자인은 유럽에서 시작됐다는 통념과 어긋나는 이 주장을, 어떻게 받아들일 수 있을까?</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w06-01-038.webp" alt="라킨 관청 건물, 버팔로" loading="lazy">
@@ -2637,7 +2642,7 @@ body.export-clean main{inset:0;}
         </ul>
       </div>
     </div>
-    <div class="think-block"><span class="mk">THINK</span><p>이 논쟁의 승자는 역사적으로 누구였을까 — 그리고 그 답은 바우하우스에서 어떤 모습으로 나타날까?</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>이 논쟁의 승자는 역사적으로 누구였을까 — 그리고 그 답은 바우하우스에서 어떤 모습으로 나타날까?</p></div>
   </div>
 </section>
 
@@ -3641,7 +3646,7 @@ body.export-clean main{inset:0;}
       <div class="figure-card"><div class="name">안상수</div><div class="role">홍익대학교 시각디자인과</div><div class="work">네모틀에서 벗어난 '탈네모틀' 글꼴(안상수체)을 실험, 한글 타이포그래피를 조형 실험의 영역으로 확장.</div></div>
       <div class="figure-card"><div class="name">디지털 폰트 산업</div><div class="role">1990s~</div><div class="work">개인용 컴퓨터 보급과 함께 한글 폰트 개발이 활자 주조업에서 소프트웨어 산업으로 전환.</div></div>
     </div>
-    <div class="think-block"><span class="mk">THINK</span><p>이 강의실이 속한 홍익대학교 시각디자인 계열도 이 흐름의 한 매듭이다 — 여러분이 만드는 것은 이 계보의 다음 장이 될 수 있을까?</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>이 강의실이 속한 홍익대학교 시각디자인 계열도 이 흐름의 한 매듭이다 — 여러분이 만드는 것은 이 계보의 다음 장이 될 수 있을까?</p></div>
   </div>
 </section>
 
