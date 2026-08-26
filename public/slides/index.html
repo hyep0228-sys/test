@@ -184,7 +184,9 @@ body.export-clean main{inset:0;}
 
 .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.4rem; flex-wrap:wrap;}
 .section-head h3{font-family:var(--f-display); font-weight:700; font-size:clamp(1.3rem,2.2vw,1.8rem); color:var(--ink);}
-.section-head .tag{font-family:var(--f-mono); font-size:.75rem; color:var(--paper); background:var(--accent); padding:.2rem .55rem;}
+/* 양식·주제 라벨. 검은 사각 박스였는데 글자만 남겼다 —
+   제목 옆에서 상자가 먼저 읽히던 것을 막는다. */
+.section-head .tag{font-family:var(--f-mono); font-size:.75rem; color:var(--ink-soft); letter-spacing:.08em;}
 .section-head.has-era{flex-direction:column; align-items:stretch; gap:.55rem;}
 .section-head.has-era .era-bar{display:flex; align-items:center; gap:.7rem; padding-bottom:.5rem; border-bottom:2px solid var(--ink);}
 .section-head.has-era .era-name{font-family:var(--f-display); font-weight:700; font-size:clamp(1.45rem,2.6vw,2.05rem); line-height:1.1; color:var(--ink); white-space:nowrap;}
