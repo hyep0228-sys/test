@@ -49,7 +49,7 @@
 | `compare` / `compare--photo` | 2단 대비 |
 | `figure-grid` + `.figure-card.has-photo` | 3칸 카드 |
 | `dual-tl` | 미술사·시기·디자인사·한국 4열 연대표 (1주차) |
-| `flowmap` | 픽토그램 흐름 SVG (1주차) |
+| `flowmap` | 픽토그램 흐름 SVG. **현재 쓰는 슬라이드 없음** — 4페이지가 빽빽해져 도식을 뺐다. CSS는 남겨뒀으니 필요하면 되살릴 것 |
 | `schedule-table` / `grade-weights` | 15주 계획 / 평가 비율 |
 
 팔레트는 **모노톤 고정**(`--accent`가 잉크색과 같음). 색으로 강조 못 하니 크기·굵기·괘선으로 위계를 만든다.
