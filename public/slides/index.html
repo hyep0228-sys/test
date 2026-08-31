@@ -324,6 +324,10 @@ body.export-clean main{inset:0;}
 .stage--split.img-left .artifact-photo{order:-1;}
 .artifact-photo{border:1px solid var(--rule); background:var(--paper-2); padding:.6rem; margin:0;}
 .artifact-photo img{width:100%; height:auto; display:block; object-fit:contain; max-height:66vh;}
+/* 한 유물을 여러 각도로 보여줄 때. 검은 배경끼리 맞붙여 한 장의 도판처럼 보이게 한다. */
+.artifact-photo .two-up{display:flex; align-items:center; justify-content:center; gap:1.4rem; background:#000; padding:1rem .8rem;}
+/* 높이를 맞춰 세운다 — 폭으로 맞추면 좁은 각도의 컷이 더 크게 보여 실제 비례가 깨진다. */
+.artifact-photo .two-up img{width:auto; height:auto; max-height:48vh; max-width:46%;}
 .artifact-photo figcaption{
   font-family:var(--f-mono); font-size:.68rem; color:var(--ink-soft); margin-top:.6rem;
   display:flex; justify-content:space-between; gap:1rem; line-height:1.4;
@@ -651,8 +655,11 @@ body.export-clean main{inset:0;}
       </ul>
     </div>
     <figure class="artifact-photo">
-      <img src="img/w02-01-002.webp" alt="좌우대칭으로 가공된 아슐리안 주먹도끼" loading="lazy">
-      <figcaption><span class="who">아슐리안 주먹도끼</span><span>CC BY-SA 4.0</span></figcaption>
+      <div class="two-up">
+        <img src="img/w02-handaxe-face.webp" alt="아슐리안 주먹도끼 정면 — 좌우대칭의 눈물방울 모양" loading="lazy">
+        <img src="img/w02-handaxe-side.webp" alt="같은 주먹도끼의 측면 — 양면을 모두 가공한 두께" loading="lazy">
+      </div>
+      <figcaption><span class="who">아슐리안 주먹도끼 — 프랑스 엔, 중기 플라이스토세</span><span>3D 모델 Izzy Lehman · MoST 6968</span></figcaption>
     </figure>
   </div>
 </section>
