@@ -36,12 +36,12 @@ export default function WeekActivityGrid({
               <Link
                 key={a.key}
                 href={`/week/${week.id}/${a.key}`}
-                className="border border-line rounded p-5 bg-white relative"
+                className="aspect-square border border-line rounded-2xl bg-white relative flex flex-col items-center justify-center text-center p-6"
               >
                 {done && (
-                  <span className="absolute top-3 right-3 text-accent">✓</span>
+                  <span className="absolute top-4 right-4 text-accent">✓</span>
                 )}
-                <p className="font-medium">{a.label}</p>
+                <p className="font-medium text-lg">{a.label}</p>
                 <p className="text-sm text-mute mt-1">{a.description}</p>
               </Link>
             );
