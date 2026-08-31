@@ -36,7 +36,7 @@ export default function WeekActivityGrid({
               <Link
                 key={a.key}
                 href={`/week/${week.id}/${a.key}`}
-                className="w-32 aspect-square border border-line rounded-2xl bg-white relative flex flex-col items-center justify-center text-center p-3"
+                className="w-full border border-line rounded-2xl bg-white relative flex flex-col items-center justify-center text-center py-5 px-6"
               >
                 {done && (
                   <span className="absolute top-3 right-3 text-accent">✓</span>
