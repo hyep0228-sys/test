@@ -229,6 +229,12 @@ body.export-clean main{inset:0;}
 .q-row div{background:var(--paper); padding:.8rem .95rem; font-size:.9rem; line-height:1.45; color:var(--ink); display:flex; align-items:center; gap:.5rem;}
 .q-row div::before{content:"?"; font-family:var(--f-mono); font-weight:700; font-size:.9rem; color:var(--paper); background:var(--ink); width:1.2rem; height:1.2rem; display:inline-flex; align-items:center; justify-content:center; flex:none;}
 .aim-note{font-size:.93rem; line-height:1.6; color:var(--ink-soft); margin-top:1rem;}
+/* 핵심어를 한 줄로 세우는 띠. 모노톤이라 색 대신 괘선과 자간으로 힘을 준다. */
+.keyline{margin:1.5rem 0; padding:.9rem 0; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink);
+  font-family:var(--f-display); font-weight:700; font-size:clamp(1.15rem,2.1vw,1.65rem);
+  letter-spacing:.06em; text-align:center; color:var(--ink);}
+/* 띠 바로 뒤에 마무리 문장이 오면 괘선이 두 줄로 겹친다 — 뒤쪽 줄을 없앤다. */
+.keyline + .aim-close{border-top:none; margin-top:1.3rem; padding-top:0;}
 .aim-close{margin-top:1.05rem; padding-top:.85rem; border-top:2px solid var(--ink); font-family:var(--f-display); font-weight:700; font-size:clamp(1rem,1.6vw,1.26rem); line-height:1.5; color:var(--ink);}
 .flowmap{width:100%; height:auto; display:block; margin-top:1.5rem; overflow:visible;}
 .flowmap .track{fill:none; stroke:var(--ink); stroke-width:1.6; stroke-linecap:round;}
@@ -771,11 +777,10 @@ body.export-clean main{inset:0;}
       <div class="tl-item"><div class="yr">신석기</div><div class="tt">1만~5천 년 전 — 토기·인장, <strong>저장과 소유의 표시</strong></div></div>
       <div class="tl-item"><div class="yr">거석·도시</div><div class="tt">5천~3천 년 전 — 공공 구조물, <strong>협업 설계</strong></div></div>
     </div>
-    <ul class="bullet-list" style="margin-top:1.8rem;">
-      <li>보통의 디자인사 수업은 산업혁명이나 미술공예운동에서 출발하고, 선사시대는 배경 설명 몇 줄로 지나간다. 하지만 여섯 단계를 나란히 놓으면, 오늘날 <strong>'디자인의 핵심 문제'</strong>라 부르는 기능·형태·생산·소통·소유·공공성이 <strong>'디자이너'라는 직업보다 수천 년 먼저</strong> 있었다는 게 보인다.</li>
-      <li>달라진 건 도구와 어휘일 뿐, 문제의 본질은 아니다 — 이 관점이 이 수업 전체를 관통한다.</li>
-    </ul>
-    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>이 여섯 걸음이 다음 시간 다룰 고대 문명(이집트·그리스·로마)에서는 어떻게 더 정교한 규칙과 제도로 굳어지는지 살펴보자.</p></div>
+    <p class="aim-lead">보통 디자인사는 <strong>산업혁명</strong>에서 시작한다.<br>하지만 디자인의 핵심 문제는 그보다 훨씬 오래전부터 존재했다.</p>
+    <div class="keyline">기능 · 형태 · 생산 · 소통 · 소유 · 공공성</div>
+    <p class="aim-close">달라진 것은 도구와 어휘일 뿐,<br>문제의 본질은 크게 달라지지 않았다.</p>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>그렇다면 고대 문명에서는 이 문제들이 어떻게 규칙과 제도로 발전했을까?</p></div>
   </div>
 </section>
 
