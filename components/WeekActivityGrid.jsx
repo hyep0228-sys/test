@@ -29,7 +29,7 @@ export default function WeekActivityGrid({
           시험 주간입니다.
         </p>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-4">
           {ACTIVITIES.map((a) => {
             const done = completedKeys.includes(a.key);
             return (
