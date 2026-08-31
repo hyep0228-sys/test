@@ -30,20 +30,23 @@
 ## 완료된 기능
 
 1. **인증**: 자유 회원가입 없음 — 교수자가 `/admin/students`에서 `이름,학번,생년월일뒤4자리` CSV를 붙여넣으면 계정이 일괄 생성됨(`app/actions/adminStudents.js`, Supabase Admin API 사용). 초기 비밀번호 = **학번+생년월일뒤4자리** (Supabase 비밀번호 정책이 6자 미만을 거부해서 생년월일 4자리 단독으로는 불가 — 학번을 앞에 붙여 6자 이상 충족). 학생은 학번+임시비번으로 로그인 → `profiles.onboarded=false`면 미들웨어가 무조건 `/onboarding`으로 보내서 새 비밀번호+닉네임+분반을 설정해야 앱을 쓸 수 있음(`app/actions/onboarding.js`). 학번→가짜 이메일 변환은 `{학번}@student.designhistory.app` 그대로 유지. **아직 CSV 명단 미제공(수강신청 대기 중) — 받는 대로 계정 생성 예정.**
-2. **홈 `/` · 주차 `/week/[n]`**: 열린 주차의 활동 버튼 + 완료 체크. `WeekActivityGrid` 컴포넌트로 공유. **2026-08-31: 학생에게 보이는 활동은 QUIZ 하나만 남기기로 결정** — BALANCE/THINK/MAKE는 `lib/activities.js`의 `ACTIVITIES` 배열에서 제거해서 그리드에 안 뜨게 했음(코드·DB는 안 지웠음, 나중에 필요하면 배열에 다시 추가하면 됨). QUIZ 자체는 아직 미구현(placeholder).
-3. **사이드바** (`components/Sidebar.jsx`): 모바일은 슬라이드 드로어, 데스크톱은 고정. 15주 목록, 닫힌 주차는 학생에게 비활성. 교수자는 전체 열람 가능 + 각 주차 옆 토글 스위치로 즉시 열기/닫기(`app/actions/weeks.js`).
-4. **BALANCE** (`/week/[n]/balance`, 코드는 살아있지만 위 결정으로 학생 화면엔 안 뜸): A/B 선택 + 성향 태그 저장, 1주차↔14주차 `pair_key` 매칭으로 BEFORE/AFTER 자동 비교, 14주차엔 자기성찰 서술 질문. URL 직접 치면 여전히 접근은 됨.
-5. **수업 슬라이드 덱** — 이 세션이 관여 안 한 다른 세션이 처음부터 다시 구축함. `public/slides/index.html` 정적 HTML 덱(프레임워크 없음), `<iframe src="/slides/index.html?week=N">`으로 허브 앱에 삽입(`components/LectureMaterialButton.jsx`). **자세한 내용·작업규칙은 `CLAUDE.md` 참고, 여기 안 씀.** 옛 "이미지 페이지 넘김 뷰어"(`lecture_materials` 테이블 기반)는 이걸로 대체됨 — `lecture_materials` 테이블·`/api/lecture-materials`(이 세션이 만들었던 push API)는 삭제된 것으로 보임(`app/api/` 디렉토리 자체가 없어짐), DB 테이블은 안 지워졌을 수 있으니 실제 사용 여부는 스키마 보고 확인할 것. **메모하기**(`lecture_notes`)와 **질문남기기**(`lecture_questions`)는 그대로 유지되어 슬라이드 모달 옆 패널로 붙어있음.
-6. **관리자 `/admin`**: 주차별 열림/닫힘 상태, 학생 수, 학생이 남긴 질문 전체 목록(닉네임·분반·주차·페이지 포함). 하위 페이지: `/admin/students`(계정 일괄생성), `/admin/slides`(슬라이드 편집 — 다른 세션이 추가, `/admin/slides/[week]/[index]` 라우트도 있음).
+2. **홈 `/` · 주차 `/week/[n]`**: 열린 주차의 활동 버튼(LESSON 버튼 아래 QUIZ 카드, 둘 다 `rounded-2xl`, LESSON이 더 크고 QUIZ는 같은 가로폭에 세로만 짧음) + 완료 체크. `WeekActivityGrid` 컴포넌트로 공유. **2026-08-31: 학생에게 보이는 활동은 QUIZ 하나만 남기기로 결정** — BALANCE/THINK/MAKE는 `lib/activities.js`의 `ACTIVITIES` 배열에서 제거해서 그리드에 안 뜨게 했음(코드·DB는 안 지웠음, 나중에 필요하면 배열에 다시 추가하면 됨).
+3. **QUIZ** (`/week/[n]/quiz`, `app/actions/quiz.js`, `quiz_questions`/`quiz_answers` 테이블): 한 문제씩 풀고 선택 즉시 정답·해설 표시, 하단에 실시간 정답 개수. 다 풀면 `completions`에 기록되고 이후 재방문 시 점수+전체 리뷰 화면으로 바뀜. **2주차 문제 5개 시딩 완료** — 실제 슬라이드(`public/slides/index.html`의 2주차 섹션) 내용 기반으로 작성(아슐리안 주먹도끼 표준화, 로마 대량생산과 노동분화, 길드의 masterpiece 어원, 구텐베르크 인쇄술, 치펜데일 지침서). 다른 주차는 문제 없음 → `/week/[n]/quiz` 접근 시 "아직 등록된 문제가 없습니다"만 보임.
+4. **사이드바** (`components/Sidebar.jsx`): 모바일은 슬라이드 드로어, 데스크톱은 고정. 15주 목록, 닫힌 주차는 학생에게 비활성. 교수자는 전체 열람 가능 + 각 주차 옆 토글 스위치로 즉시 열기/닫기(`app/actions/weeks.js`).
+5. **BALANCE** (`/week/[n]/balance`, 코드는 살아있지만 위 결정으로 학생 화면엔 안 뜸): A/B 선택 + 성향 태그 저장, 1주차↔14주차 `pair_key` 매칭으로 BEFORE/AFTER 자동 비교, 14주차엔 자기성찰 서술 질문. URL 직접 치면 여전히 접근은 됨.
+6. **수업 슬라이드 덱** — 이 세션이 관여 안 한 다른 세션이 처음부터 다시 구축함. `public/slides/index.html` 정적 HTML 덱(프레임워크 없음), `<iframe src="/slides/index.html?week=N">`으로 허브 앱에 삽입(`components/LectureMaterialButton.jsx`, 버튼 라벨 "LESSON"). **자세한 내용·작업규칙은 `CLAUDE.md` 참고, 여기 안 씀.** 옛 "이미지 페이지 넘김 뷰어"(`lecture_materials` 테이블 기반)는 이걸로 대체됨 — `lecture_materials` 테이블·`/api/lecture-materials`(이 세션이 만들었던 push API)는 삭제된 것으로 보임(`app/api/` 디렉토리 자체가 없어짐), DB 테이블은 안 지워졌을 수 있으니 실제 사용 여부는 스키마 보고 확인할 것. **메모하기**(`lecture_notes`)와 **질문남기기**(`lecture_questions`)는 그대로 유지되어 슬라이드 모달 옆 패널로 붙어있음.
+7. **관리자 `/admin`**: 주차별 열림/닫힘 상태, 학생 수, 학생이 남긴 질문 전체 목록(닉네임·분반·주차·페이지 포함). 하위 페이지: `/admin/students`(계정 일괄생성), `/admin/slides`(슬라이드 편집 — 다른 세션이 추가, `/admin/slides/[week]/[index]` 라우트도 있음).
+
+**주의(2026-08-31)**: 다른 기기/세션이 이 레포에서 슬라이드 작업을 동시에 하고 있음 확인됨. `git add -A`로 한번 그쪽의 임시 파일(`s17b.js`)이 실수로 같이 커밋된 적 있음(바로 다음 커밋에서 삭제해서 정리함). **앞으로는 `git add -A` 대신 건드린 파일만 콕 집어서 add할 것.**
 
 ## DB 스키마 (supabase/migrations/*.sql, 순서대로 적용됨)
 
-`profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경).
+`profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers`.
 Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketches`(MAKE용)는 아직 미생성.
 
 ## 아직 안 한 것
 
-- **QUIZ 실제 구현** (스키마도 아직 없음 — 지금 유일하게 학생에게 보이는 활동이라 우선순위 높음)
+- **QUIZ 나머지 주차 문제 채우기** (지금 2주차 5문항만 있음, 1·3~15주차는 비어있어서 접속하면 "문제 없음" 뜸)
 - THINK/MAKE는 보류 상태(코드는 있으나 학생 화면에서 뺌) — 나중에 다시 켤지, 완전히 갈아엎을지는 미정
 - MY ARCHIVE `/archive` 실데이터 연동 (지금은 주차 목록만 나열)
 - Dashboard 통계 (참여율, 정답률 등)
