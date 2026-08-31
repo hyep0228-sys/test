@@ -66,7 +66,7 @@ export default function LectureMaterialButton({
     <>
       <button
         onClick={() => setOpen(true)}
-        className="w-full border border-line rounded p-3 text-sm text-center bg-white mb-6"
+        className="w-full border border-line rounded-2xl py-10 px-6 text-base font-medium text-center bg-white mb-6"
       >
         수업자료 다시보기
       </button>
