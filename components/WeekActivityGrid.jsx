@@ -42,7 +42,6 @@ export default function WeekActivityGrid({
                   <span className="absolute top-3 right-3 text-accent">✓</span>
                 )}
                 <p className="font-medium">{a.label}</p>
-                <p className="text-xs text-mute mt-1">{a.description}</p>
               </Link>
             );
           })}
