@@ -68,7 +68,7 @@ export default function LectureMaterialButton({
         onClick={() => setOpen(true)}
         className="w-full border border-line rounded-2xl py-10 px-6 text-base font-medium text-center bg-white mb-6"
       >
-        LESSON
+        LECTURE
       </button>
 
       {open && (
