@@ -336,7 +336,10 @@ body.export-clean main{inset:0;}
 .artifact-photo .two-up img{width:auto; height:auto; max-height:48vh; max-width:46%;}
 /* 가로 사진 두 장 — 전경과 세부를 위아래로. 하나로 읽히도록 간격을 좁게 둔다. */
 .artifact-photo .stack-2{display:flex; flex-direction:column; gap:.4rem;}
-.artifact-photo .stack-2 img{width:100%; height:auto; max-height:36vh; object-fit:contain;}
+.artifact-photo .stack-2 > img{width:100%; height:auto; max-height:33vh; object-fit:contain;}
+/* 전경 아래에 세부 두 장을 나란히. 각자 다른 것을 보여주므로 크기는 같게. */
+.artifact-photo .stack-2 .pair{display:flex; gap:.4rem; align-items:center; justify-content:center;}
+.artifact-photo .stack-2 .pair img{width:50%; height:auto; max-height:22vh; object-fit:contain;}
 .artifact-photo figcaption{
   font-family:var(--f-mono); font-size:.68rem; color:var(--ink-soft); margin-top:.6rem;
   display:flex; justify-content:space-between; gap:1rem; line-height:1.4;
@@ -863,9 +866,12 @@ body.export-clean main{inset:0;}
     <figure class="artifact-photo">
       <div class="stack-2">
         <img src="img/w02-terracotta-front.webp" alt="병마용 1호 갱을 정면에서 본 모습 — 열을 지은 병사들이 앞으로 뻗어 나온다" loading="lazy">
-        <img src="img/w02-terracotta-faces.webp" alt="병마용 병사 얼굴 클로즈업 — 이목구비와 수염, 상투가 저마다 다르다" loading="lazy">
+        <div class="pair">
+          <img src="img/w02-terracotta-faces.webp" alt="병마용 병사 얼굴 클로즈업 — 이목구비와 수염, 상투가 저마다 다르다" loading="lazy">
+          <img src="img/w02-caesar-coin.webp" alt="율리우스 카이사르의 초상이 새겨진 데나리우스 은화" loading="lazy">
+        </div>
       </div>
-      <figcaption><span class="who">진시황릉 병마용 1호 갱 — 8천여 개 중 일부, 그리고 병사들의 얼굴</span><span>CC BY 2.0 · 교수자 제공</span></figcaption>
+      <figcaption><span class="who">병마용 1호 갱과 병사들의 얼굴 · 카이사르 데나리우스, 기원전 44년경</span><span>CC BY 2.0 · CC0 · 교수자 제공</span></figcaption>
     </figure>
     <div>
       <div class="section-head has-era"><div class="era-bar"><span class="era-name">중국·지중해</span><span class="tag">STANDARDIZATION</span><span class="spacer"></span></div><h3>표준화라는 발상은 이미 있었다</h3></div>
