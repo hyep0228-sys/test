@@ -192,6 +192,13 @@ body.export-clean main{inset:0;}
 .section-head.has-era .era-name{font-family:var(--f-display); font-weight:700; font-size:clamp(1.45rem,2.6vw,2.05rem); line-height:1.1; color:var(--ink); white-space:nowrap;}
 .section-head.has-era .spacer{flex:1;}
 .section-head.has-era h3{font-size:clamp(1.15rem,1.9vw,1.5rem); font-weight:600;}
+/* 어원 상자 — 제목 줄 오른쪽 끝. flex 안에서 baseline 이 아니라 위쪽에 맞춘다. */
+.etym{margin-left:auto; align-self:flex-start; max-width:26rem; border-left:2px solid var(--ink); padding:.15rem 0 .15rem .9rem;}
+.etym dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:.15rem .8rem; align-items:baseline;}
+.etym dt{font-family:var(--f-mono); font-size:.74rem; font-weight:600; letter-spacing:.06em; color:var(--ink); white-space:nowrap;}
+.etym dd{margin:0; font-size:.76rem; line-height:1.5; color:var(--ink-soft);}
+.etym dd b{color:var(--ink); font-weight:600;}
+.etym .src{grid-column:1/-1; font-family:var(--f-mono); font-size:.62rem; color:var(--ink-soft); opacity:.8; margin-top:.35rem;}
 
 .bullet-list{list-style:none; padding:0; display:flex; flex-direction:column; gap:.85rem;}
 .bullet-list li{
@@ -620,7 +627,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="기원과 장인정신" data-dates="260만 년 전~기원전 2000년">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>도구는 언제부터 '디자인'인가</h3><span class="tag">ORIGINS</span></div>
+    <div class="section-head"><h3>도구는 언제부터 '디자인'인가</h3><span class="tag">ORIGINS</span><div class="etym"><dl><dt>designare</dt><dd>라틴어. <b>de-</b> 밖으로 + <b>signare</b> 표시하다 → <b>표시해 두다, 지정하다</b></dd><dt>disegno</dt><dd>이탈리아어, 르네상스. <b>그림이자 그 뒤의 구상</b>. 손과 머리가 아직 한 낱말 안에 있다</dd><span class="src">design 이 영어에 들어온 것은 16세기다</span></dl></div></div>
     <ul class="bullet-list">
       <li>이 시대에는 아직 '디자이너'라는 직업이 없다. 하지만 돌을 깨는 방식에는 <strong>기능, 형태, 계획</strong>이라는 세 층위가 조금씩 쌓여간다.</li>
       <li>이어지는 여섯 단계로 이 변화를 순서대로 따라간다 — 최소한의 가공에서 시작해, 대칭과 표준화, 미리 계획된 제작, 이미지를 통한 소통, 저장과 표시, 마지막으로 공동체 단위의 건설까지.</li>
@@ -633,7 +640,7 @@ body.export-clean main{inset:0;}
       <span class="chip">신석기 혁명</span>
       <span class="chip">거석·초기 도시</span>
     </div>
-    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>'디자인'을 산업 이후의 직업으로만 볼지, 의도된 형태 부여 행위 전체로 볼지 — 이 질문을 염두에 두고 이어지는 여섯 단계를 보자.</p></div>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>'디자인'을 산업 이후의 직업으로만 볼 것인가, 의도된 형태 부여 행위 전체로 볼 것인가</p></div>
   </div>
 </section>
 
