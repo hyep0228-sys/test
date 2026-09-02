@@ -15,19 +15,7 @@ export default function WeekActivityGrid({
       </p>
       <h1 className="font-display text-4xl mb-3">{week.short_title}</h1>
       {week.key_question && (
-        <p className="text-mute mb-4">{week.key_question}</p>
-      )}
-      {week.keywords?.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-6">
-          {week.keywords.map((kw) => (
-            <span
-              key={kw}
-              className="text-xs font-medium text-accent border border-accent/40 bg-accent/5 rounded-full px-3 py-1"
-            >
-              {kw}
-            </span>
-          ))}
-        </div>
+        <p className="text-mute mb-6">{week.key_question}</p>
       )}
 
       <LectureMaterialButton
