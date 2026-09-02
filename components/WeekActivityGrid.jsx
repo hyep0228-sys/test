@@ -22,7 +22,7 @@ export default function WeekActivityGrid({
           {week.keywords.map((kw) => (
             <span
               key={kw}
-              className="text-xs text-mute border border-line rounded-full px-3 py-1"
+              className="text-xs font-medium text-accent border border-accent/40 bg-accent/5 rounded-full px-3 py-1"
             >
               {kw}
             </span>
