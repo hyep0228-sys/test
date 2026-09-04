@@ -12,7 +12,8 @@ function formatDate(iso) {
 export default async function AdminPage() {
   const supabase = await createClient();
 
-  const [{ data: weeks }, { count: studentCount }, { data: questions }] =
+  // 질문 전체 목록과 필터는 /admin/questions 가 맡는다. 여기는 미처리 몇 건만 미리 보여준다.
+  const [{ data: weeks }, { count: studentCount }, { count: unresolvedCount }, { data: recent }] =
     await Promise.all([
       supabase
         .from("weeks")
@@ -24,14 +25,18 @@ export default async function AdminPage() {
         .eq("role", "student"),
       supabase
         .from("lecture_questions")
-        .select(
-          "id, week_id, page_no, question, created_at, profiles(name, nickname, section)"
-        )
+        .select("id", { count: "exact", head: true })
+        .is("resolved_at", null),
+      supabase
+        .from("lecture_questions")
+        .select("id, week_id, page_no, question, created_at, profiles(nickname, section)")
+        .is("resolved_at", null)
         .order("created_at", { ascending: false })
-        .limit(100),
+        .limit(5),
     ]);
 
   const weekTitleById = new Map((weeks ?? []).map((w) => [w.id, w.short_title]));
+  const recentRows = recent ?? [];
 
   return (
     <Page width="wide">
@@ -48,51 +53,64 @@ export default async function AdminPage() {
         </Link>
       </p>
 
-      <p className="text-sm font-medium mb-3">주차</p>
-      <div className="grid gap-2 sm:grid-cols-2 mb-12">
-        {(weeks ?? []).map((w) => (
-          <div
-            key={w.id}
-            className="border border-line rounded p-4 bg-white flex justify-between items-center"
-          >
-            <div>
-              <p className="text-sm text-mute">
-                WEEK {String(w.id).padStart(2, "0")}
-              </p>
-              <p className="font-medium">{w.short_title}</p>
-            </div>
-            <span className="text-sm text-mute">
-              {w.is_exam ? "시험" : w.is_open ? "열림" : "닫힘"}
-            </span>
-          </div>
-        ))}
+      <div className="flex items-baseline justify-between gap-3 mb-3">
+        <p className="text-sm font-medium">
+          학생 질문{" "}
+          <span className="text-mute font-normal">
+            미처리 {unresolvedCount ?? 0}개
+          </span>
+        </p>
+        <Link href="/admin/questions" className="text-sm text-accent shrink-0">
+          전체 보기 →
+        </Link>
       </div>
 
-      <p className="text-sm font-medium mb-3">
-        학생 질문 {questions?.length ? `(${questions.length})` : ""}
-      </p>
-      {(questions ?? []).length === 0 ? (
-        <p className="text-mute text-sm">아직 등록된 질문이 없습니다.</p>
+      {recentRows.length === 0 ? (
+        <p className="text-mute text-sm mb-12">미처리 질문이 없습니다.</p>
       ) : (
-        <div className="space-y-2">
-          {questions.map((q) => (
-            <div key={q.id} className="border border-line rounded p-4 bg-white">
-              <div className="flex justify-between items-baseline mb-1.5 text-xs text-mute">
-                <span>
+        <div className="space-y-2 mb-12">
+          {recentRows.map((q) => (
+            <Link
+              key={q.id}
+              href={`/admin/questions?week=${q.week_id}`}
+              className="block border border-line rounded-xl p-4 bg-white hover:border-ink transition-colors"
+            >
+              <div className="flex justify-between items-baseline gap-3 mb-1.5 text-xs text-mute">
+                <span className="min-w-0 truncate">
                   WEEK {String(q.week_id).padStart(2, "0")} ·{" "}
                   {weekTitleById.get(q.week_id) ?? ""}
                   {q.page_no ? ` · ${q.page_no}페이지` : ""}
                 </span>
-                <span>{formatDate(q.created_at)}</span>
+                <span className="shrink-0">{formatDate(q.created_at)}</span>
               </div>
               <p className="text-sm">{q.question}</p>
               <p className="text-xs text-mute mt-1.5">
                 {q.profiles?.nickname ?? "익명"} · {q.profiles?.section}분반
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       )}
+
+      <p className="text-sm font-medium mb-3">주차</p>
+      <div className="grid gap-2 sm:grid-cols-2">
+        {(weeks ?? []).map((w) => (
+          <div
+            key={w.id}
+            className="border border-line rounded p-4 bg-white flex justify-between items-center"
+          >
+            <div className="min-w-0">
+              <p className="text-sm text-mute">
+                WEEK {String(w.id).padStart(2, "0")}
+              </p>
+              <p className="font-medium truncate">{w.short_title}</p>
+            </div>
+            <span className="text-sm text-mute shrink-0">
+              {w.is_exam ? "시험" : w.is_open ? "열림" : "닫힘"}
+            </span>
+          </div>
+        ))}
+      </div>
     </Page>
   );
 }

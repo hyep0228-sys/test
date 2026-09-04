@@ -99,8 +99,27 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 `profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers`.
 Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketches`(MAKE용)는 아직 미생성.
 
+## 마이그레이션 이력이 원격과 어긋나 있다 (2026-09-04 발견)
+
+`supabase migration list --linked` 를 돌리면 원격에 **기록된 마이그레이션이 첫 번째(`20260824000001`) 하나뿐**이다.
+2~9번은 `remote: ""` 로 나온다. 그런데 서비스 롤 키로 REST 를 찔러보면
+`lecture_questions`·`lecture_notes`·`quiz_questions`·`slide_overrides` 가 **전부 실제로 존재한다.**
+즉 스키마는 적용됐는데 `supabase_migrations.schema_migrations` 에 기록만 안 된 상태다
+(예전 세션이 SQL 에디터에 직접 붙여넣어 적용한 것으로 보인다).
+
+**그래서 `supabase db push` 를 그냥 돌리면 안 된다.** 이미 있는 테이블에 `create table` 을 다시 실행해서
+실패하거나 중간까지만 적용된다. 새 마이그레이션을 올리려면 둘 중 하나다.
+
+1. `supabase migration repair --status applied <version>` 으로 2~9번을 "적용됨"으로 기록한 뒤 `db push`
+   (이력 테이블만 건드리고 스키마는 안 바꾼다 — 이후 세션이 편해진다)
+2. 새 마이그레이션의 SQL 만 대시보드 SQL 에디터에 직접 실행
+
+**미적용 상태(2026-09-04 기준)**: `20260904000001_question_resolved.sql` — `lecture_questions.resolved_at` 컬럼.
+`resolved_at` 이 없으면 `/admin` 과 `/admin/questions` 가 쿼리 단계에서 깨진다. **적용 전에 배포하지 말 것.**
+
 ## 아직 안 한 것
 
+- **`20260904000001` 마이그레이션 적용** (위 항목 참고 — 안 하면 관리자 화면이 깨진다)
 - **QUIZ 나머지 주차 문제 채우기** (지금 2주차 5문항만 있음, 1·3~15주차는 비어있어서 접속하면 "문제 없음" 뜸)
 - THINK/MAKE는 보류 상태(코드는 있으나 학생 화면에서 뺌) — 나중에 다시 켤지, 완전히 갈아엎을지는 미정
 - Dashboard 통계 (참여율, 정답률 등)
