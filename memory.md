@@ -74,6 +74,26 @@
 **남은 문제**: 덱(`public/slides/index.html`) 자체는 여전히 프로젝터용 16:9 고정이라
 모바일 iframe 안에서 제목이 가로로 잘린다. 허브 셸이 아니라 덱 쪽 작업이고, 아직 안 건드렸다.
 
+## MY ARCHIVE (2026-09-04)
+
+`/archive` 는 예전에 `weeks` 만 조회해 주차 제목 15개를 나열했다 — 사이드바와 다를 게 없는 빈 페이지였다.
+지금은 **학생이 남긴 것을 주차별로 모아 보여준다**: 퀴즈 점수(맞힌 수/총 문항, 미완료면 '푸는 중'),
+내 메모, 내 질문(슬라이드 페이지 번호·날짜 포함).
+
+**왜 필요했나**: 메모·질문은 LECTURE 모달 안에서만 쓸 수 있어서, 한 번 쓰고 나면 그 주차 모달(253장 덱)을
+다시 열지 않는 한 찾을 길이 없었다. 쓰기만 되고 읽기가 막힌 상태였다. 시험 전 복습이 주 용도다.
+
+**아무것도 안 남긴 주차는 아예 안 그린다.** 15주를 전부 나열하면 다시 사이드바와 같아진다.
+전부 비어 있으면 어디서 메모·질문을 쓰는지 알려주는 안내 카드가 뜬다.
+
+데이터 수집은 `app/(main)/archive/page.jsx`, 그리기는 `components/ArchiveList.jsx`
+(`WeekTimeline` 과 같은 구조). 주차별 퀴즈 총 문항 수는 `quiz_questions` 를 따로 받아 JS 에서 잇는다 —
+PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴 것이고, 지금 행 수가 적어 충분하다.
+
+**RLS 확인됨(2026-09-04)**: `lecture_questions` 는 학생 본인(`auth.uid() = user_id`)과 교수자(`is_professor()`)만
+읽는다 — UI 필터가 아니라 DB 정책이다. `lecture_notes` 에는 **professor 읽기 정책이 없어** 메모는 교수자도 못 본다.
+모달의 "나만 볼 수 있어요" 문구가 실제와 맞다. 이 구분을 바꾸려면 마이그레이션이 필요하다.
+
 ## DB 스키마 (supabase/migrations/*.sql, 순서대로 적용됨)
 
 `profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers`.
@@ -83,6 +103,5 @@ Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketc
 
 - **QUIZ 나머지 주차 문제 채우기** (지금 2주차 5문항만 있음, 1·3~15주차는 비어있어서 접속하면 "문제 없음" 뜸)
 - THINK/MAKE는 보류 상태(코드는 있으나 학생 화면에서 뺌) — 나중에 다시 켤지, 완전히 갈아엎을지는 미정
-- MY ARCHIVE `/archive` 실데이터 연동 (지금은 주차 목록만 나열)
 - Dashboard 통계 (참여율, 정답률 등)
 - CSV 명단 대기 중(수강신청 미완료) — 받는 대로 `/admin/students`에서 계정 생성
