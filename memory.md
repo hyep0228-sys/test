@@ -99,7 +99,7 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 `profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers`.
 Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketches`(MAKE용)는 아직 미생성.
 
-## 마이그레이션 이력이 원격과 어긋나 있다 (2026-09-04 발견)
+## 마이그레이션 이력 어긋남 — 해결됨 (2026-09-04)
 
 `supabase migration list --linked` 를 돌리면 원격에 **기록된 마이그레이션이 첫 번째(`20260824000001`) 하나뿐**이다.
 2~9번은 `remote: ""` 로 나온다. 그런데 서비스 롤 키로 REST 를 찔러보면
@@ -114,12 +114,12 @@ Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketc
    (이력 테이블만 건드리고 스키마는 안 바꾼다 — 이후 세션이 편해진다)
 2. 새 마이그레이션의 SQL 만 대시보드 SQL 에디터에 직접 실행
 
-**미적용 상태(2026-09-04 기준)**: `20260904000001_question_resolved.sql` — `lecture_questions.resolved_at` 컬럼.
-`resolved_at` 이 없으면 `/admin` 과 `/admin/questions` 가 쿼리 단계에서 깨진다. **적용 전에 배포하지 말 것.**
+**2026-09-04 처리함**: 위 1번(`migration repair --status applied` 로 2~9번 기록 → `db push`)으로 정리했고,
+`20260904000001_question_resolved.sql`(`lecture_questions.resolved_at` + 교수자 update 정책)까지 원격에 적용·검증했다.
+이제 이력과 실제 스키마가 맞으므로 **다음부터는 `supabase db push` 를 그냥 써도 된다.**
 
 ## 아직 안 한 것
 
-- **`20260904000001` 마이그레이션 적용** (위 항목 참고 — 안 하면 관리자 화면이 깨진다)
 - **QUIZ 나머지 주차 문제 채우기** (지금 2주차 5문항만 있음, 1·3~15주차는 비어있어서 접속하면 "문제 없음" 뜸)
 - THINK/MAKE는 보류 상태(코드는 있으나 학생 화면에서 뺌) — 나중에 다시 켤지, 완전히 갈아엎을지는 미정
 - Dashboard 통계 (참여율, 정답률 등)
