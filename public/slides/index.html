@@ -181,11 +181,15 @@ body.export-clean main{inset:0;}
   font-family:var(--f-mono); font-size:.8rem; color:var(--ink-soft);
   padding:.4rem .8rem; border:1px solid var(--rule);
 }
+/* 주차 열쇳말 — 노란 사각 바탕. THINK 표식과 같은 노랑을 써서
+   "이 수업이 학생에게 거는 신호"로 색을 통일한다. */
 .keywords-line{
-  font-family:var(--f-mono); font-size:.82rem; color:var(--ink-soft);
-  margin-top:1.4rem; letter-spacing:.01em;
+  display:inline-block;
+  font-family:var(--f-mono); font-size:.82rem; color:#241c00;
+  background:#f2c230; padding:.55rem .95rem;
+  margin-top:1.4rem; letter-spacing:.01em; line-height:1.5;
 }
-.keywords-line b{color:var(--accent); font-weight:600; letter-spacing:.06em; margin-right:.5rem;}
+.keywords-line b{color:#241c00; opacity:.6; font-weight:700; letter-spacing:.08em; margin-right:.65rem;}
 
 .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.4rem; flex-wrap:wrap;}
 .section-head h3{font-family:var(--f-display); font-weight:700; font-size:clamp(1.3rem,2.2vw,1.8rem); color:var(--ink);}
