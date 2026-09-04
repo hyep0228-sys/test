@@ -287,6 +287,20 @@ body.export-clean main{inset:0;}
 
 .stage--question{text-align:center;}
 .stage--question .headline{font-size:var(--fs-headline-lg);}
+/* 브릿지 질문 말풍선 — 한 주를 닫는 질문을 학생에게 건네는 형태로.
+   꼬리는 삼각형 두 개를 겹쳐 만든다(바깥은 테두리색, 안쪽은 종이색). */
+.speech{
+  position:relative; display:block; width:fit-content; max-width:min(92%,46rem);
+  border:2.5px solid var(--ink); border-radius:2.2rem;
+  padding:2.2rem 3rem 2.4rem; background:var(--paper); margin:0 auto;
+}
+.speech .headline{margin:0;}
+.speech::before,.speech::after{content:""; position:absolute; width:0; height:0; border-style:solid;}
+.speech::before{left:3.4rem; bottom:-2.05rem; border-width:2.1rem 1.5rem 0 0;
+  border-color:var(--ink) transparent transparent transparent;}
+.speech::after{left:3.58rem; bottom:-1.4rem; border-width:1.72rem 1.16rem 0 0;
+  border-color:var(--paper) transparent transparent transparent;}
+.stage--question .bridge-note{margin-top:2.6rem;}
 .bridge-note{
   margin-top:1.8rem; font-family:var(--f-mono); font-size:.82rem; color:var(--ink-soft);
   display:inline-flex; align-items:center; gap:.6rem; padding:.5rem 1rem; border:1px dashed var(--rule);
@@ -1346,7 +1360,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">설계는 언제부터<br>장인의 손을 떠났을까?</h2>
+    <div class="speech"><h2 class="headline">설계는 언제부터<br>장인의 손을 떠났을까?</h2></div>
     <div class="bridge-note">다음 주 — 이성의 시대와 산업혁명</div>
   </div>
 </section>
@@ -1781,7 +1795,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">미술은 아카데미로,<br>제조업은 공장으로 갈라졌다.<br>이 둘은 다시 만날까?</h2>
+    <div class="speech"><h2 class="headline">미술은 아카데미로,<br>제조업은 공장으로 갈라졌다.<br>이 둘은 다시 만날까?</h2></div>
     <div class="bridge-note">다음 주 — 합리화된 생산과 만국박람회</div>
   </div>
 </section>
@@ -2207,7 +2221,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">기계를 거부하지 않고도<br>좋은 디자인이 가능할까?</h2>
+    <div class="speech"><h2 class="headline">기계를 거부하지 않고도<br>좋은 디자인이 가능할까?</h2></div>
     <div class="bridge-note">다음 주 — 개혁의 바람, 미술공예운동</div>
   </div>
 </section>
@@ -2573,7 +2587,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">수공예의 손길을 지키면서도<br>새로운 시대의 장식은 가능한가?</h2>
+    <div class="speech"><h2 class="headline">수공예의 손길을 지키면서도<br>새로운 시대의 장식은 가능한가?</h2></div>
     <div class="bridge-note">다음 주 — 아르누보</div>
   </div>
 </section>
@@ -2818,7 +2832,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">아르누보는 여전히<br>손으로 만드는 장식이다.<br>장식을 걷어내면 무엇이 남을까?</h2>
+    <div class="speech"><h2 class="headline">아르누보는 여전히<br>손으로 만드는 장식이다.<br>장식을 걷어내면 무엇이 남을까?</h2></div>
     <div class="bridge-note">다음 주 — 이론에서 실천까지</div>
   </div>
 </section>
@@ -3035,7 +3049,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">표준화된 형태를 향한 이 실험은,<br>1919년 한 학교의 설립으로 이어진다.</h2>
+    <div class="speech"><h2 class="headline">표준화된 형태를 향한 이 실험은,<br>1919년 한 학교의 설립으로 이어진다.</h2></div>
     <div class="bridge-note">중간고사 이후 — 모더니즘과 바우하우스로</div>
   </div>
 </section>
@@ -3264,7 +3278,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">같은 시기, 미국은 스타일로 욕망을 팔고<br>유럽은 형태에서 장식을 지우고 있었다.</h2>
+    <div class="speech"><h2 class="headline">같은 시기, 미국은 스타일로 욕망을 팔고<br>유럽은 형태에서 장식을 지우고 있었다.</h2></div>
     <div class="bridge-note">다음 주 — 환원주의와 모더니즘</div>
   </div>
 </section>
@@ -3468,7 +3482,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">"적을수록 좋다"는 말은,<br>모든 지역·모든 사용자에게<br>같은 답이었을까?</h2>
+    <div class="speech"><h2 class="headline">"적을수록 좋다"는 말은,<br>모든 지역·모든 사용자에게<br>같은 답이었을까?</h2></div>
     <div class="bridge-note">기하학적 순수주의에 대한 비판 — 지역성·장식·상징의 상실 논란. 다음 주 — 아르데코</div>
   </div>
 </section>
@@ -3654,7 +3668,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">전쟁은 소비를 멈춰 세웠다.<br>그 시기 디자인은 무엇을 했을까?</h2>
+    <div class="speech"><h2 class="headline">전쟁은 소비를 멈춰 세웠다.<br>그 시기 디자인은 무엇을 했을까?</h2></div>
     <div class="bridge-note">다음 주 — 전쟁·전후 디자인과 굿 디자인</div>
   </div>
 </section>
@@ -3849,7 +3863,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">'좋은 디자인'의 기준이 나라마다 달랐다면,<br>한국은 그 기준을 어떻게 세워갔을까?</h2>
+    <div class="speech"><h2 class="headline">'좋은 디자인'의 기준이 나라마다 달랐다면,<br>한국은 그 기준을 어떻게 세워갔을까?</h2></div>
     <div class="bridge-note">다음 주 — 한국 근현대 디자인사</div>
   </div>
 </section>
@@ -4031,7 +4045,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Bridge</div>
-    <h2 class="headline">한국은 서구의 모더니즘을<br>번역했는가, 전유했는가?</h2>
+    <div class="speech"><h2 class="headline">한국은 서구의 모더니즘을<br>번역했는가, 전유했는가?</h2></div>
     <div class="bridge-note">다음 주 — 재건에서 동시대까지</div>
   </div>
 </section>
@@ -4223,7 +4237,7 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--question">
     <div class="kicker" style="justify-content:center;">Closing</div>
-    <h2 class="headline">디자이너는 손으로 만드는 사람에서<br>판단하는 사람으로 바뀌고 있다.<br>무엇을 잃고, 무엇을 얻는가?</h2>
+    <div class="speech"><h2 class="headline">디자이너는 손으로 만드는 사람에서<br>판단하는 사람으로 바뀌고 있다.<br>무엇을 잃고, 무엇을 얻는가?</h2></div>
     <div class="bridge-note">기말고사 전, 15주간의 질문을 다시 정리한다</div>
   </div>
 </section>
