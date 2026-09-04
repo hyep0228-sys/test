@@ -7,7 +7,20 @@
 
 홍익대학교 디자인컨버전스학부 1학년 **「디자인사」**, 2026-2학기. 담당 박지혜.
 **실기 전공생이 듣는 이론 수업**이라, 텍스트보다 **시각자료가 핵심**이다.
+수강생은 **선행 이론과목이 없다** — 미술사를 들은 학생도 있지만 안 들은 학생이 더 많고,
+디자인사는 대부분 처음이다. 르네상스·바로크 같은 양식 이름을 이미 아는 말로 전제하지 말 것.
 주차당 100분, 15주. 주교재는 Fiell & Fiell 『디자인의 역사』.
+
+## 시작하기 전에 (2026-09 기준)
+
+작업 폴더는 **`~/design-history-app`** 이다. 임시폴더가 아니라 영구 클론이다.
+
+**다른 세션이 같은 폴더에서 허브 앱을 작업 중이다.** 슬라이드(`public/slides/`)와 앱 코드는
+겹치지 않지만, 상대가 `git add -A` 를 돌리면 내 미커밋 변경이 그쪽 커밋에 딸려 들어간다.
+**작업 단위가 끝나면 바로 커밋**하고, 푸시 전에 `git pull` 한다.
+
+`node tools/slides/verify.js` 전체 검증은 **3분 이상** 걸린다. 명령을 `&&` 로 길게 엮으면
+타임아웃에 걸려 뒤의 커밋이 통째로 날아간다. 검증과 커밋은 따로 실행할 것.
 
 ## 파일 구조
 
@@ -101,47 +114,54 @@ git add -A public/slides && git commit && git push origin main
 4. **파일명을 믿지 말 것.** `Terracotta-Army-Museum-01.jpg`가 병마용이 아니라 박물관 건물이었다.
    넣기 전에 이미지를 실제로 볼 것.
 5. **전역 페이지 번호는 슬라이드를 추가하면 밀린다.** 교수자가 "N페이지"라 하면 현재 번호로 다시 셀 것.
-6. **넘침은 스크롤이 아니라 잘림으로 나타난다.** 옛 `verify.js`는 `.stage`의 `scrollHeight-clientHeight`를 봤는데
+6. **슬라이드 3장은 파일이 아니라 DB 가 렌더링된다.** 덱은 Supabase `slide_overrides` 를 읽어
+   해당 슬라이드의 `.stage` 를 통째로 갈아끼운다. 파일만 고치면 화면이 안 바뀐다.
+   현재 3건 — `(1,1)` `(1,4)` `(2,2)`. 확인:
+   ```bash
+   KEY=$(grep -o "SUPABASE_ANON_KEY = '[^']*'" public/slides/index.html | sed "s/.*'\(.*\)'/\1/")
+   URL=$(grep -o "SUPABASE_URL = '[^']*'" public/slides/index.html | sed "s/.*'\(.*\)'/\1/")
+   curl -s "$URL/rest/v1/slide_overrides?select=week_id,slide_index" -H "apikey: $KEY"
+   ```
+   **더 위험한 것**: 오버라이드는 `(주차, 주차 안 순번)` 으로 걸려 있다. **슬라이드 순서를 바꾸거나
+   중간에 넣고 빼면 엉뚱한 슬라이드에 붙는다.** 실제로 1주차를 재배열하다 「미술사와 디자인사」
+   오버라이드가 「15주 수업계획」 자리에 걸린 적이 있다. 순서를 건드렸으면 **반드시 대조**하고,
+   파일을 고쳤으면 서비스 롤 키로 오버라이드도 같이 갱신할 것(`.env.local`).
+7. **넘침은 스크롤이 아니라 잘림으로 나타난다.** 옛 `verify.js`는 `.stage`의 `scrollHeight-clientHeight`를 봤는데
    stage에는 높이 제약이 없어 늘 0이었다 — 10장이 잘리는 동안 "넘침 없음"으로 통과했다.
    반드시 **stage의 렌더 높이를 슬라이드 안쪽 영역과 직접 비교**할 것. `72vh` 같은 뷰포트 단위도 같은 함정이다
    (크롬바·패딩·캡션 높이를 빼지 못한다).
 
 ## 주차별 진행 상황
 
-| 주차 | 주제 | 슬라이드 | 교재 반영 |
-|---|---|---|---|
-| 1 | 오리엔테이션 | 5 | — |
-| 2 | 디자인의 초기 기원과 장인정신 (선사~18세기) | 39 | ✅ 선사-18c 전체(책 55쪽까지) |
-| 3 | 이성의 시대와 산업혁명 | 25 | ✅ 3장 전체 |
-| 4 | 합리화된 생산과 만국박람회 | 29 | ✅ 4장·5장 |
-| 5 | 개혁의 바람, 미술공예운동 | 25 | ✅ 6장 |
-| 6 | 아르누보 | 18 | ✅ 7장 |
-| 7·9~14 | 이론에서 실천까지 ~ 디지털·AI | 각 15 | ❌ **교재 미반영** |
+| 주차 | 주제 | 슬라이드 | 이미지 | 교재 반영 |
+|---|---|---|---|---|
+| 1 | 오리엔테이션 | 6 | 0 | — |
+| 2 | 선사~18세기 | 39 | 41 | ✅ |
+| 3 | 이성의 시대와 산업혁명 | 25 | 15 | ✅ 3장 전체 |
+| 4 | 합리화된 생산과 만국박람회 | 29 | 8 | ✅ 4·5장 |
+| 5 | 개혁의 바람, 미술공예운동 | 25 | 9 | ✅ 6장 |
+| 6 | 아르누보 | 18 | 4 | ✅ 7장 |
+| 7 | 이론에서 실천까지 | 15 | 2 | ✅ |
+| 9~14 | 포디즘 ~ 디지털·AI | 각 15 | — | ❌ 교재 미반영 |
 
-**다음 할 일**: 7주차 이후 교재 PDF를 받아 위와 같은 방식으로 보강.
-6주차(18장)는 앞뒤 주차보다 얇아 늘릴 여지가 있다.
+전체 253장.
 
-**정리됨**: 2·3주차 18세기 겹침은 그대로 두기로 했다. 2주차는 물건·양식(리스네, 마리 앙투아네트 가구, 디렉투아르),
-3주차는 사상·시대(페인의 '이성의 시대', 조지왕조·구스타비안·제퍼슨)로 층이 갈려 도입과 본론으로 읽히고, 교재 순서와도 맞는다.
-겹쳐 보이게 만들던 원인 둘만 없앴다 — 40페이지의 중복 문장 삭제, 54페이지 제목을 「연표로 보는 기계화」로 변경.
+**다음 할 일**
+1. **4~7주차 이미지 보강.** 3주차를 8/25 → 15/25 로 채운 방식이 기준이다.
+   7주차가 가장 비어 있다(15장에 2장) — 베렌스의 AEG 제품·서체, 로스의 건축은 그림이 있어야 한다.
+2. 8장 이후 교재 PDF 를 받아 9주차 이후 보강. 바탕화면 「디자인의역사」 폴더에는 7장까지만 있다.
+3. 학생 모달이 덱을 `clean=1` 없이 띄워, **닫힌 주차까지 '주차 이동' 메뉴로 열람 가능**하다.
+   `components/LectureMaterialButton.jsx` 의 `src` 한 줄 문제인데 다른 세션이 그 파일을 작업 중이라 미뤄뒀다.
 
-**정리됨**: `data-era` 뒤섞임. 나중에 끼워 넣은 슬라이드가 주제와 무관하게 그때의 태그를 달고 들어가서,
-상단 표시줄의 시대명이 넘길 때마다 튀었다. 15장을 다시 달아 이제 모든 주차가 연속 블록이다.
+## 곁들여 만든 문서
 
-| 주차 | 블록 |
+슬라이드 밖에 있는 것들. 덱이 바뀌면 이쪽도 어긋난다.
+
+| 문서 | 주소 |
 |---|---|
-| 4 | `expo` 만국박람회(p69~88) → `massproduction` 합리화된 생산(p89~97) |
-| 5 | `crafts` 미술공예운동(p98~118) → `reform` 디자인 개혁(p119~122) |
-| 6 | `nouveau` 아르누보(p123~135) → `ornament` 장식과 형태(p136~138, 설리반·라이트) → `nouveau`(p139~140) |
+| 오리엔테이션 대본 (8장·20분) | claude.ai/code/artifact/4c1b2f33-35d0-453b-8e16-45adaff909f2 |
+| 2주차 대본 (39장·100분) | claude.ai/code/artifact/274d5477-dc3b-48c3-8080-5b02ba019ae9 |
+| 중간고사 문제안 (1~7주차) | claude.ai/code/artifact/36454fe4-b2bc-44cd-b7a7-cd2914b55fa6 |
 
-**슬라이드를 새로 넣을 때는 앞뒤 슬라이드의 `data-era` 를 그대로 따를 것.** 주제가 정말 바뀌는 자리에서만 태그를 바꾼다.
-
-<!-- BEGIN:nextjs-agent-rules -->
-
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
+대본 문체는 **합니다체**(소리 내어 말하는 글이라 슬라이드의 `~하다`체와 다르다).
+학생 전공을 대본에 적지 말고, **억지로 학생 작업에 갖다 붙이지 말 것** — 사실만 쓴다.
