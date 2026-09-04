@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  /* 아이폰 가로전환 시 사파리가 본문 글씨를 제멋대로 키우는 것을 막는다. */
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   background-color: #EFEEEA;
   color: #151515;
+  /* 학번·URL 같은 긴 문자열이 좁은 화면에서 가로 스크롤을 만들지 않게. */
+  overflow-wrap: break-word;
+}
+
+/* 노치 기기 대응. viewport 의 viewportFit:"cover" 와 짝이다. */
+.pad-safe-x {
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+}
+.pad-safe-b {
+  padding-bottom: env(safe-area-inset-bottom);
 }

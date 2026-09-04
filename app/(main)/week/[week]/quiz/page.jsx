@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import QuizPlayer from "./QuizPlayer";
+import Page from "@/components/Page";
 
 export default async function QuizPage({ params }) {
   const { week: weekParam } = await params;
@@ -30,21 +31,21 @@ export default async function QuizPage({ params }) {
 
   if (!week) {
     return (
-      <main className="px-6 py-16">
+      <Page>
         <p className="text-mute">해당 주차를 찾을 수 없습니다.</p>
-      </main>
+      </Page>
     );
   }
 
   if ((questions ?? []).length === 0) {
     return (
-      <main className="px-6 py-16">
+      <Page>
         <p className="text-sm text-mute mb-1">
           WEEK {String(week.id).padStart(2, "0")}
         </p>
-        <h1 className="font-display text-3xl mb-6">QUIZ</h1>
+        <h1 className="font-display text-2xl sm:text-3xl mb-6">QUIZ</h1>
         <p className="text-mute">아직 등록된 문제가 없습니다.</p>
-      </main>
+      </Page>
     );
   }
 
@@ -63,11 +64,11 @@ export default async function QuizPage({ params }) {
   const score = myAnswers.filter((a) => a.is_correct).length;
 
   return (
-    <main className="px-6 py-16">
+    <Page>
       <p className="text-sm text-mute mb-1">
         WEEK {String(week.id).padStart(2, "0")}
       </p>
-      <h1 className="font-display text-3xl mb-8">QUIZ</h1>
+      <h1 className="font-display text-2xl sm:text-3xl mb-8">QUIZ</h1>
 
       {isCompleted ? (
         <div>
@@ -119,6 +120,6 @@ export default async function QuizPage({ params }) {
           ← 홈으로
         </Link>
       </p>
-    </main>
+    </Page>
   );
 }

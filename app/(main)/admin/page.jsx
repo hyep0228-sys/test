@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import Page from "@/components/Page";
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -10,24 +11,6 @@ function formatDate(iso) {
 
 export default async function AdminPage() {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user?.id)
-    .maybeSingle();
-
-  if (profile?.role !== "professor") {
-    return (
-      <main className="px-6 py-16 max-w-md mx-auto">
-        <p className="text-mute">교수자만 접근할 수 있습니다.</p>
-      </main>
-    );
-  }
 
   const [{ data: weeks }, { count: studentCount }, { data: questions }] =
     await Promise.all([
@@ -51,8 +34,8 @@ export default async function AdminPage() {
   const weekTitleById = new Map((weeks ?? []).map((w) => [w.id, w.short_title]));
 
   return (
-    <main className="px-6 py-16 max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl mb-2">관리자</h1>
+    <Page width="wide">
+      <h1 className="font-display text-2xl sm:text-3xl mb-2">관리자</h1>
       <p className="text-mute mb-4">전체 학생 수: {studentCount ?? 0}명</p>
       <p className="mb-2">
         <Link href="/admin/students" className="text-sm text-accent underline">
@@ -66,7 +49,7 @@ export default async function AdminPage() {
       </p>
 
       <p className="text-sm font-medium mb-3">주차</p>
-      <div className="space-y-2 mb-12">
+      <div className="grid gap-2 sm:grid-cols-2 mb-12">
         {(weeks ?? []).map((w) => (
           <div
             key={w.id}
@@ -110,6 +93,6 @@ export default async function AdminPage() {
           ))}
         </div>
       )}
-    </main>
+    </Page>
   );
 }

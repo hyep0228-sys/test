@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { signIn } from "@/app/actions/auth";
+import Page from "@/components/Page";
 
 const initialState = { error: null };
 
@@ -9,8 +10,8 @@ export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(signIn, initialState);
 
   return (
-    <main className="px-6 py-16 max-w-md mx-auto">
-      <h1 className="font-display text-3xl mb-1">디자인사 아카이브</h1>
+    <Page width="form" center>
+      <h1 className="font-display text-2xl sm:text-3xl mb-1">디자인사 아카이브</h1>
       <p className="text-mute mb-10">학번으로 로그인하세요</p>
 
       <form action={formAction} className="space-y-4">
@@ -55,6 +56,6 @@ export default function LoginPage() {
         계정은 교수님이 미리 만들어둡니다. 학번과 발급받은 임시 비밀번호로
         로그인해주세요.
       </p>
-    </main>
+    </Page>
   );
 }

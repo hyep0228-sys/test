@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import BalanceForm from "./BalanceForm";
+import Page from "@/components/Page";
 
 export default async function BalancePage({ params }) {
   const { week: weekParam } = await params;
@@ -81,18 +82,18 @@ export default async function BalancePage({ params }) {
 
   if (!week) {
     return (
-      <main className="px-6 py-16">
+      <Page>
         <p className="text-mute">해당 주차를 찾을 수 없습니다.</p>
-      </main>
+      </Page>
     );
   }
 
   return (
-    <main className="px-6 py-16">
+    <Page>
       <p className="text-sm text-mute mb-1">
         WEEK {String(week.id).padStart(2, "0")}
       </p>
-      <h1 className="font-display text-3xl mb-2">BALANCE</h1>
+      <h1 className="font-display text-2xl sm:text-3xl mb-2">BALANCE</h1>
       <p className="text-mute mb-10">나의 디자인 취향</p>
 
       {(questions ?? []).length === 0 && (
@@ -150,6 +151,6 @@ export default async function BalancePage({ params }) {
           ← 홈으로
         </Link>
       </p>
-    </main>
+    </Page>
   );
 }

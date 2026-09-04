@@ -63,7 +63,7 @@ export default function QuizPlayer({ weekId, questions }) {
         <img
           src={question.image_url}
           alt=""
-          className="w-full rounded-2xl border border-line mb-6 object-cover"
+          className="w-full max-h-[60vh] rounded-2xl border border-line mb-6 object-contain bg-white"
         />
       )}
 
@@ -84,7 +84,7 @@ export default function QuizPlayer({ weekId, questions }) {
               key={i}
               onClick={() => choose(i)}
               disabled={answered}
-              className={`text-left border rounded-2xl px-4 py-3 text-sm ${style}`}
+              className={`text-left border rounded-2xl px-4 py-3.5 text-sm sm:text-base ${style}`}
             >
               {choice}
               {answered && i === question.answer_index && (
@@ -108,7 +108,7 @@ export default function QuizPlayer({ weekId, questions }) {
         <button
           onClick={next}
           disabled={isPending}
-          className="w-full bg-accent text-white py-3 rounded-2xl font-medium disabled:opacity-60"
+          className="w-full bg-accent text-white py-3.5 rounded-2xl font-medium disabled:opacity-60"
         >
           {isPending
             ? "처리 중..."

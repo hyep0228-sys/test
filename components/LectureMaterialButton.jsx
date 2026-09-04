@@ -60,34 +60,45 @@ export default function LectureMaterialButton({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, close]);
 
+  // 모달이 떠 있는 동안 뒤 본문이 같이 스크롤되지 않게. 모바일에서 특히 티가 났다.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const src = `/slides/index.html?week=${weekId}`;
 
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="w-full border border-line rounded-2xl py-10 px-6 text-base font-medium text-center bg-white mb-6"
+        className="w-full border border-line rounded-2xl py-8 sm:py-10 lg:py-12 px-6 text-base font-medium text-center bg-white mb-6 hover:border-ink transition-colors"
       >
         LECTURE
       </button>
 
       {open && (
+        // 모바일은 화면을 꽉 채운다. 덱이 16:9라 여백을 남기면 슬라이드가 너무 작아진다.
         <div
-          className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/70 flex items-stretch sm:items-center justify-center sm:p-4"
           onClick={close}
         >
           <div
-            className="bg-paper rounded-lg w-[96vw] max-w-6xl h-[92vh] flex flex-col overflow-hidden"
+            className="bg-paper w-full h-full rounded-none sm:w-[96vw] sm:max-w-6xl sm:h-[92vh] sm:rounded-lg flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-line shrink-0">
-              <p className="text-sm text-mute">
+            <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-3 border-b border-line shrink-0">
+              <p className="text-xs sm:text-sm text-mute shrink-0">
                 {pageCount ? `${page ?? 1} / ${pageCount}` : "수업자료"}
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   onClick={() => setPanel(panel === "note" ? null : "note")}
-                  className={`text-xs px-3 py-1.5 rounded border ${
+                  className={`text-xs px-2.5 sm:px-3 py-1.5 rounded border ${
                     panel === "note"
                       ? "border-accent text-accent"
                       : "border-line text-mute"
@@ -99,7 +110,7 @@ export default function LectureMaterialButton({
                   onClick={() =>
                     setPanel(panel === "question" ? null : "question")
                   }
-                  className={`text-xs px-3 py-1.5 rounded border ${
+                  className={`text-xs px-2.5 sm:px-3 py-1.5 rounded border ${
                     panel === "question"
                       ? "border-accent text-accent"
                       : "border-line text-mute"
@@ -110,22 +121,24 @@ export default function LectureMaterialButton({
                 <button
                   onClick={close}
                   aria-label="닫기"
-                  className="text-mute text-lg leading-none px-1"
+                  className="text-mute text-lg leading-none px-2 py-1"
                 >
                   ✕
                 </button>
               </div>
             </div>
 
-            <div className="flex-1 flex min-h-0">
+            {/* lg 미만에서는 패널이 옆이 아니라 아래로 붙는다 — 좁은 화면에서
+                가로로 나누면 슬라이드가 읽을 수 없을 만큼 작아졌다. */}
+            <div className="flex-1 flex flex-col lg:flex-row min-h-0">
               <iframe
                 src={src}
                 title={`${weekId}주차 수업자료`}
-                className="flex-1 border-0"
+                className="flex-1 w-full min-h-0 border-0"
               />
 
               {panel && (
-                <div className="w-80 shrink-0 border-l border-line overflow-y-auto p-4">
+                <div className="w-full lg:w-80 shrink-0 max-h-[45%] lg:max-h-none border-t lg:border-t-0 lg:border-l border-line overflow-y-auto overscroll-contain p-4 pad-safe-b">
                   {panel === "note" && (
                     <form action={noteAction} className="flex flex-col h-full">
                       <input type="hidden" name="week_id" value={weekId} />
@@ -136,8 +149,8 @@ export default function LectureMaterialButton({
                       <textarea
                         name="text"
                         defaultValue={initialNote ?? ""}
-                        rows={12}
-                        className="w-full border border-line bg-white px-3 py-2 rounded text-sm flex-1"
+                        rows={6}
+                        className="w-full border border-line bg-white px-3 py-2 rounded text-sm flex-1 lg:min-h-[16rem]"
                         placeholder="자유롭게 메모해보세요"
                       />
                       <div className="flex items-center gap-2 mt-3">
@@ -198,7 +211,7 @@ export default function LectureMaterialButton({
                       </form>
 
                       {questions.length > 0 && (
-                        <div className="mt-5 pt-4 border-t border-line space-y-2 overflow-y-auto">
+                        <div className="mt-5 pt-4 border-t border-line space-y-2">
                           <p className="text-xs text-mute mb-1">
                             내가 남긴 질문
                           </p>

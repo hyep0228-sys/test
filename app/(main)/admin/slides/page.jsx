@@ -1,26 +1,9 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import Page from "@/components/Page";
 
 export default async function SlidesAdminPage() {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user?.id)
-    .maybeSingle();
-
-  if (profile?.role !== "professor") {
-    return (
-      <main className="px-6 py-16 max-w-md mx-auto">
-        <p className="text-mute">교수자만 접근할 수 있습니다.</p>
-      </main>
-    );
-  }
 
   const [{ data: weeks }, { data: overrides }] = await Promise.all([
     supabase
@@ -36,13 +19,13 @@ export default async function SlidesAdminPage() {
   }
 
   return (
-    <main className="px-6 py-16 max-w-2xl mx-auto">
+    <Page width="wide">
       <p className="mb-6">
         <Link href="/admin" className="text-sm text-accent underline">
           ← 관리자 홈
         </Link>
       </p>
-      <h1 className="font-display text-3xl mb-2">슬라이드 편집</h1>
+      <h1 className="font-display text-2xl sm:text-3xl mb-2">슬라이드 편집</h1>
       <p className="text-mute mb-10 text-sm">
         여기서 고친 내용은 배포 없이 바로 학생 화면에 반영됩니다. 큰 폭의
         구조 변경(새 슬라이드 추가 등)은 여전히 코드로 반영해야 해요.
@@ -71,6 +54,6 @@ export default async function SlidesAdminPage() {
           </Link>
         ))}
       </div>
-    </main>
+    </Page>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { completeOnboarding } from "@/app/actions/onboarding";
+import Page from "@/components/Page";
 
 const initialState = { error: null };
 
@@ -12,8 +13,8 @@ export default function OnboardingPage() {
   );
 
   return (
-    <main className="px-6 py-16 max-w-md mx-auto">
-      <h1 className="font-display text-3xl mb-1">처음 오셨네요</h1>
+    <Page width="form" center>
+      <h1 className="font-display text-2xl sm:text-3xl mb-1">처음 오셨네요</h1>
       <p className="text-mute mb-10">
         발급받은 임시 비밀번호 대신, 새 비밀번호와 닉네임/분반을 설정해주세요.
       </p>
@@ -78,6 +79,6 @@ export default function OnboardingPage() {
           {isPending ? "저장 중..." : "시작하기"}
         </button>
       </form>
-    </main>
+    </Page>
   );
 }

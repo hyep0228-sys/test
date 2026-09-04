@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import WeekActivityGrid from "@/components/WeekActivityGrid";
+import Page from "@/components/Page";
 
 export default async function WeekOverviewPage({ params }) {
   const { week: weekParam } = await params;
@@ -18,21 +19,21 @@ export default async function WeekOverviewPage({ params }) {
 
   if (!week) {
     return (
-      <main className="px-6 py-16">
+      <Page>
         <p className="text-mute">해당 주차를 찾을 수 없습니다.</p>
-      </main>
+      </Page>
     );
   }
 
   if (!week.is_open && !isProfessor) {
     return (
-      <main className="px-6 py-16">
+      <Page>
         <p className="text-sm text-mute mb-1">
           WEEK {String(week.id).padStart(2, "0")}
         </p>
-        <h1 className="font-display text-3xl mb-6">{week.short_title}</h1>
+        <h1 className="font-display text-2xl sm:text-3xl mb-6">{week.short_title}</h1>
         <p className="text-mute">아직 열리지 않은 주차입니다.</p>
-      </main>
+      </Page>
     );
   }
 
@@ -59,13 +60,13 @@ export default async function WeekOverviewPage({ params }) {
   const completedKeys = (completions ?? []).map((c) => c.activity);
 
   return (
-    <main className="px-6 py-16">
+    <Page>
       <WeekActivityGrid
         week={week}
         completedKeys={completedKeys}
         note={noteRow?.text ?? ""}
         questions={questionRows ?? []}
       />
-    </main>
+    </Page>
   );
 }

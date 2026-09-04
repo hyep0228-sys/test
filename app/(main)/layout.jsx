@@ -22,12 +22,12 @@ export default async function MainLayout({ children }) {
 
   const isProfessor = profile?.role === "professor";
 
+  // 사이드바는 lg(1024px) 부터 고정, 그 아래는 드로어다.
+  // 본문 폭은 각 페이지의 <Page> 가 정한다 — 여기서 묶지 말 것.
   return (
-    <div className="md:flex md:min-h-screen">
+    <div className="lg:flex lg:min-h-dvh">
       <Sidebar weeks={weeks ?? []} isProfessor={isProfessor} />
-      <div className="flex-1 min-w-0">
-        <div className="max-w-md mx-auto min-h-screen">{children}</div>
-      </div>
+      <div className="flex-1 min-w-0">{children}</div>
     </div>
   );
 }

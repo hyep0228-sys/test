@@ -1,29 +1,13 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { listSlidesForWeek } from "@/lib/slideStore";
+import Page from "@/components/Page";
 
 export default async function WeekSlidesAdminPage({ params }) {
   const { week: weekParam } = await params;
   const weekId = Number(weekParam);
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user?.id)
-    .maybeSingle();
-
-  if (profile?.role !== "professor") {
-    return (
-      <main className="px-6 py-16 max-w-md mx-auto">
-        <p className="text-mute">교수자만 접근할 수 있습니다.</p>
-      </main>
-    );
-  }
-
   const [{ data: week }, { data: overrides }] = await Promise.all([
     supabase.from("weeks").select("*").eq("id", weekId).maybeSingle(),
     supabase
@@ -38,14 +22,14 @@ export default async function WeekSlidesAdminPage({ params }) {
   const slides = listSlidesForWeek(weekId);
 
   return (
-    <main className="px-6 py-16 max-w-2xl mx-auto">
+    <Page width="wide">
       <p className="mb-6">
         <Link href="/admin/slides" className="text-sm text-accent underline">
           ← 주차 목록
         </Link>
       </p>
       <p className="text-sm text-mute mb-1">WEEK {String(weekId).padStart(2, "0")}</p>
-      <h1 className="font-display text-3xl mb-10">
+      <h1 className="font-display text-2xl sm:text-3xl mb-10">
         {week?.short_title ?? ""}
       </h1>
 
@@ -72,6 +56,6 @@ export default async function WeekSlidesAdminPage({ params }) {
           ))}
         </div>
       )}
-    </main>
+    </Page>
   );
 }

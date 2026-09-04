@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getEditableStage } from "@/lib/slideStore";
 import SlideEditorForm from "@/components/SlideEditorForm";
+import Page from "@/components/Page";
 
 export default async function SlideEditorPage({ params }) {
   const { week: weekParam, index: indexParam } = await params;
@@ -9,23 +10,6 @@ export default async function SlideEditorPage({ params }) {
   const slideIndex = Number(indexParam);
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user?.id)
-    .maybeSingle();
-
-  if (profile?.role !== "professor") {
-    return (
-      <main className="px-6 py-16 max-w-md mx-auto">
-        <p className="text-mute">교수자만 접근할 수 있습니다.</p>
-      </main>
-    );
-  }
-
   const { data: override } = await supabase
     .from("slide_overrides")
     .select("content_html, updated_at")
@@ -37,14 +21,14 @@ export default async function SlideEditorPage({ params }) {
 
   if (!stage) {
     return (
-      <main className="px-6 py-16 max-w-md mx-auto">
+      <Page>
         <p className="text-mute">존재하지 않는 슬라이드예요.</p>
-      </main>
+      </Page>
     );
   }
 
   return (
-    <main className="px-6 py-16 max-w-3xl mx-auto">
+    <Page width="wide">
       <p className="mb-6">
         <Link
           href={`/admin/slides/${weekId}`}
@@ -65,6 +49,6 @@ export default async function SlideEditorPage({ params }) {
         hasOverride={Boolean(override)}
         updatedAt={override?.updated_at ?? null}
       />
-    </main>
+    </Page>
   );
 }

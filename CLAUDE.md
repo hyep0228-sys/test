@@ -135,3 +135,13 @@ git add -A public/slides && git commit && git push origin main
 | 6 | `nouveau` 아르누보(p123~135) → `ornament` 장식과 형태(p136~138, 설리반·라이트) → `nouveau`(p139~140) |
 
 **슬라이드를 새로 넣을 때는 앞뒤 슬라이드의 `data-era` 를 그대로 따를 것.** 주제가 정말 바뀌는 자리에서만 태그를 바꾼다.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
