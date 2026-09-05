@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import Page from "@/components/Page";
 import WeekTimeline from "@/components/WeekTimeline";
+import NoticeCard from "@/components/NoticeCard";
 import { ACTIVITIES } from "@/lib/activities";
+import { NOTICE_KEY } from "@/lib/notice";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -10,13 +12,21 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data: weeks }, { data: profile }] = await Promise.all([
-    supabase
-      .from("weeks")
-      .select("id, short_title, is_open, is_exam")
-      .order("id", { ascending: true }),
-    supabase.from("profiles").select("role").eq("id", user?.id).maybeSingle(),
-  ]);
+  const [{ data: weeks }, { data: profile }, { data: noticeRow }] =
+    await Promise.all([
+      supabase
+        .from("weeks")
+        .select("id, short_title, is_open, is_exam")
+        .order("id", { ascending: true }),
+      supabase.from("profiles").select("role").eq("id", user?.id).maybeSingle(),
+      supabase
+        .from("app_settings")
+        .select("value")
+        .eq("key", NOTICE_KEY)
+        .maybeSingle(),
+    ]);
+
+  const notice = noticeRow?.value?.text?.trim() ? noticeRow.value : null;
 
   const isProfessor = profile?.role === "professor";
   const list = weeks ?? [];
@@ -52,6 +62,10 @@ export default async function HomePage() {
       <p className="text-mute mb-8 sm:mb-10 text-sm">
         15주 · 열린 주차 {openCount}개 · 완료 {completedWeekIds.length}개
       </p>
+
+      {notice && (
+        <NoticeCard text={notice.text} updatedAt={notice.updated_at} />
+      )}
 
       {list.length === 0 ? (
         <p className="text-mute">주차 정보를 불러오지 못했습니다.</p>

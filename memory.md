@@ -94,6 +94,29 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 읽는다 — UI 필터가 아니라 DB 정책이다. `lecture_notes` 에는 **professor 읽기 정책이 없어** 메모는 교수자도 못 본다.
 모달의 "나만 볼 수 있어요" 문구가 실제와 맞다. 이 구분을 바꾸려면 마이그레이션이 필요하다.
 
+## 공지 (2026-09-05)
+
+홈 맨 위에 뜨는 **한 칸짜리** 공지. 교수자가 `/admin` 에서 쓰고, 새로 쓰면 이전 것을 덮고,
+비우고 저장하면 학생 화면에서 사라진다. 목록이 아니다 — 쌓이면 오래된 걸 정리해야 해서 일부러 한 칸으로 뒀다.
+
+**테이블을 새로 만들지 않았다.** 기존 `app_settings`(key/value jsonb) 에 `key='notice'` 로 얹었다.
+그 테이블에 이미 "로그인하면 읽기 / 교수자만 쓰기" RLS 가 걸려 있어 공지에 필요한 조건과 정확히 같다.
+값 모양은 `{"text": "...", "updated_at": "ISO8601"}`.
+
+| 파일 | 내용 |
+|---|---|
+| `lib/notice.js` | `NOTICE_KEY`, `NOTICE_MAX_LENGTH` |
+| `app/actions/notice.js` | `saveNotice` |
+| `components/NoticeCard.jsx` | 홈에 뜨는 카드 |
+| `components/NoticeForm.jsx` | 관리자 편집 칸 |
+
+**상수를 액션 파일에 두지 말 것.** `"use server"` 파일은 async 함수만 export 할 수 있어서
+`export const NOTICE_KEY` 를 액션에 두면 빌드가 깨진다("Only async functions are allowed to be exported").
+그래서 `lib/notice.js` 로 뺐다.
+
+**참고**: 2026-09-04 에는 "공지는 학교 사이트로 갈음한다"고 정했다가 다음 날 뒤집었다.
+지금 기준은 이 항목이다.
+
 ## 팀 논의 공유 (2026-09-05)
 
 수업이 **일찍 끝난 날에만** 여는 주차별 공유판. 목적은 오직 공유다 — 교수자가 한 화면을

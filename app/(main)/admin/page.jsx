@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Page from "@/components/Page";
+import NoticeForm from "@/components/NoticeForm";
+import { NOTICE_KEY } from "@/lib/notice";
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -18,6 +20,7 @@ export default async function AdminPage() {
     { count: studentCount },
     { count: unresolvedCount },
     { data: recent },
+    { data: noticeRow },
   ] = await Promise.all([
     // 질문 항목에 주차 제목을 붙이는 용도. 열림/닫힘은 사이드바가 보여준다.
     supabase
@@ -40,6 +43,11 @@ export default async function AdminPage() {
       .is("resolved_at", null)
       .order("created_at", { ascending: false })
       .limit(5),
+    supabase
+      .from("app_settings")
+      .select("value")
+      .eq("key", NOTICE_KEY)
+      .maybeSingle(),
   ]);
 
   const weekTitleById = new Map(
@@ -51,6 +59,8 @@ export default async function AdminPage() {
     <Page width="wide">
       <h1 className="font-display text-2xl sm:text-3xl mb-2">관리자</h1>
       <p className="text-mute mb-4">전체 학생 수: {studentCount ?? 0}명</p>
+      <NoticeForm initialText={noticeRow?.value?.text ?? ""} />
+
       <div className="grid gap-2 sm:grid-cols-2 mb-10">
         <Link
           href="/admin/students"
