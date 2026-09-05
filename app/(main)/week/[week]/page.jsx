@@ -37,8 +37,12 @@ export default async function WeekOverviewPage({ params }) {
     );
   }
 
-  const [{ data: completions }, { data: noteRow }, { data: questionRows }] =
-    await Promise.all([
+  const [
+    { data: completions },
+    { data: noteRow },
+    { data: questionRows },
+    { count: discussionCount },
+  ] = await Promise.all([
       supabase
         .from("completions")
         .select("activity")
@@ -56,6 +60,10 @@ export default async function WeekOverviewPage({ params }) {
         .eq("user_id", user.id)
         .eq("week_id", week.id)
         .order("created_at", { ascending: false }),
+      supabase
+        .from("discussion_posts")
+        .select("id", { count: "exact", head: true })
+        .eq("week_id", week.id),
     ]);
   const completedKeys = (completions ?? []).map((c) => c.activity);
 
@@ -66,6 +74,8 @@ export default async function WeekOverviewPage({ params }) {
         completedKeys={completedKeys}
         note={noteRow?.text ?? ""}
         questions={questionRows ?? []}
+        discussionCount={discussionCount ?? 0}
+        isProfessor={isProfessor}
       />
     </Page>
   );

@@ -94,9 +94,44 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 읽는다 — UI 필터가 아니라 DB 정책이다. `lecture_notes` 에는 **professor 읽기 정책이 없어** 메모는 교수자도 못 본다.
 모달의 "나만 볼 수 있어요" 문구가 실제와 맞다. 이 구분을 바꾸려면 마이그레이션이 필요하다.
 
+## 팀 논의 공유 (2026-09-05)
+
+수업이 **일찍 끝난 날에만** 여는 주차별 공유판. 목적은 오직 공유다 — 교수자가 한 화면을
+빔 프로젝터에 띄우면 다 같이 본다. 채점·제출물이 아니다.
+
+**조를 테이블로 만들지 않았다.** 조가 그날 앉은 자리대로 랜덤하게 묶이고 인원도 3~5명으로
+들쭉날쭉해서 고정 명단이 성립하지 않는다. 대신 글을 올릴 때 학생이 **조 이름을 직접 적고**
+(`team_name`, 자유 입력), 화면에서 그 이름으로 묶는다. 같은 조원 여러 명이 각자 올려도
+한 덩어리로 모인다. 이미 올라온 이름은 `datalist` 로 제안해 이름이 갈리는 걸 줄인다.
+
+| 경로 | 내용 |
+|---|---|
+| `/week/[n]/discussion` | 올리기 폼 + 조별 게시판 |
+| `/week/[n]/discussion/present` | **발표 모드** — 한 조씩 크게, ←/→/Space 로 이동, Esc 로 나가기 |
+| `app/actions/discussion.js` | 글 작성·삭제, 논의 열기/닫기 |
+| `lib/discussion.js` | 조별 묶기, 이미지 public URL 만들기 |
+
+올릴 수 있는 것: **글 · 링크 · 사진**(JPG/PNG/WEBP/GIF, 5MB). 셋 중 하나는 있어야 한다(DB check).
+사진은 기존 public 버킷 `content` 의 `discussions/` 아래에 저장한다.
+
+**주의할 점 몇 가지**
+
+- **`weeks.discussion_open`** 이 열림 스위치다. 교수자는 주차 화면과 논의 화면에서 바로 켜고 끈다.
+  닫아도 **읽기는 남는다** — 학생이 자기가 올린 걸 나중에 다시 볼 수 있어야 한다. 닫히는 건 쓰기뿐이고,
+  RLS 의 insert 정책이 `weeks.discussion_open` 을 직접 확인하므로 UI 를 우회해도 못 쓴다.
+- **작성자 닉네임을 글에 복사해 저장한다**(`author_nickname`). `profiles` 는 "본인 행만 읽기"라
+  임베드로 가져오면 학생 눈에는 남의 글이 전부 "익명"으로 보였다. 그렇다고 `profiles` select 를 열면
+  RLS 가 행 단위라 **닉네임뿐 아니라 이름·학번까지 전교생에게 열린다.** 그래서 열지 않았다.
+- **링크는 스킴을 검사한다**(`normalizeLink`). `<a href>` 로 그대로 나가므로 `javascript:` 같은 걸
+  막지 않으면 누른 사람 브라우저에서 실행된다. http/https 만 통과시킨다.
+- **`content` 버킷은 public 이다.** 올린 사진은 주소를 아는 사람이면 로그인 없이 볼 수 있다(경로는 UUID).
+  교실 공유용이라 지금은 이대로 두지만, 민감해지면 비공개 버킷 + 서명 URL 로 바꿔야 한다.
+- 발표 모드에서 조 이름은 **`font-sans`** 를 쓴다. 디스플레이 세리프(Instrument Serif)는 라틴 글리프만
+  있어서 "1조" 같은 이름의 숫자만 세리프로 튀어 이름이 깨져 보였다.
+
 ## DB 스키마 (supabase/migrations/*.sql, 순서대로 적용됨)
 
-`profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers`.
+`profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers` → `lecture_questions.resolved_at` → `weeks.discussion_open`/`discussion_posts`.
 Storage 버킷: `content`(수업자료 이미지, public read) 생성됨. `sketches`(MAKE용)는 아직 미생성.
 
 ## 마이그레이션 이력 어긋남 — 해결됨 (2026-09-04)
