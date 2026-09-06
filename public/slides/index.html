@@ -444,6 +444,66 @@ body.export-clean main{inset:0;}
 .schedule-table .tp span{display:block; font-size:.76rem; color:var(--ink-soft); margin-top:.1rem;}
 .schedule-table tr.is-exam .tp b{color:var(--ink-soft);}
 @media (max-width:900px){ .schedule-grid{grid-template-columns:1fr;} }
+/* ============ 모바일 (≤700px) ============
+   덱은 프로젝터용 16:9 한 장이 기본이다. 폰에서는 그 전제가 깨진다 —
+   세로로 긴 화면에 16:9 를 맞추면 fitActive 가 0.62 까지 줄여도 글씨가 안 읽힌다.
+   그래서 폰에서는 "한 화면에 한 장"을 포기하고 **세로로 읽고 옆으로 넘기는** 방식으로 바꾼다.
+   - .slide 를 세로 스크롤 컨테이너로 (기본은 overflow:hidden 이라 잘렸다)
+   - fitActive 의 scale() 을 끈다 (JS 쪽에서도 조기 반환한다)
+   - vh 로 묶인 사진 상한을 푼다 — 스크롤되는 문서에서는 뷰포트 높이가 기준이 될 수 없다
+   - 다단 표는 1단으로 접고, 접을 수 없는 4열 연대표만 가로 스크롤로 남긴다
+   프로젝터·노트북(>700px)에는 아무 영향이 없다. */
+@media (max-width:700px){
+  :root{
+    --fs-headline: 1.55rem;
+    --fs-headline-lg: 1.85rem;
+    --fs-subhead: .98rem;
+    --fs-body: .97rem;
+  }
+
+  .slide{padding:1.15rem 1.15rem 2rem;}
+  .slide.is-active{
+    align-items:flex-start;
+    overflow-y:auto; overflow-x:hidden;
+    overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+  }
+  /* 스크롤되는 화면에서 모서리 장식은 따라다니지 않고 어중간하게 걸린다 */
+  .slide::before,.slide::after{display:none;}
+
+  .stage{max-width:none; transform:none !important;}
+  .stage--hero{max-height:none;}
+
+  /* 뷰포트 높이로 묶인 상한들 — 세로 스크롤에서는 기준이 안 맞는다 */
+  .artifact-photo img{max-height:none;}
+  .artifact-photo .two-up img{max-height:38vh; max-width:48%;}
+  .artifact-photo .stack-2 > img{max-height:none;}
+  .artifact-photo .stack-2 .pair img{max-height:none;}
+  .hero-photo img{max-height:none;}
+
+  /* 다단을 1단으로 */
+  .q-row{grid-template-columns:1fr;}
+  .figure-grid{grid-template-columns:1fr;}
+  .grade-split{grid-template-columns:1fr; gap:1.4rem;}
+  .timeline-row{flex-direction:column;}
+  .timeline-row .tl-item{border-left:none; border-top:1px solid var(--rule); padding:.8rem 0 0;}
+  .book-row{grid-template-columns:1fr; gap:.35rem;}
+
+  /* 좌우 화살표가 화면 한가운데에 떠서 본문 위에 걸쳤다.
+     세로로 읽는 화면에서는 글을 가리므로 아래 구석으로 내린다.
+     넘기기는 스와이프가 기본이고, 이 버튼은 보조다. */
+  .nav-btn{
+    top:auto; transform:none; bottom:56px;
+    width:40px; height:40px; font-size:1.2rem; opacity:.4;
+    background:var(--paper); box-shadow:0 1px 6px rgba(0,0,0,.12);
+  }
+
+  /* 4열 연대표는 접으면 뜻이 없어진다 — 가로로 밀어서 본다 */
+  .dual-tl{
+    grid-template-columns:minmax(150px,1fr) 116px minmax(150px,1fr) minmax(150px,1fr);
+    overflow-x:auto; overscroll-behavior-x:contain;
+  }
+}
+
 </style>
 
 <div class="chrome">
@@ -4826,6 +4886,14 @@ body.export-clean main{inset:0;}
     if(!st) return;
 
     st.style.transform = '';                       // 재기 전에 원래 크기로 되돌린다
+
+    // 폰에서는 한 화면에 욱여넣지 않는다 — CSS 가 .slide 를 세로 스크롤로 바꿔두었고,
+    // 여기서 줄이면 읽으려고 키운 글씨를 다시 깎게 된다.
+    if(window.matchMedia && window.matchMedia('(max-width:700px)').matches){
+      if(fitRO) fitRO.disconnect();
+      return;
+    }
+
     var cs = getComputedStyle(s);
     var availH = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     var availW = s.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
@@ -4944,13 +5012,18 @@ body.export-clean main{inset:0;}
   });
 
   // touch swipe
-  var touchX=null;
-  document.addEventListener('touchstart', function(e){ touchX=e.changedTouches[0].clientX; }, {passive:true});
+  var touchX=null, touchY=null;
+  document.addEventListener('touchstart', function(e){
+    touchX=e.changedTouches[0].clientX; touchY=e.changedTouches[0].clientY;
+  }, {passive:true});
   document.addEventListener('touchend', function(e){
     if(touchX===null) return;
     var dx = e.changedTouches[0].clientX - touchX;
-    if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); }
-    touchX=null;
+    var dy = e.changedTouches[0].clientY - touchY;
+    // 가로가 세로보다 확실히 클 때만 넘긴다 — 폰에서 슬라이드를 세로로 읽는 동안
+    // 손가락이 옆으로 조금 흐르면 장이 멋대로 넘어갔다.
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5){ dx<0 ? next() : prev(); }
+    touchX=null; touchY=null;
   }, {passive:true});
 
   function toggleFullscreen(){
