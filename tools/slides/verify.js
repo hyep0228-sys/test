@@ -65,9 +65,58 @@ const measure = () => {
   };
 };
 
+// Supabase 오버라이드는 (주차, 주차 안 순번) 으로 걸린다. 슬라이드를 중간에
+// 넣거나 빼면 조용히 한 칸씩 밀려 엉뚱한 장을 덮어쓴다 — 실제로 겪었다.
+// 그래서 배포 전에 DB 를 읽어 파일과 대조한다. 네트워크가 안 되면 건너뛴다.
+async function overrideCheck() {
+  const html = fs.readFileSync(path.join(SLIDES, 'index.html'), 'utf8');
+  const url = (html.match(/SUPABASE_URL = '([^']+)'/) || [])[1];
+  const key = (html.match(/SUPABASE_ANON_KEY = '([^']+)'/) || [])[1];
+  if (!url || !key) { console.log('오버라이드 : 키를 못 찾음 — 건너뜀'); return true; }
+
+  let rows;
+  try {
+    const r = await fetch(`${url}/rest/v1/slide_overrides?select=week_id,slide_index,content_html`,
+                          { headers: { apikey: key } });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    rows = await r.json();
+  } catch (e) {
+    console.log('오버라이드 : 조회 실패 — 건너뜀 (' + e.message + ')');
+    return true;
+  }
+  if (!rows.length) { console.log('오버라이드 : 없음 — 파일이 곧 화면'); return true; }
+
+  const secs = html.split(/(?=<section class="slide")/).filter((x) => x.startsWith('<section class="slide"'));
+  const byWeek = {};
+  for (const sec of secs) {
+    const w = (sec.match(/data-week="([^"]*)"/) || [])[1];
+    (byWeek[w] = byWeek[w] || []).push(sec);
+  }
+  const norm = (x) => x.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+
+  let bad = 0;
+  console.log(`오버라이드 ${rows.length}건 — 이 슬라이드는 파일이 아니라 DB 가 화면이 된다`);
+  for (const r of rows) {
+    const sec = (byWeek[String(r.week_id)] || [])[r.slide_index - 1];
+    if (!sec) { console.log(`  ✗ (${r.week_id},${r.slide_index}) 가리키는 슬라이드가 없다`); bad++; continue; }
+    const title = (sec.match(/data-title="([^"]*)"/) || [])[1];
+    const body = sec.slice(0, sec.indexOf('</section>'));
+    const i = body.indexOf('<div class="stage');
+    const stage = body.slice(body.indexOf('>', i) + 1, body.lastIndexOf('</div>'));
+    const same = norm(stage) === norm(r.content_html);
+    console.log(`  ${same ? '·' : '✗'} (${r.week_id},${r.slide_index}) → 「${title}」 ` +
+                (same ? '파일과 같음(무해)' : '파일과 다름 — 화면은 DB 를 따른다'));
+    if (!same) bad++;
+  }
+  if (bad) console.log('  슬라이드를 넣거나 뺐다면 순번이 밀린 것이다. 다시 맞추거나 지울 것.');
+  return bad === 0;
+}
+
 async function main() {
+
   const only = process.argv[2] ? Number(process.argv[2]) : null;
   const okRefs = refIntegrity();
+  const okOverrides = await overrideCheck();
 
   const browser = await chromium.launch({ executablePath: CHROME, headless: true });
   const failed = [];
@@ -108,7 +157,7 @@ async function main() {
   console.log('  깨진이미지:', broken);
   console.log('  404      :', failed.length ? [...new Set(failed)] : '없음');
 
-  const pass = okRefs && !overflow.length && !broken && !failed.length;
+  const pass = okRefs && okOverrides && !overflow.length && !broken && !failed.length;
   console.log(pass ? '\n✓ 통과 — 배포 가능' : '\n✗ 실패 — 배포 전 수정 필요');
   if (squeezed.length) console.log('  (과도축소는 배포를 막지 않는다. 다만 그 장은 내용을 덜어내는 게 맞다.)');
   process.exit(pass ? 0 : 1);
