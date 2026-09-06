@@ -30,7 +30,7 @@ export default function DiscussionToggle({ weekId, open }) {
       onClick={handle}
       disabled={isPending}
       aria-pressed={isOpen}
-      className={`text-xs px-3 py-1.5 rounded border transition-colors disabled:opacity-50 ${
+      className={`text-xs px-4 min-h-11 inline-flex items-center rounded border transition-colors disabled:opacity-50 ${
         isOpen ? "border-accent text-accent" : "border-line text-mute"
       }`}
     >

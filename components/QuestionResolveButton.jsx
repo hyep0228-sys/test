@@ -26,7 +26,7 @@ export default function QuestionResolveButton({ questionId, resolved }) {
       onClick={handle}
       disabled={isPending}
       aria-pressed={isResolved}
-      className={`shrink-0 text-xs px-3 py-1.5 rounded border transition-colors disabled:opacity-50 ${
+      className={`shrink-0 text-xs px-4 min-h-11 inline-flex items-center justify-center rounded border transition-colors disabled:opacity-50 ${
         isResolved
           ? "border-line text-mute"
           : "border-accent text-accent"

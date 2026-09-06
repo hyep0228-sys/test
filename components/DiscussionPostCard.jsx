@@ -62,7 +62,7 @@ export default function DiscussionPostCard({ post, imageUrl, canDelete }) {
             type="button"
             onClick={remove}
             disabled={isPending}
-            className="text-xs text-mute shrink-0 disabled:opacity-50"
+            className="text-xs text-mute shrink-0 inline-flex items-center min-h-11 -my-3 pl-3 disabled:opacity-50"
           >
             지우기
           </button>

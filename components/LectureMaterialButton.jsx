@@ -98,7 +98,7 @@ export default function LectureMaterialButton({
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   onClick={() => setPanel(panel === "note" ? null : "note")}
-                  className={`text-xs px-2.5 sm:px-3 py-1.5 rounded border ${
+                  className={`text-xs px-3 min-h-11 inline-flex items-center rounded border ${
                     panel === "note"
                       ? "border-accent text-accent"
                       : "border-line text-mute"
@@ -110,7 +110,7 @@ export default function LectureMaterialButton({
                   onClick={() =>
                     setPanel(panel === "question" ? null : "question")
                   }
-                  className={`text-xs px-2.5 sm:px-3 py-1.5 rounded border ${
+                  className={`text-xs px-3 min-h-11 inline-flex items-center rounded border ${
                     panel === "question"
                       ? "border-accent text-accent"
                       : "border-line text-mute"
@@ -121,7 +121,7 @@ export default function LectureMaterialButton({
                 <button
                   onClick={close}
                   aria-label="닫기"
-                  className="text-mute text-lg leading-none px-2 py-1"
+                  className="text-mute text-lg leading-none px-3 min-h-11 inline-flex items-center"
                 >
                   ✕
                 </button>

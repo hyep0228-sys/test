@@ -30,7 +30,7 @@ export default function ArchiveList({ rows }) {
             </div>
             <Link
               href={`/week/${week.id}`}
-              className="text-xs text-accent shrink-0"
+              className="text-xs text-accent shrink-0 inline-flex items-center min-h-11 -my-3 pl-3"
             >
               주차로 →
             </Link>
