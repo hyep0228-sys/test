@@ -201,8 +201,10 @@ body.export-clean main{inset:0;}
 .section-head.has-era .era-name{font-family:var(--f-display); font-weight:700; font-size:clamp(1.45rem,2.6vw,2.05rem); line-height:1.1; color:var(--ink); white-space:nowrap;}
 .section-head.has-era .spacer{flex:1;}
 .section-head.has-era h3{font-size:clamp(1.15rem,1.9vw,1.5rem); font-weight:600;}
-/* 어원 패널 — 낱말이 언어를 건너오는 경로를 세로로 보여준다. 2단 오른쪽 열에 선다. */
+/* 어원 패널 — 낱말이 언어를 건너오는 경로를 세로로 보여준다. 2단 중 한쪽 열에 선다. */
 .etym{border-left:2px solid var(--ink); padding:.1rem 0 .1rem 1.1rem;}
+/* etym 이 왼쪽 단일 때는 구분선이 두 단 사이(오른쪽)에 오도록 뒤집는다 */
+.stage--split > .etym:first-child{border-left:none; border-right:2px solid var(--ink); padding:.1rem 1.1rem .1rem 0;}
 .etym h4{font-family:var(--f-display); font-weight:700; font-size:1.02rem; color:var(--ink); margin:0 0 .9rem;}
 .etym .step{margin-bottom:.85rem;}
 .etym .w{display:flex; align-items:baseline; gap:.55rem; flex-wrap:wrap;}
@@ -572,15 +574,6 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="intro" data-week="1" data-title="'디자인'이라는 말의 뿌리" data-dates="Intro">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split">
-    <div>
-      <div class="section-head"><h3>어디서 왔고, 어디까지 갔는가</h3><span class="tag">ETYMOLOGY</span></div>
-      <ul class="bullet-list">
-        <li><strong>19~20세기.</strong> 산업 생산과 함께 <strong>제품·그래픽·건축</strong>의 이름으로 자리잡는다 — 이번 학기가 주로 다루는 범위다.</li>
-        <li><strong>20세기 후반.</strong> 화면이 생기며 <strong>UX/UI 디자인</strong>이, 눈에 보이지 않는 절차에도 <strong>서비스 디자인</strong>이 붙는다.</li>
-        <li><strong>지금.</strong> 정책 디자인, 조직 디자인, 경험 디자인처럼 <strong>'설계가 필요한 모든 것'</strong>에 이 말이 옮겨간다.</li>
-      </ul>
-      <p class="aim-close">'그리는 일'에서 출발한 말이, 지금은 <strong>문제를 계획하고 해결하는 태도</strong>를 가리키는 말로 넓어졌다.</p>
-    </div>
     <div class="etym">
       <h4>디자인이라는 말의 기원</h4>
       <div class="step">
@@ -603,6 +596,15 @@ body.export-clean main{inset:0;}
         <p>갈라진 두 뜻을 다시 하나로</p>
       </div>
       <p class="close">그래서 디자인은 처음부터 <b>생각(계획)과 손(그림)이 분리되지 않은 말</b>이었다.</p>
+    </div>
+    <div>
+      <div class="section-head"><h3>어디서 왔고, 어디까지 갔는가</h3><span class="tag">ETYMOLOGY</span></div>
+      <ul class="bullet-list">
+        <li><strong>19~20세기.</strong> 산업 생산과 함께 <strong>제품·그래픽·건축</strong>의 이름으로 자리잡는다 — 이번 학기가 주로 다루는 범위다.</li>
+        <li><strong>20세기 후반.</strong> 화면이 생기며 <strong>UX/UI 디자인</strong>이, 눈에 보이지 않는 절차에도 <strong>서비스 디자인</strong>이 붙는다.</li>
+        <li><strong>지금.</strong> 정책 디자인, 조직 디자인, 경험 디자인처럼 <strong>'설계가 필요한 모든 것'</strong>에 이 말이 옮겨간다.</li>
+      </ul>
+      <p class="aim-close">'그리는 일'에서 출발한 말이, 지금은 <strong>문제를 계획하고 해결하는 태도</strong>를 가리키는 말로 넓어졌다.</p>
     </div>
   </div>
 </section>
