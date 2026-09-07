@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Page from "@/components/Page";
 import OnboardingForm from "@/components/OnboardingForm";
+import { signOut } from "@/app/actions/auth";
 
 export default async function OnboardingPage() {
   const supabase = await createClient();
@@ -28,6 +29,14 @@ export default async function OnboardingPage() {
         section={profile?.section}
         nickname={profile?.nickname}
       />
+
+      {/* 온보딩을 마치기 전에는 다른 화면으로 못 나간다. 잘못 로그인했을 때
+          빠져나갈 길이 여기 하나뿐이라 로그아웃을 붙여둔다. */}
+      <form action={signOut} className="mt-8 text-center">
+        <button className="text-mute text-sm underline min-h-11 px-3">
+          다른 계정으로 로그인
+        </button>
+      </form>
     </Page>
   );
 }
