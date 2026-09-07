@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
-import { studentNoToEmail, INITIAL_PASSWORD } from "@/lib/auth";
+import { studentNoToEmail, normalizeStudentNo, INITIAL_PASSWORD } from "@/lib/auth";
 
 function adminClient() {
   return createServiceClient(
@@ -65,14 +65,16 @@ export async function bulkCreateStudents(prevState, formData) {
   for (const line of lines) {
     // 탭으로 붙여넣는 경우(엑셀에서 그대로 복사)도 받아준다
     const parts = line.split(/[,\t]/).map((p) => p.trim());
-    const [name, studentNo] = parts;
+    const [name, rawStudentNo] = parts;
+    const studentNo = normalizeStudentNo(rawStudentNo);
 
     if (!name || !studentNo) {
       results.push({ line, status: "실패", detail: "형식 오류 (이름,학번)" });
       continue;
     }
-    if (!/^\d+$/.test(studentNo)) {
-      results.push({ line, status: "실패", detail: `학번이 숫자가 아닙니다: ${studentNo}` });
+    // 학번은 `C475123` 처럼 영문자로 시작한다 — 숫자만으로 막으면 안 된다.
+    if (!/^[A-Z0-9]{4,20}$/.test(studentNo)) {
+      results.push({ line, status: "실패", detail: `학번 형식이 이상합니다: ${rawStudentNo}` });
       continue;
     }
     if (seen.has(studentNo)) {
