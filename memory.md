@@ -178,6 +178,28 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 - 발표 모드에서 조 이름은 **`font-sans`** 를 쓴다. 디스플레이 세리프(Instrument Serif)는 라틴 글리프만
   있어서 "1조" 같은 이름의 숫자만 세리프로 튀어 이름이 깨져 보였다.
 
+## 백업 (2026-09-07)
+
+**코드·슬라이드·마이그레이션은 GitHub 에 있다.** 레포는 **PUBLIC** 이다 —
+학생 명단, DB 백업 파일, 키를 절대 커밋하지 말 것. `.env.local` 은 `.gitignore` 에 있고
+커밋된 파일에 서비스 키가 없는 것을 확인했다. 덱에 박힌 키는 `sb_publishable_...`(공개용)이라 문제없다.
+
+**DB 는 2026-09-07 까지 백업이 하나도 없었다.** `supabase db dump` 는 Docker 가 있어야 하는데
+이 기기엔 Docker 도 `pg_dump` 도 없다. 그래서 REST 로 전 테이블을 받는 **`tools/backup.js`** 를 만들었다.
+
+```bash
+node tools/backup.js          # ~/design-history-backup/<날짜>/ 에 저장
+```
+
+스키마는 `supabase/migrations/` 가 git 에 있으니 **데이터만** 받아도 복구에 충분하다.
+비밀키는 스크립트에 없고 `.env.local` 에서 읽는다. **레포 안 경로로는 저장이 막혀 있다**(공개 레포라서).
+
+**한계**: `auth.users` 는 id·이메일·메타데이터만 받고 **비밀번호 해시는 못 받는다.**
+최악의 경우 계정을 다시 만들고 전원 `000000` 으로 초기화해야 한다(명단이 있으니 가능).
+**Supabase 자체의 자동 백업 여부는 대시보드 → Database → Backups 에서 확인할 것** — 무료 플랜이면 대개 없다.
+
+학기 중에는 **주 1회** 돌리는 게 좋다. 학생 질문·팀 논의가 쌓이기 시작하면 잃으면 복구할 수 없다.
+
 ## DB 스키마 (supabase/migrations/*.sql, 순서대로 적용됨)
 
 `profiles`, `weeks`(15주 시드 포함), `completions`, `app_settings`(before_after_weeks 설정) → `balance_questions/answers/reflections` → `lecture_materials` → `lecture_notes`, `lecture_questions` → `profiles.onboarded`(계정 최초설정 완료 여부, nickname/section은 nullable로 변경) → `quiz_questions`(2주차 5문항 시딩됨)/`quiz_answers` → `lecture_questions.resolved_at` → `weeks.discussion_open`/`discussion_posts`.
