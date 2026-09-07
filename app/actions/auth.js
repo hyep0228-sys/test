@@ -27,7 +27,7 @@ export async function signIn(prevState, formData) {
   // "이 학번의 이름이 맞나"를 계속 물어볼 수 있는 창구가 된다.
   const { data: profile } = await supabase
     .from("profiles")
-    .select("name")
+    .select("name, onboarded")
     .eq("id", data.user.id)
     .maybeSingle();
 
@@ -36,7 +36,9 @@ export async function signIn(prevState, formData) {
     return { error: "이름이 학번과 일치하지 않습니다.", step: "identity" };
   }
 
-  redirect("/");
+  // 첫 로그인이면 여기서 바로 온보딩으로 보낸다. "/" 로 보내면 프록시가 다시
+  // 돌려세우는데, 그 과정에서 주소창만 "/" 로 남고 화면은 온보딩이 뜬다.
+  redirect(profile.onboarded ? "/" : "/onboarding");
 }
 
 export async function signOut() {
