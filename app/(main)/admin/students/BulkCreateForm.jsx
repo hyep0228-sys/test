@@ -10,17 +10,52 @@ export default function BulkCreateForm() {
     bulkCreateStudents,
     initialState
   );
+  const ok = state?.results?.filter((r) => r.status === "생성됨").length ?? 0;
 
   return (
     <div>
-      <form action={formAction} className="space-y-3">
-        <textarea
-          name="csv"
-          rows={10}
-          placeholder={"박지혜,20260001,0715\n김민준,20260002,1123"}
-          className="w-full border border-line bg-white px-4 py-3 rounded text-sm font-mono"
-        />
+      <form action={formAction} className="space-y-4">
+        <div>
+          <label className="block text-sm mb-1" htmlFor="section">
+            분반
+          </label>
+          <select
+            id="section"
+            name="section"
+            required
+            defaultValue=""
+            className="border border-line bg-white rounded px-3 py-2.5 text-sm"
+          >
+            <option value="" disabled>
+              고르세요
+            </option>
+            <option value="1">1분반</option>
+            <option value="2">2분반</option>
+            <option value="3">3분반</option>
+          </select>
+          <p className="text-mute text-xs mt-1.5">
+            이 목록 전체에 같은 분반이 들어갑니다. 분반별로 나눠서 붙여넣으세요.
+          </p>
+        </div>
+
+        <div>
+          <label className="block text-sm mb-1" htmlFor="csv">
+            명단 <span className="text-mute">(한 줄에 <b>이름,학번</b>)</span>
+          </label>
+          <textarea
+            id="csv"
+            name="csv"
+            rows={10}
+            placeholder={"박지혜,20260001\n김민준,20260002"}
+            className="w-full border border-line bg-white px-4 py-3 rounded text-sm font-mono"
+          />
+          <p className="text-mute text-xs mt-1.5">
+            엑셀에서 이름·학번 두 열을 그대로 복사해 붙여넣어도 됩니다.
+          </p>
+        </div>
+
         {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
+
         <button
           type="submit"
           disabled={isPending}
@@ -33,8 +68,7 @@ export default function BulkCreateForm() {
       {state?.results && (
         <div className="mt-8 space-y-2">
           <p className="text-sm font-medium">
-            결과 ({state.results.filter((r) => r.status === "생성됨").length}/
-            {state.results.length} 성공)
+            결과 ({ok}/{state.results.length} 성공)
           </p>
           {state.results.map((r, i) => (
             <div
