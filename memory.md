@@ -198,7 +198,18 @@ node tools/backup.js          # ~/design-history-backup/<날짜>/ 에 저장
 최악의 경우 계정을 다시 만들고 전원 `000000` 으로 초기화해야 한다(명단이 있으니 가능).
 **Supabase 자체의 자동 백업 여부는 대시보드 → Database → Backups 에서 확인할 것** — 무료 플랜이면 대개 없다.
 
-학기 중에는 **주 1회** 돌리는 게 좋다. 학생 질문·팀 논의가 쌓이기 시작하면 잃으면 복구할 수 없다.
+**자동 예약(2026-09-07 설정)**: macOS launchd 로 **매주 수요일 오전 10시** 자동 실행된다.
+수업이 화요일(화4~화7)이라 그 주 활동이 다 담기는 시점이다.
+
+| 항목 | 값 |
+|---|---|
+| 등록 파일 | `~/Library/LaunchAgents/com.jeehyepark.designhistory-backup.plist` |
+| 실행 | `/usr/local/bin/node .../tools/backup.js` |
+| 로그 | `~/design-history-backup/_log/backup.log` · `backup.err` |
+
+맥이 꺼져 있었으면 다음에 켤 때 한 번 돈다. 확인은 `launchctl list | grep designhistory`,
+끄려면 `launchctl unload ~/Library/LaunchAgents/com.jeehyepark.designhistory-backup.plist`.
+**node 경로가 바뀌면 조용히 실패한다** — 이상하면 `backup.err` 부터 볼 것.
 
 ## DB 스키마 (supabase/migrations/*.sql, 순서대로 적용됨)
 
