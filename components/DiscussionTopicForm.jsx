@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useCallback, useEffect, useRef } from "react";
 import { saveDiscussionTopic } from "@/app/actions/discussion";
 import { TOPIC_MAX_LENGTH } from "@/lib/discussion";
 
@@ -15,6 +15,27 @@ export default function DiscussionTopicForm({ weekId, initialTopic }) {
     saveDiscussionTopic,
     initialState,
   );
+  const textareaRef = useRef(null);
+
+  // 주제를 길게 쓰면 고정 높이 칸 안에서 스크롤돼 전체가 한눈에 안 들어온다.
+  // 내용만큼 칸을 늘려 스크롤을 없앤다. 폭이 바뀌면 줄바꿈이 달라지므로 다시 잰다.
+  const fitHeight = useCallback(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, []);
+
+  useEffect(() => {
+    fitHeight();
+    window.addEventListener("resize", fitHeight);
+    return () => window.removeEventListener("resize", fitHeight);
+  }, [fitHeight]);
+
+  // 저장하고 나면 서버가 화면을 다시 그린다. 그때 높이도 다시 맞춘다.
+  useEffect(() => {
+    if (state?.saved) fitHeight();
+  }, [state, fitHeight]);
 
   return (
     <form
@@ -32,13 +53,15 @@ export default function DiscussionTopicForm({ weekId, initialTopic }) {
         학생 화면과 발표 모드에 함께 뜹니다. 비우고 저장하면 사라집니다.
       </p>
       <textarea
+        ref={textareaRef}
         id="discussion-topic"
         name="topic"
-        rows={6}
+        rows={3}
         maxLength={TOPIC_MAX_LENGTH}
         defaultValue={initialTopic ?? ""}
+        onInput={fitHeight}
         placeholder="예: 만국박람회의 전시물 중 하나를 골라, 그것이 기계 생산의 무엇을 보여주는지 이야기해 보자."
-        className="w-full border border-line bg-paper px-3 py-2 rounded text-sm leading-relaxed"
+        className="w-full border border-line bg-paper px-3 py-2 rounded text-sm leading-relaxed resize-none overflow-hidden"
       />
       <div className="flex items-center gap-3 mt-3">
         <button
