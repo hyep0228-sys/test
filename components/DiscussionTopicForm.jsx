@@ -34,7 +34,7 @@ export default function DiscussionTopicForm({ weekId, initialTopic }) {
       <textarea
         id="discussion-topic"
         name="topic"
-        rows={3}
+        rows={6}
         maxLength={TOPIC_MAX_LENGTH}
         defaultValue={initialTopic ?? ""}
         placeholder="예: 만국박람회의 전시물 중 하나를 골라, 그것이 기계 생산의 무엇을 보여주는지 이야기해 보자."
