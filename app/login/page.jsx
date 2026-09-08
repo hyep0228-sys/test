@@ -41,11 +41,15 @@ export default function LoginPage() {
         <div className={step === 1 ? "space-y-4" : "hidden"}>
           <div>
             <label className="block text-sm mb-1" htmlFor="student_no">학번</label>
+            {/* inputMode 를 numeric 으로 두면 폰에서 숫자 키패드만 떠서
+                'C475123' 처럼 영문자로 시작하는 학번을 아예 못 친다. */}
             <input
               id="student_no"
               name="student_no"
-              inputMode="numeric"
               autoComplete="username"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              spellCheck={false}
               value={studentNo}
               onChange={(e) => setStudentNo(e.target.value)}
               className={FIELD}
