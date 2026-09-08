@@ -16,6 +16,8 @@ export default function DiscussionPresenter({
   teams,
 }) {
   const [index, setIndex] = useState(0);
+  // 주제는 접어둔 채로 시작한다. 발표 중에 화면을 차지하는 건 조 내용이어야 한다.
+  const [topicOpen, setTopicOpen] = useState(false);
   const router = useRouter();
 
   const total = teams.length;
@@ -36,6 +38,10 @@ export default function DiscussionPresenter({
         go(-1);
       } else if (e.key === "Escape") {
         router.push(`/week/${weekId}/discussion`);
+      } else if (e.code === "KeyT") {
+        // key 가 아니라 code 로 본다. 한글 자판이면 e.key 가 'ㅅ' 으로 온다.
+        e.preventDefault();
+        setTopicOpen((v) => !v);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -46,23 +52,41 @@ export default function DiscussionPresenter({
 
   return (
     <div className="fixed inset-0 z-50 bg-paper flex flex-col">
-      <header className="flex items-baseline justify-between gap-4 px-6 sm:px-10 py-4 border-b border-line shrink-0">
+      <header className="flex items-start justify-between gap-4 px-6 sm:px-10 py-4 border-b border-line shrink-0">
         {/* 조를 한 팀씩 크게 넘기는 화면이라, 무엇을 논의했는지는
-            머리글에 계속 남아 있어야 한다. */}
+            머리글에 계속 남아 있어야 한다. 다만 주제가 길면 화면을 다 먹으므로
+            접어두고, 필요할 때 펼친다. */}
         <div className="min-w-0">
           <p className="text-sm text-mute truncate">
             WEEK {String(weekId).padStart(2, "0")} · {weekTitle}
           </p>
           {topic && (
-            <p className="text-sm mt-0.5 line-clamp-2 leading-snug">{topic}</p>
+            <p
+              className={`text-sm mt-0.5 leading-snug whitespace-pre-wrap ${
+                topicOpen ? "max-h-[40vh] overflow-y-auto pr-2" : "line-clamp-2"
+              }`}
+            >
+              {topic}
+            </p>
           )}
         </div>
-        <button
-          onClick={() => router.push(`/week/${weekId}/discussion`)}
-          className="text-sm text-mute shrink-0"
-        >
-          나가기 (Esc)
-        </button>
+        <div className="flex items-center gap-4 shrink-0">
+          {topic && (
+            <button
+              onClick={() => setTopicOpen((v) => !v)}
+              aria-expanded={topicOpen}
+              className="text-sm text-mute"
+            >
+              {topicOpen ? "주제 접기 (T)" : "주제 펼치기 (T)"}
+            </button>
+          )}
+          <button
+            onClick={() => router.push(`/week/${weekId}/discussion`)}
+            className="text-sm text-mute"
+          >
+            나가기 (Esc)
+          </button>
+        </div>
       </header>
 
       {/* min-h-full + justify-center: 내용이 짧으면 화면 가운데,
