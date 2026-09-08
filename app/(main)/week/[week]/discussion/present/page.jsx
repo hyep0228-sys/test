@@ -12,7 +12,7 @@ export default async function DiscussionPresentPage({ params }) {
   const [{ data: week }, { data: posts }] = await Promise.all([
     supabase
       .from("weeks")
-      .select("id, short_title")
+      .select("id, short_title, discussion_topic")
       .eq("id", weekId)
       .maybeSingle(),
     supabase
@@ -38,6 +38,7 @@ export default async function DiscussionPresentPage({ params }) {
     <DiscussionPresenter
       weekId={weekId}
       weekTitle={week?.short_title ?? ""}
+      topic={week?.discussion_topic ?? null}
       teams={teams}
     />
   );

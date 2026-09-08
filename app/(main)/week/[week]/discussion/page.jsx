@@ -4,6 +4,8 @@ import Page from "@/components/Page";
 import DiscussionForm from "@/components/DiscussionForm";
 import DiscussionBoard from "@/components/DiscussionBoard";
 import DiscussionToggle from "@/components/DiscussionToggle";
+import DiscussionTopicCard from "@/components/DiscussionTopicCard";
+import DiscussionTopicForm from "@/components/DiscussionTopicForm";
 import { groupByTeam, withImageUrls } from "@/lib/discussion";
 
 export default async function DiscussionPage({ params }) {
@@ -19,7 +21,7 @@ export default async function DiscussionPage({ params }) {
     await Promise.all([
       supabase
         .from("weeks")
-        .select("id, short_title, is_open, discussion_open")
+        .select("id, short_title, is_open, discussion_open, discussion_topic")
         .eq("id", weekId)
         .maybeSingle(),
       supabase.from("profiles").select("role").eq("id", user?.id).maybeSingle(),
@@ -92,6 +94,19 @@ export default async function DiscussionPage({ params }) {
           ? `${teams.length}개 조 · ${rows.length}개 글`
           : "아직 올라온 글이 없습니다."}
       </p>
+
+      {/* 무엇을 논의하는지가 맨 위에 있어야 한다. 교수자에게는 쓰는 칸,
+          학생에게는 읽는 카드로 같은 자리에 나온다. */}
+      {isProfessor ? (
+        <DiscussionTopicForm
+          weekId={weekId}
+          initialTopic={week.discussion_topic}
+        />
+      ) : (
+        week.discussion_topic && (
+          <DiscussionTopicCard topic={week.discussion_topic} />
+        )
+      )}
 
       {week.discussion_open ? (
         <DiscussionForm weekId={weekId} teamNames={teamNames} />

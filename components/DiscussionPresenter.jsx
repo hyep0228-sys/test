@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation";
  * 사이드바가 있는 (main) 레이아웃 안에 있지만 화면 전체를 덮어서 가린다.
  * 교실 뒤에서도 읽혀야 하므로 본문 글씨를 평소보다 크게 잡았다.
  */
-export default function DiscussionPresenter({ weekId, weekTitle, teams }) {
+export default function DiscussionPresenter({
+  weekId,
+  weekTitle,
+  topic,
+  teams,
+}) {
   const [index, setIndex] = useState(0);
   const router = useRouter();
 
@@ -42,9 +47,16 @@ export default function DiscussionPresenter({ weekId, weekTitle, teams }) {
   return (
     <div className="fixed inset-0 z-50 bg-paper flex flex-col">
       <header className="flex items-baseline justify-between gap-4 px-6 sm:px-10 py-4 border-b border-line shrink-0">
-        <p className="text-sm text-mute min-w-0 truncate">
-          WEEK {String(weekId).padStart(2, "0")} · {weekTitle}
-        </p>
+        {/* 조를 한 팀씩 크게 넘기는 화면이라, 무엇을 논의했는지는
+            머리글에 계속 남아 있어야 한다. */}
+        <div className="min-w-0">
+          <p className="text-sm text-mute truncate">
+            WEEK {String(weekId).padStart(2, "0")} · {weekTitle}
+          </p>
+          {topic && (
+            <p className="text-sm mt-0.5 line-clamp-2 leading-snug">{topic}</p>
+          )}
+        </div>
         <button
           onClick={() => router.push(`/week/${weekId}/discussion`)}
           className="text-sm text-mute shrink-0"

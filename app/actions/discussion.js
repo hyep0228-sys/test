@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { TOPIC_MAX_LENGTH } from "@/lib/discussion";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -40,6 +41,37 @@ export async function toggleDiscussionOpen(weekId, nextValue) {
   if (error) throw new Error(error.message);
 
   revalidatePath("/", "layout");
+}
+
+/**
+ * 교수자가 그 주차의 논의 주제를 쓴다. 주차마다 한 칸이고, 새로 쓰면 이전 것을 덮는다.
+ * 비우고 저장하면 학생 화면에서 사라진다(공지와 같은 방식).
+ */
+export async function saveDiscussionTopic(prevState, formData) {
+  const weekId = Number(formData.get("week_id"));
+  const topic = formData.get("topic")?.toString().trim() ?? "";
+
+  if (!Number.isInteger(weekId)) return { error: "주차를 알 수 없습니다." };
+  if (topic.length > TOPIC_MAX_LENGTH) {
+    return { error: `논의 주제는 ${TOPIC_MAX_LENGTH}자까지 쓸 수 있습니다.` };
+  }
+
+  const supabase = await createClient();
+  try {
+    await requireProfessor(supabase);
+  } catch (e) {
+    return { error: e.message };
+  }
+
+  const { error } = await supabase
+    .from("weeks")
+    .update({ discussion_topic: topic || null })
+    .eq("id", weekId);
+
+  if (error) return { error: error.message };
+
+  revalidatePath(`/week/${weekId}/discussion`);
+  return { saved: true, cleared: topic === "" };
 }
 
 /**
