@@ -1,10 +1,16 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { NOTE_MAX_LENGTH } from "@/lib/lectureNotes";
 
 export async function saveLectureNote(prevState, formData) {
   const weekId = Number(formData.get("week_id"));
   const text = formData.get("text")?.toString() ?? "";
+
+  // 칸에도 maxLength 를 걸어뒀지만, 액션은 직접 호출될 수 있으니 여기서 다시 본다.
+  if (text.length > NOTE_MAX_LENGTH) {
+    return { error: `메모는 ${NOTE_MAX_LENGTH.toLocaleString()}자까지 쓸 수 있습니다.` };
+  }
 
   const supabase = await createClient();
   const {

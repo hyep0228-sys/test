@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, useActionState } from "react";
 import { saveLectureNote, submitLectureQuestion } from "@/app/actions/lectureNotes";
+import { NOTE_MAX_LENGTH } from "@/lib/lectureNotes";
 
 const noteInitialState = { saved: false, error: null };
 const questionInitialState = { submitted: null, error: null };
@@ -13,9 +14,11 @@ export default function LectureMaterialButton({
 }) {
   const [open, setOpen] = useState(false);
   const [panel, setPanel] = useState(null); // null | "note" | "question"
-  // 폰에서 패널은 화면 아래 절반도 안 되는 칸이라 길게 쓰기가 답답하다.
-  // 크게 열면 폰에서는 덱을 잠시 감추고 패널이 화면을 다 쓴다.
+  // 패널은 기본이 좁아서 길게 쓰기가 답답하다. 크게 열면 덱과 반씩 나눠 갖는다.
   const [panelBig, setPanelBig] = useState(false);
+  // 어디까지 썼는지 보이게 글자 수를 센다. 칸 자체는 defaultValue 로 두고
+  // 길이만 따로 추적한다 — 매 글자마다 다시 그리게 만들 필요가 없다.
+  const [noteLength, setNoteLength] = useState((initialNote ?? "").length);
   const [page, setPage] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [questions, setQuestions] = useState(initialQuestions ?? []);
@@ -147,14 +150,17 @@ export default function LectureMaterialButton({
             {/* lg 미만에서는 패널이 옆이 아니라 아래로 붙는다 — 좁은 화면에서
                 가로로 나누면 슬라이드가 읽을 수 없을 만큼 작아졌다. */}
             <div className="flex-1 flex flex-col lg:flex-row min-h-0">
-              {/* 크게 열면 폰에서는 덱을 감춘다. 좁은 화면을 둘로 나눈 채
-                  패널만 키우면 어느 쪽도 제대로 안 보인다.
-                  lg 이상은 나란히 두고 패널 폭만 넓힌다. */}
+              {/* 크게 열면 lg 이상은 왼쪽 덱 · 오른쪽 메모로 반씩 나눈다.
+                  폰 세로에서 좌우로 나누면 한 칸이 190px 남짓이라 16:9 덱의
+                  글자가 안 읽힌다. 그래서 폰은 위아래로 두되 비율을 뒤집어
+                  덱 35% · 메모 65% 로 둔다. */}
               <iframe
                 src={src}
                 title={`${weekId}주차 수업자료`}
-                className={`flex-1 w-full min-h-0 border-0 ${
-                  panel && panelBig ? "hidden lg:block" : ""
+                className={`w-full min-h-0 border-0 ${
+                  panel && panelBig
+                    ? "h-[35%] shrink-0 lg:h-auto lg:flex-1"
+                    : "flex-1"
                 }`}
               />
 
@@ -162,7 +168,7 @@ export default function LectureMaterialButton({
                 <div
                   className={`w-full min-h-0 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-line pad-safe-b ${
                     panelBig
-                      ? "flex-1 lg:flex-none lg:w-[34rem]"
+                      ? "flex-1 lg:flex-none lg:w-1/2"
                       : "shrink-0 max-h-[45%] lg:max-h-none lg:w-80"
                   }`}
                 >
@@ -185,10 +191,17 @@ export default function LectureMaterialButton({
                         name="text"
                         defaultValue={initialNote ?? ""}
                         rows={3}
+                        maxLength={NOTE_MAX_LENGTH}
+                        onChange={(e) => setNoteLength(e.target.value.length)}
                         className="w-full border border-line bg-white px-3 py-2 rounded text-sm flex-1 min-h-0 resize-none leading-relaxed"
                         placeholder="자유롭게 메모해보세요"
                       />
-                      <div className="flex items-center gap-2 mt-3 shrink-0">
+                      <p className="text-[11px] text-mute text-right mt-1 shrink-0">
+                        {noteLength >= NOTE_MAX_LENGTH
+                          ? `최대 ${NOTE_MAX_LENGTH.toLocaleString()}자`
+                          : `${noteLength.toLocaleString()}자`}
+                      </p>
+                      <div className="flex items-center gap-2 mt-2 shrink-0">
                         <button
                           type="submit"
                           disabled={noteIsPending}
