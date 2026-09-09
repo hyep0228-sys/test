@@ -11,6 +11,10 @@
  *
  * 비밀키는 이 파일에 없다 — `.env.local` 에서 읽는다.
  * **받은 파일에는 학생 이름·학번이 들어 있다. 레포(공개)에 넣지 말 것.**
+ *
+ * 2026-09-09: 예약 실행이 `getaddrinfo ENOTFOUND` 로 통째로 실패했다. 맥이 그 시각에
+ * 막 깨어나 아직 네트워크가 안 붙은 상태였다. 그래서 모든 요청을 재시도로 감싸고,
+ * 연결이 확인된 뒤에야 폴더를 만든다 — 빈 폴더가 남아 백업이 된 것처럼 보이면 안 된다.
  */
 const fs = require("fs");
 const path = require("path");
@@ -23,6 +27,28 @@ const TABLES = [
   "discussion_posts", "slide_overrides",
   "balance_questions", "balance_answers", "balance_reflections",
 ];
+
+// 맥이 깨어나 네트워크가 붙기까지 기다린다. 1분 간격 12번이면 12분이다.
+const RETRIES = 12;
+const RETRY_DELAY_MS = 60_000;
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** 네트워크가 아직 없을 수 있으므로 fetch 는 반드시 이걸로 부른다. */
+async function fetchRetry(url, options, label) {
+  let lastError;
+  for (let attempt = 1; attempt <= RETRIES; attempt++) {
+    try {
+      return await fetch(url, options);
+    } catch (e) {
+      lastError = e;
+      const code = e.cause?.code ?? e.message;
+      console.error(`  연결 실패 (${attempt}/${RETRIES}) ${label} — ${code}`);
+      if (attempt < RETRIES) await sleep(RETRY_DELAY_MS);
+    }
+  }
+  throw lastError;
+}
 
 function loadEnv() {
   const file = path.join(__dirname, "..", ".env.local");
@@ -60,12 +86,16 @@ function loadEnv() {
     process.exit(1);
   }
 
+  // 폴더보다 연결을 먼저 확인한다. 순서를 바꾸면 실패했을 때 빈 폴더만 남아
+  // 백업이 된 것처럼 보인다. 실제로 2026-09-09 에 그랬다.
+  await fetchRetry(`${URL}/rest/v1/weeks?select=id&limit=1`, { headers: H }, "연결 확인");
+
   fs.mkdirSync(base, { recursive: true });
 
   const summary = [];
 
   for (const t of TABLES) {
-    const res = await fetch(`${URL}/rest/v1/${t}?select=*`, { headers: H });
+    const res = await fetchRetry(`${URL}/rest/v1/${t}?select=*`, { headers: H }, t);
     if (!res.ok) {
       summary.push(`  ${t.padEnd(20)} — 건너뜀 (${res.status})`);
       continue;
@@ -79,7 +109,11 @@ function loadEnv() {
   // 비밀번호 해시는 내려오지 않으므로, 이것만으로 로그인을 복원할 수는 없다.
   const users = [];
   for (let page = 1; ; page++) {
-    const res = await fetch(`${URL}/auth/v1/admin/users?page=${page}&per_page=200`, { headers: H });
+    const res = await fetchRetry(
+      `${URL}/auth/v1/admin/users?page=${page}&per_page=200`,
+      { headers: H },
+      `auth_users p${page}`,
+    );
     if (!res.ok) break;
     const body = await res.json();
     const batch = body.users ?? [];
@@ -94,4 +128,12 @@ function loadEnv() {
 
   console.log(`백업 위치: ${base}\n`);
   console.log(summary.join("\n"));
-})();
+})().catch((e) => {
+  // 예약 실행은 아무도 안 보고 있다. 무엇이 왜 실패했는지 한 줄로 남긴다.
+  console.error(
+    `\n백업 실패: ${e.cause?.code ?? e.message}\n` +
+      `네트워크가 12분 동안 붙지 않았거나 키가 잘못됐습니다. ` +
+      `맥을 켠 채로 \`node tools/backup.js\` 를 다시 실행하세요.`,
+  );
+  process.exit(1);
+});

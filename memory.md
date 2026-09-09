@@ -207,6 +207,12 @@ node tools/backup.js          # ~/design-history-backup/<날짜>/ 에 저장
 | 실행 | `/usr/local/bin/node .../tools/backup.js` |
 | 로그 | `~/design-history-backup/_log/backup.log` · `backup.err` |
 
+**2026-09-09 예약 실행이 실패했다** — `getaddrinfo ENOTFOUND`. 맥이 그 시각에 막 깨어나
+아직 네트워크가 안 붙은 상태였고, 스크립트는 즉시 죽으면서 **빈 폴더만 남겼다**(백업이 된 것처럼 보였다).
+어제 수업의 메모 75건이 백업 없이 하루를 보냈다. 고친 것: 모든 요청을 **1분 간격 12번 재시도**로 감싸고,
+**연결이 확인된 뒤에야 폴더를 만든다.** 실패하면 종료코드 1과 함께 이유를 한 줄로 남긴다.
+그래도 실패할 수 있으니 **수업 다음 날에는 `_log/backup.err` 를 한 번 볼 것.**
+
 맥이 꺼져 있었으면 다음에 켤 때 한 번 돈다. 확인은 `launchctl list | grep designhistory`,
 끄려면 `launchctl unload ~/Library/LaunchAgents/com.jeehyepark.designhistory-backup.plist`.
 **node 경로가 바뀌면 조용히 실패한다** — 이상하면 `backup.err` 부터 볼 것.
