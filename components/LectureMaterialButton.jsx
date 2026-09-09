@@ -13,6 +13,9 @@ export default function LectureMaterialButton({
 }) {
   const [open, setOpen] = useState(false);
   const [panel, setPanel] = useState(null); // null | "note" | "question"
+  // 폰에서 패널은 화면 아래 절반도 안 되는 칸이라 길게 쓰기가 답답하다.
+  // 크게 열면 폰에서는 덱을 잠시 감추고 패널이 화면을 다 쓴다.
+  const [panelBig, setPanelBig] = useState(false);
   const [page, setPage] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [questions, setQuestions] = useState(initialQuestions ?? []);
@@ -97,7 +100,10 @@ export default function LectureMaterialButton({
               </p>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
-                  onClick={() => setPanel(panel === "note" ? null : "note")}
+                  onClick={() => {
+                    setPanel(panel === "note" ? null : "note");
+                    setPanelBig(false);
+                  }}
                   className={`text-xs px-3 min-h-11 inline-flex items-center rounded border ${
                     panel === "note"
                       ? "border-accent text-accent"
@@ -107,9 +113,10 @@ export default function LectureMaterialButton({
                   메모하기
                 </button>
                 <button
-                  onClick={() =>
-                    setPanel(panel === "question" ? null : "question")
-                  }
+                  onClick={() => {
+                    setPanel(panel === "question" ? null : "question");
+                    setPanelBig(false);
+                  }}
                   className={`text-xs px-3 min-h-11 inline-flex items-center rounded border ${
                     panel === "question"
                       ? "border-accent text-accent"
@@ -118,6 +125,15 @@ export default function LectureMaterialButton({
                 >
                   질문남기기
                 </button>
+                {panel && (
+                  <button
+                    onClick={() => setPanelBig((v) => !v)}
+                    aria-pressed={panelBig}
+                    className="text-xs px-3 min-h-11 inline-flex items-center rounded border border-line text-mute"
+                  >
+                    {panelBig ? "작게" : "크게"}
+                  </button>
+                )}
                 <button
                   onClick={close}
                   aria-label="닫기"
@@ -131,29 +147,48 @@ export default function LectureMaterialButton({
             {/* lg 미만에서는 패널이 옆이 아니라 아래로 붙는다 — 좁은 화면에서
                 가로로 나누면 슬라이드가 읽을 수 없을 만큼 작아졌다. */}
             <div className="flex-1 flex flex-col lg:flex-row min-h-0">
+              {/* 크게 열면 폰에서는 덱을 감춘다. 좁은 화면을 둘로 나눈 채
+                  패널만 키우면 어느 쪽도 제대로 안 보인다.
+                  lg 이상은 나란히 두고 패널 폭만 넓힌다. */}
               <iframe
                 src={src}
                 title={`${weekId}주차 수업자료`}
-                className="flex-1 w-full min-h-0 border-0"
+                className={`flex-1 w-full min-h-0 border-0 ${
+                  panel && panelBig ? "hidden lg:block" : ""
+                }`}
               />
 
               {panel && (
-                <div className="w-full lg:w-80 shrink-0 max-h-[45%] lg:max-h-none border-t lg:border-t-0 lg:border-l border-line overflow-y-auto overscroll-contain p-4 pad-safe-b">
+                <div
+                  className={`w-full min-h-0 flex flex-col overflow-hidden border-t lg:border-t-0 lg:border-l border-line pad-safe-b ${
+                    panelBig
+                      ? "flex-1 lg:flex-none lg:w-[34rem]"
+                      : "shrink-0 max-h-[45%] lg:max-h-none lg:w-80"
+                  }`}
+                >
                   {panel === "note" && (
-                    <form action={noteAction} className="flex flex-col h-full">
+                    <form
+                      action={noteAction}
+                      className="flex flex-col min-h-0 flex-1 p-4"
+                    >
                       <input type="hidden" name="week_id" value={weekId} />
-                      <p className="text-sm font-medium mb-2">나만의 메모</p>
-                      <p className="text-xs text-mute mb-3">
+                      <p className="text-sm font-medium mb-2 shrink-0">
+                        나만의 메모
+                      </p>
+                      <p className="text-xs text-mute mb-3 shrink-0">
                         이 주차 수업자료를 보며 남긴 메모는 나만 볼 수 있어요.
                       </p>
+                      {/* 예전에는 패널 전체가 스크롤되고 그 안에서 이 칸이 또
+                          스크롤돼, 저장 버튼이 접혀 안 보이는 일이 있었다.
+                          이제 스크롤은 이 칸 하나뿐이고 버튼은 늘 바닥에 있다. */}
                       <textarea
                         name="text"
                         defaultValue={initialNote ?? ""}
-                        rows={6}
-                        className="w-full border border-line bg-white px-3 py-2 rounded text-sm flex-1 lg:min-h-[16rem]"
+                        rows={3}
+                        className="w-full border border-line bg-white px-3 py-2 rounded text-sm flex-1 min-h-0 resize-none leading-relaxed"
                         placeholder="자유롭게 메모해보세요"
                       />
-                      <div className="flex items-center gap-2 mt-3">
+                      <div className="flex items-center gap-2 mt-3 shrink-0">
                         <button
                           type="submit"
                           disabled={noteIsPending}
@@ -174,15 +209,17 @@ export default function LectureMaterialButton({
                   )}
 
                   {panel === "question" && (
-                    <div className="flex flex-col h-full">
-                      <p className="text-sm font-medium mb-2">질문남기기</p>
-                      <p className="text-xs text-mute mb-3">
+                    <div className="flex flex-col min-h-0 flex-1 p-4">
+                      <p className="text-sm font-medium mb-2 shrink-0">
+                        질문남기기
+                      </p>
+                      <p className="text-xs text-mute mb-3 shrink-0">
                         남긴 질문은 교수님만 볼 수 있어요.
                       </p>
                       <form
                         ref={questionFormRef}
                         action={questionAction}
-                        className="space-y-2"
+                        className="space-y-2 shrink-0"
                       >
                         <input type="hidden" name="week_id" value={weekId} />
                         <input
@@ -211,7 +248,7 @@ export default function LectureMaterialButton({
                       </form>
 
                       {questions.length > 0 && (
-                        <div className="mt-5 pt-4 border-t border-line space-y-2">
+                        <div className="mt-5 pt-4 border-t border-line space-y-2 min-h-0 flex-1 overflow-y-auto overscroll-contain">
                           <p className="text-xs text-mute mb-1">
                             내가 남긴 질문
                           </p>
