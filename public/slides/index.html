@@ -111,6 +111,37 @@ button{font-family:inherit;}
 .nav-btn--next{right:clamp(.6rem,2vw,1.6rem);}
 .nav-btn[disabled]{opacity:.15; cursor:default;}
 
+/* ============ IMAGE LIGHTBOX ============ */
+/* 사진을 누르면 크게 본다. .slide 안은 fitActive 가 scale() 을 걸어서
+   position:fixed 가 그 안에 갇힌다 — 반드시 body 직속에 둘 것. */
+.artifact-photo img, .hero-photo img{cursor:zoom-in;}
+.lightbox{
+  position:fixed; inset:0; z-index:80; background:rgba(20,17,12,.93);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.9rem; padding:4vmin 3vmin 5vmin; cursor:zoom-out;
+  opacity:0; pointer-events:none; transition:opacity .18s;
+}
+.lightbox.is-open{opacity:1; pointer-events:auto;}
+.lightbox img{
+  max-width:94vw; max-height:82vh; width:auto; height:auto; object-fit:contain;
+  background:var(--paper); box-shadow:0 24px 70px rgba(0,0,0,.5);
+}
+.lightbox__cap{
+  font-family:var(--f-mono); font-size:.78rem; line-height:1.5; color:#e8e2d6;
+  text-align:center; max-width:80ch; margin:0;
+}
+.lightbox__hint{
+  font-family:var(--f-mono); font-size:.66rem; color:#e8e2d6; opacity:.5; margin:0;
+}
+.lightbox__close{
+  position:absolute; top:2vmin; right:2.6vmin; width:2.4rem; height:2.4rem;
+  font-size:1.6rem; line-height:1; color:#e8e2d6; background:none;
+  border:1px solid rgba(232,226,214,.35); cursor:pointer;
+}
+@media (max-width:700px){
+  .lightbox img{max-width:98vw; max-height:74vh;}
+}
+
 /* ============ MENU OVERLAY ============ */
 .menu-overlay{
   position:fixed; inset:0; z-index:60; background:rgba(33,28,20,.55);
@@ -524,6 +555,13 @@ body.export-clean main{inset:0;}
   </div>
   <button class="nav-btn nav-btn--prev" id="prevBtn" aria-label="이전 슬라이드">‹</button>
   <button class="nav-btn nav-btn--next" id="nextBtn" aria-label="다음 슬라이드">›</button>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox__close" id="lightboxClose" aria-label="닫기">&times;</button>
+  <img id="lightboxImg" alt="">
+  <p class="lightbox__cap" id="lightboxCap"></p>
+  <p class="lightbox__hint">아무 곳이나 누르거나 ESC</p>
 </div>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -2305,12 +2343,12 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>수정궁 — 산업이 스스로를 전시하다</h3><span class="tag">1851</span></div>
     <ul class="bullet-list">
-      <li><strong>1851</strong> 런던 대박람회(The Great Exhibition). 조지프 팩스턴의 수정궁(Crystal Palace)이 그 회장이었다.</li>
-      <li>철과 유리로 조립한 <strong>프리패브 건축</strong>이 산업 생산력 자체를 상징했다.</li>
-      <li>전시된 기계 생산품 다수는 <strong>과잉 장식</strong>과 부적절한 재료 모방으로 비판받았다.</li>
-      <li>"할 수 있다고 해서 해야 하는가" — 이 물음이 처음 공론화된다.</li>
-      <li>기계는 형태를 빠르게 반복했지만 <strong>좋은 형태를 보장하지 않았다</strong>.</li>
-    </ul>
+        <li><strong>1851</strong> 런던 대박람회. 조지프 팩스턴의 수정궁(Crystal Palace).</li>
+        <li>철과 유리로 조립한 <strong>프리패브 건축</strong> — 산업 생산력의 상징.</li>
+        <li>전시된 기계 생산품 다수는 <strong>과잉 장식</strong>·재료 모방으로 비판받았다.</li>
+        <li>"할 수 있다고 해서 해야 하는가" — 이 물음이 처음 공론화된다.</li>
+        <li>기계는 반복이 빠르지만 <strong>좋은 형태를 보장하지 않는다</strong>.</li>
+      </ul>
   </div>
 </section>
 <section class="slide" data-era="expo" data-week="4" data-title="앨버트 공과 박람회의 탄생" data-dates="1848~1850">
@@ -2323,12 +2361,12 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>왕실 부군이 밀어붙인 국제 행사</h3><span class="tag">PRINCE ALBERT</span></div>
       <ul class="bullet-list">
-        <li><strong>1848</strong> 앨버트 공이 정부에 박람회 제안서를 냈다. 빅토리아 여왕의 남편이자 왕립예술협회 대표였다.</li>
-        <li>의회 반응은 미지근했지만 그는 물러서지 않았다.</li>
-        <li><strong>1849</strong> 런던 시장 만찬 연설 — "여러 나라와 세계 각지를 분리하던 거리는 점점 사라지고 있습니다."</li>
-        <li>이어서 — "발견이나 발명을 해도 <strong>공개성 때문에 이미 경쟁자들이 개선하거나 추월</strong>해버립니다."</li>
-        <li>그는 박람회를 "전 인류가 도달한 <strong>발전 지점의 진실한 시험</strong>이며 살아있는 그림"이라 규정했다.</li>
-        <li>기금 조달은 순탄치 않았다. 잡지 『펀치』는 모자를 내밀어 돈을 구걸하는 그를 <strong>"근면한 젊은이"</strong>라 풍자했다.</li>
+        <li><strong>1848</strong> 앨버트 공, 정부에 박람회 제안서 제출. 빅토리아 여왕의 남편, 왕립예술협회 대표.</li>
+        <li>의회 반응은 미지근했으나 물러서지 않았다.</li>
+        <li><strong>1849</strong> 런던 시장 만찬 연설 — "나라와 나라를 분리하던 거리는 점점 사라지고 있습니다."</li>
+        <li>"발명을 해도 <strong>공개성 때문에 경쟁자들이 이미 개선하거나 추월</strong>해버립니다."</li>
+        <li>박람회는 "전 인류가 도달한 <strong>발전 지점의 진실한 시험</strong>이며 살아있는 그림".</li>
+        <li>기금 조달 난항. 『펀치』는 모자를 내밀어 구걸하는 그를 <strong>"근면한 젊은이"</strong>로 풍자.</li>
       </ul>
     </div>
   </div>
@@ -2339,12 +2377,12 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>아무도 풀지 못한 설계 과제</h3><span class="tag">COMPETITION</span></div>
     <ul class="bullet-list">
-      <li><strong>1850</strong> 3월 공모 시작. 1851년 1월 1일까지 약 7만 평방피트 규모의 구조물을 세워야 했다.</li>
-      <li>시작부터 마무리까지 <strong>단 9개월</strong>이었다.</li>
-      <li><strong>233명 이상</strong>의 건축가가 계획안을 냈지만 설계 요강과 맞아떨어지는 안은 하나도 없었다.</li>
-      <li>위원회가 직접 준비한 <strong>벽돌 건물 안</strong>은 "볼품없다"는 비난을 받고 비용 초과를 이유로 기각됐다.</li>
-      <li>표류하던 프로젝트를 살려낸 사람은 <strong>조지프 팩스턴</strong>. "천재지만 건축가나 기술자가 아닌" 데번셔 공작의 수석 정원사였다.</li>
-    </ul>
+        <li><strong>1850</strong> 3월 공모 시작. 1851년 1월 1일까지 약 7만 평방피트 구조물.</li>
+        <li>시작부터 마무리까지 <strong>단 9개월</strong>.</li>
+        <li><strong>233명 이상</strong>의 건축가가 응모. 설계 요강에 맞는 안은 하나도 없었다.</li>
+        <li>위원회의 벽돌 건물 안 — "볼품없다"는 비난, 비용 초과로 <strong>기각</strong>.</li>
+        <li>프로젝트를 살린 사람은 <strong>조지프 팩스턴</strong>. "천재지만 건축가나 기술자가 아닌" 데번셔 공작의 수석 정원사.</li>
+      </ul>
     <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>전문 건축가 233명이 못 푼 문제를 정원사가 풀었다. 문제를 다시 정의하면 답이 달라진다는 것을, 이 사례는 어떻게 보여주는가?</p></div>
   </div>
 </section>
@@ -2359,10 +2397,10 @@ body.export-clean main{inset:0;}
       <cite>— 오웬 존스, 『장식의 문법』(1856)의 원리를 요약하면</cite>
     </div>
     <ul class="bullet-list" style="margin-top:1.2rem;">
-      <li><strong>헨리 콜</strong>은 저급한 장식을 비판하는 『디자인 저널』을 발행했다.</li>
-      <li>대박람회 수익금으로 <strong>사우스켄싱턴박물관</strong>(오늘날의 V&amp;A)을 세워 디자인 교육을 제도화했다.</li>
-      <li>"정직한 재료, 정직한 구조"라는 이 개혁의 언어는 <strong>19세기 후반 미술공예운동</strong>의 토양이 된다 (→ 5주차).</li>
-    </ul>
+        <li><strong>헨리 콜</strong> — 저급한 장식을 비판한 『디자인 저널』 발행.</li>
+        <li>대박람회 수익금으로 <strong>사우스켄싱턴박물관</strong>(오늘날의 V&amp;A) 설립. 디자인 교육의 제도화.</li>
+        <li>"정직한 재료, 정직한 구조" — <strong>19세기 후반 미술공예운동</strong>의 토양 (→ 5주차).</li>
+      </ul>
   </div>
 </section>
 
@@ -2372,10 +2410,10 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>철과 유리로 지은 6개월짜리 건물</h3><span class="tag">1851</span></div>
       <ul class="bullet-list">
-        <li>온실 건축가 <strong>조지프 팩스턴</strong>이 규격화된 유리·철골 부재를 조립해 단 몇 달 만에 완공했다.</li>
-        <li>건축 자체가 <strong>프리패브 부품의 표준화</strong>를 증명하는 하나의 거대한 전시물이었다.</li>
-        <li>박람회 후 시드넘으로 옮겨 재조립했으나 <strong>1936년 화재</strong>로 소실됐다.</li>
-        <li>오늘날은 사진과 판화로만 남아 있다.</li>
+        <li>온실 건축가 <strong>조지프 팩스턴</strong>. 규격화된 유리·철골 부재를 조립해 몇 달 만에 완공.</li>
+        <li>건축 자체가 <strong>프리패브 부품 표준화</strong>의 거대한 전시물.</li>
+        <li>박람회 후 시드넘으로 이전·재조립, <strong>1936년 화재</strong>로 소실.</li>
+        <li>지금은 사진과 판화로만 남아 있다.</li>
       </ul>
     </div>
     <figure class="artifact-photo">
@@ -2390,14 +2428,14 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>반복된 국제 박람회</h3><span class="tag">SERIES</span></div>
     <div class="timeline-row">
-      <div class="tl-item"><div class="yr">1844</div><div class="tt">파리 — 국가 박람회. 대박람회의 전례가 된 국내 산업전이다. 콜과 동료들은 이것을 국제 규모로 넓히려 했다</div></div>
+      <div class="tl-item"><div class="yr">1844</div><div class="tt">파리 — 국가 박람회. 대박람회의 전례가 된 국내 산업전</div></div>
       <div class="tl-item"><div class="yr">1851</div><div class="tt">런던 — 수정궁, 산업생산의 첫 전 지구적 전시</div></div>
       <div class="tl-item"><div class="yr">1862</div><div class="tt">런던 — 디자인 개혁의 논쟁이 이어짐</div></div>
       <div class="tl-item"><div class="yr">1873</div><div class="tt">빈 — 일본이 처음으로 대규모 참가, 자포니즘 확산의 계기</div></div>
       <div class="tl-item"><div class="yr">1889</div><div class="tt">파리 — 에펠탑, 철골 구조의 또 다른 정점</div></div>
       <div class="tl-item"><div class="yr">1893</div><div class="tt">시카고 — 미국이 자국 산업력을 처음 국제 무대에 전시</div></div>
     </div>
-    <p class="map-note">박람회는 <strong>1925년 파리</strong>(아르데코)·<strong>1939년 뉴욕</strong>(유선형)에서도 그 시대의 양식을 대중에게 공개하는 자리로 반복된다 (→ 11주차).</p>
+    <p class="map-note"><strong>1925년 파리</strong>(아르데코)·1939년 뉴욕(유선형)에서도 반복된다 (→ 11주차).</p>
   </div>
 </section>
 
@@ -2406,16 +2444,16 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>온실 기술자가 지은 궁전</h3><span class="tag">ENGINEERING</span></div>
     <ul class="bullet-list">
-      <li>팩스턴은 데번셔 공작의 <strong>수석 정원사</strong>이자 대형 온실 설계자였다. 채츠워스의 거대 온실 경험을 그대로 확장했다.</li>
-      <li><strong>1850</strong> 6월, 첫 안은 철도 이사회 회의 중 압지에 그린 낙서 같은 스케치였다.</li>
-      <li>규격화된 철제 기둥과 판유리 패널을 <strong>공장에서 미리 만들어 현장에서 조립</strong>했다. 판유리만 약 30만 장이 들어갔다.</li>
-      <li>착공에서 완공까지 <strong>약 5개월</strong>. 시공은 철도설비·교량건설 전문사인 폭스·헨더슨 합작사가 맡았다.</li>
-      <li>이 건물을 세운 것은 건축이 아니라 <strong>철도 토목 기술</strong>이었다.</li>
-      <li>길이 <strong>1,851피트</strong>(약 564m). 개최 연도와 같은 숫자로 맞췄고, 당시 세계 최대의 실내 공간이었다.</li>
-      <li>하이드파크의 오래된 느릅나무를 베지 않고 <strong>건물 안에 그대로 품었다</strong>.</li>
-      <li>역사가 헤르미오네 홉하우스 — "런던 사람들에게 그 건물은 <strong>세계 8번째 불가사의</strong>였다."</li>
-      <li>'수정궁'이라는 이름부터가 잡지 <strong>『펀치』</strong>가 붙인 별명이다.</li>
-    </ul>
+        <li>팩스턴 — 데번셔 공작의 <strong>수석 정원사</strong>이자 대형 온실 설계자. 채츠워스 온실의 확장이다.</li>
+        <li><strong>1850</strong> 6월, 첫 안은 철도 이사회 회의 중 압지에 그린 낙서 같은 스케치.</li>
+        <li>철제 기둥·판유리 패널을 <strong>공장 제작 · 현장 조립</strong>. 판유리 약 30만 장.</li>
+        <li>착공에서 완공까지 <strong>약 5개월</strong>. 시공은 철도설비·교량건설 전문 폭스·헨더슨 합작사.</li>
+        <li>이 건물을 세운 것은 건축이 아니라 <strong>철도 토목 기술</strong>이었다.</li>
+        <li>길이 <strong>1,851피트</strong>(약 564m) — 개최 연도와 같은 숫자. 당시 세계 최대의 실내 공간.</li>
+        <li>하이드파크의 오래된 느릅나무를 베지 않고 <strong>건물 안에 그대로 품었다</strong>.</li>
+        <li>역사가 헤르미오네 홉하우스 — "런던 사람들에게 <strong>세계 8번째 불가사의</strong>였다."</li>
+        <li>'수정궁'이라는 이름부터가 잡지 <strong>『펀치』</strong>가 붙인 별명이다.</li>
+      </ul>
   </div>
 </section>
 <section class="slide" data-era="expo" data-week="4" data-title="수련 잎에서 온 구조" data-dates="1849~1851">
@@ -2424,11 +2462,11 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>자연의 기술적 위업</h3><span class="tag">BIOMIMICRY</span></div>
       <ul class="bullet-list">
-        <li>팩스턴은 채츠워스에서 아마존의 <strong>대왕수련</strong>(Victoria regia)을 재배하는 데 성공했다.</li>
-        <li>그를 사로잡은 것은 꽃이 아니라 <strong>잎이 하중을 견디는 힘</strong>이었다.</li>
-        <li>지름 2미터가 넘는 잎의 비밀은 뒷면의 <strong>방사형 갈비뼈 구조</strong>였다. 굵은 주맥이 중심에서 뻗고 가는 가로맥이 격자로 이어 붙든다.</li>
-        <li>팩스턴은 이를 <strong>"자연의 기술적 위업"</strong>이라 불렀다.</li>
-        <li>이 원리를 백합 온실의 연결식 지붕으로 옮기고, 다시 모듈 단위로 확장해 <strong>수정궁</strong>을 설계했다.</li>
+        <li>팩스턴은 채츠워스에서 아마존의 <strong>대왕수련</strong>(Victoria regia) 재배에 성공했다.</li>
+        <li>그를 사로잡은 것은 꽃이 아니라 <strong>잎이 하중을 견디는 힘</strong>.</li>
+        <li>지름 2미터 넘는 잎의 비밀은 뒷면의 <strong>방사형 갈비뼈 구조</strong> — 굵은 주맥과 가는 가로맥의 격자.</li>
+        <li>팩스턴의 말 — <strong>"자연의 기술적 위업"</strong>.</li>
+        <li>백합 온실의 연결식 지붕 → 모듈로 확장 → <strong>수정궁</strong>.</li>
         <li>구조는 자연에서, 재료는 공장에서 왔다.</li>
       </ul>
     </div>
@@ -2446,14 +2484,14 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>철골에 삼원색을 칠하다</h3><span class="tag">OWEN JONES</span></div>
       <ul class="bullet-list">
-        <li>건물이 완성되자 내부 장식을 맡은 사람은 건축가이자 디자인 이론가인 <strong>오웬 존스</strong>였다.</li>
+        <li>내부 장식을 맡은 사람은 건축가이자 디자인 이론가 <strong>오웬 존스</strong>.</li>
         <li>5년 뒤 『장식의 문법』(1856)을 펴내는 바로 그 사람이다.</li>
-        <li>존스는 <strong>색채가 건축 형태를 규정하는 데 쓰여야 한다</strong>고 믿었다.</li>
-        <li>이집트·그리스·아랍 등 동방 문명의 기념비에서 끌어온 <strong>빨강·파랑·노랑 다색 계획</strong>을 논쟁적으로 도입했다.</li>
+        <li><strong>색채가 건축 형태를 규정</strong>하는 데 쓰여야 한다고 믿었다.</li>
+        <li>이집트·그리스·아랍 등 동방 문명의 기념비에서 끌어온 <strong>빨강·파랑·노랑</strong> 다색 계획.</li>
         <li>철 구조물을 여러 색으로 칠해 <strong>깊이와 원근감</strong>을 만들었다.</li>
-        <li>1842년 창간된 『디 일러스트레이티드 런던 뉴스』의 평론가는 이 채색을 터너 회화의 <strong>"뿌연 흐릿함"</strong>에 비유했다.</li>
-        <li>존스는 30개 분류 중 두 부문을 감독했다 — "종이·인쇄술·제본술", "조각·모델·조형미술·모자이크·에나멜".</li>
-        <li><strong>전시품 배치</strong>까지 맡았다. 지금으로 치면 전시 디자이너다.</li>
+        <li>1842년 창간된 『디 일러스트레이티드 런던 뉴스』 — 터너 회화의 <strong>"뿌연 흐릿함"</strong>에 비유.</li>
+        <li>30개 분류 중 두 부문(인쇄·제본, 조각·조형)을 감독하고 <strong>전시품 배치</strong>까지 맡았다.</li>
+        <li>지금으로 치면 전시 디자이너다.</li>
       </ul>
     </div>
     <figure class="artifact-photo">
@@ -2473,14 +2511,15 @@ body.export-clean main{inset:0;}
     <div>
     <div class="section-head"><h3>세계를 네 개의 방으로 압축하다</h3><span class="tag">CONTENT</span></div>
     <ul class="bullet-list">
-      <li>전시는 <strong>원료 · 기계 · 공산품 · 순수미술</strong> 네 부문 아래 30개 분류로 나뉘었다.</li>
-      <li>이 엄청나게 다양한 제조물을 논리적 구분으로 분류한 것 자체가 <strong>위원회의 이례적인 일</strong>이었다.</li>
-      <li>팩스턴이 설계한 약 <strong>3,300만 입방피트</strong>의 공간에 10만여 개 품목이 놓였다.</li>
-      <li>해양 엔진·기계 직조기·증기 기관차·유압 프레스 같은 <strong>중장비</strong>부터 스테인드글라스·샹들리에·시계·레이스 같은 소품까지.</li>
-      <li>화제를 모은 것 — 인도의 대형 다이아몬드 <strong>'코이누르'</strong>, 미국관의 콜트 리볼버(호환 부품), 독일 크루프사의 강철 주조물.</li>
-      <li>나라별 구획을 넘어 <strong>영국 제조사가 할 수 있으리라 상상되는 모든 시도</strong>를 선보이는 전용 구획이 따로 있었다.</li>
-      <li>절반은 영국과 대영제국 식민지의 전시였다 — <strong>산업력을 과시하는 국가적 행사</strong>였다는 점도 함께 봐야 한다.</li>
-    </ul>
+        <li><strong>원료 · 기계 · 공산품 · 순수미술</strong> 네 부문, 그 아래 30개 분류.</li>
+        <li>이 다양한 제조물을 논리적으로 분류한 것 자체가 <strong>이례적인 일</strong>이었다.</li>
+        <li>약 <strong>3,300만 입방피트</strong> 공간에 10만여 개 품목.</li>
+        <li><strong>중장비</strong> — 해양 엔진 · 기계 직조기 · 증기 기관차 · 유압 프레스.</li>
+        <li>소품 — 스테인드글라스 · 샹들리에 · 시계 · <strong>레이스</strong>.</li>
+        <li>화제작 — 인도의 <strong>'코이누르'</strong> 다이아몬드, 미국관 콜트 리볼버(호환 부품), 크루프사 강철 주조물.</li>
+        <li>영국 제조사가 할 수 있으리라 상상되는 모든 시도를 모은 <strong>전용 구획</strong>도 따로 있었다.</li>
+        <li>절반이 영국과 대영제국 식민지 전시 — <strong>산업력을 과시하는 국가적 행사</strong>였다.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -2496,12 +2535,12 @@ body.export-clean main{inset:0;}
       <div class="section-head"><h3>1실링이 만든 관객</h3><span class="tag">AUDIENCE</span></div>
       <ul class="bullet-list">
         <li>6개월간 <strong>유료 관람객 60만 명 이상</strong>이 다녀간 대중적 성공이었다.</li>
-        <li>비결은 <strong>입장료 차등제</strong>였다. 개막 초기 1파운드에서 5월 말부터 평일 1실링으로 내렸다.</li>
-        <li>방문객 대다수가 이 '실링 데이'에 왔다 — <strong>노동자 계층이 처음으로 대규모 관객이 된 전시</strong>다.</li>
-        <li>여행업자 <strong>토머스 쿡</strong>은 단체 할인 철도 여행을 짜서 15만 명 이상을 런던으로 실어날랐다. 근대 패키지 관광의 출발점이다.</li>
-        <li>왕립위원회는 약 <strong>18만 6천 파운드</strong>의 흑자를 남겼다. 이 돈이 박물관과 학교를 만든다.</li>
+        <li>비결은 <strong>입장료 차등제</strong> — 개막 초기 1파운드, 5월 말부터 평일 1실링.</li>
+        <li>대다수가 '실링 데이'에 왔다. <strong>노동자 계층이 처음으로 대규모 관객</strong>이 된 전시다.</li>
+        <li>여행업자 <strong>토머스 쿡</strong>, 단체 할인 철도로 15만 명 이상 수송. 근대 패키지 관광의 출발점.</li>
+        <li>왕립위원회 흑자 약 <strong>18만 6천 파운드</strong>. 이 돈이 박물관과 학교를 만든다.</li>
       </ul>
-      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>전시를 <strong>누가 볼 수 있는가</strong>를 정하는 것도 디자인의 일부다. 1실링이라는 가격 하나가 이 박람회의 성격을 바꿔놓았다.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>전시를 <strong>누가 볼 수 있는가</strong>를 정하는 것도 디자인의 일부다.</p></div>
     </div>
   </div>
 </section>
@@ -2512,16 +2551,16 @@ body.export-clean main{inset:0;}
     <div>
     <div class="section-head"><h3>공무원이 디자인 개혁을 이끌다</h3><span class="tag">HENRY COLE</span></div>
     <ul class="bullet-list">
-      <li>헨리 콜은 기록보관소 공무원 출신으로 <strong>우편 제도 개혁</strong>에도 관여했다.</li>
-      <li><strong>1843</strong> 화가 존 캘컷 호슬리에게 그림을 맡겨 세계 최초의 상업용 크리스마스 카드를 찍어 1실링에 팔았다.</li>
-      <li>그는 <strong>"초기 디자인 이론을 실현했던 최초의 산업디자이너"</strong>로 평가된다.</li>
-      <li><strong>1846</strong> '펠릭스 서멀리'라는 가명으로 예술협회 디자인 공모전에 흰색 다기그릇 세트를 내 금메달을 받았다.</li>
-      <li>이 다기세트는 <strong>형태의 단순함</strong>으로 유명했고 민튼(Minton)사에서 생산에 들어갔다.</li>
-      <li><strong>1847</strong> 서멀리 예술제작소를 세워 존 벨·다니엘 매클라이즈·리처드 레드그레이브 같은 유명 화가·조각가에게 산업생산용 제품을 의뢰했다.</li>
-      <li>겨우 3년 만에 단명했지만 <strong>'예술제작품'</strong> 개념을 확립했다.</li>
-      <li><strong>1849</strong> 『디자인과 제품 저널』 창간. 편집은 리처드 레드그레이브가 맡았다.</li>
-      <li><strong>1847~49</strong> 왕립예술협회 전시회를 매년 조직했고, 1851년에는 협회 회장이 되었다.</li>
-    </ul>
+        <li>기록보관소 공무원 출신. <strong>우편 제도 개혁</strong>에도 관여했다.</li>
+        <li><strong>1843</strong> 존 캘컷 호슬리에게 그림을 맡겨 세계 최초의 상업용 크리스마스 카드를 1실링에 팔았다.</li>
+        <li><strong>"초기 디자인 이론을 실현했던 최초의 산업디자이너"</strong>로 평가된다.</li>
+        <li><strong>1846</strong> '펠릭스 서멀리' 가명으로 예술협회 디자인 공모전 금메달 — 흰색 다기그릇 세트.</li>
+        <li><strong>형태의 단순함</strong>으로 유명해져 민튼(Minton)사에서 생산.</li>
+        <li><strong>1847</strong> 서멀리 예술제작소 설립. 존 벨·다니엘 매클라이즈·리처드 레드그레이브에게 산업생산용 제품을 의뢰.</li>
+        <li>3년 만에 단명했으나 <strong>'예술제작품'</strong> 개념을 확립했다.</li>
+        <li><strong>1849</strong> 『디자인과 제품 저널』 창간. 편집은 리처드 레드그레이브.</li>
+        <li><strong>1847~49</strong> 왕립예술협회 전시회를 매년 조직, 1851년 협회 회장이 되었다.</li>
+      </ul>
     </div>
     <figure class="artifact-photo">
       <img src="img/w04-cole-card.webp" alt="1843년 헨리 콜이 의뢰한 세계 최초의 상업용 크리스마스 카드, 존 캘컷 호슬리 그림" loading="lazy">
@@ -2534,15 +2573,16 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>디자인이란 무엇인가, 처음으로 정의되다</h3><span class="tag">DEFINITION</span></div>
     <div class="pullquote">
-      <p>디자인에는 <strong>이중적 관계</strong>가 있다. 첫째, 디자인된 물건은 <strong>유용성</strong>과 엄밀하게 연관된다. 둘째, 그 유용성을 <strong>아름답게 만드는 것 또는 장식하는 것</strong>과 관련된다. 하지만 많은 이들은 디자인이라는 말을 전체적인 의미보다 유용성과 별개거나 반대되기도 하는 장식이라는 의미에 더 가까운 두 번째 의미와 동일시한다. 이렇게 <strong>부가된 것과 본질적인 것을 혼동함</strong>에 따라, 현대 디자이너들의 작품에서 볼 수 있는 중대한 취향의 오류가 많이 생겨났다.</p>
+      <p>디자인에는 <strong>이중적 관계</strong>가 있다. 첫째, 디자인된 물건은 <strong>유용성</strong>과 엄밀하게 연관된다. 둘째, 그 유용성을 <strong>아름답게 만들거나 장식하는 것</strong>과 관련된다. 하지만 많은 이들은 디자인을 두 번째 의미와 동일시한다. 이렇게 <strong>부가된 것과 본질적인 것을 혼동함</strong>에 따라 중대한 취향의 오류가 많이 생겨났다.</p>
       <cite>— 헨리 콜, 『디자인과 제품 저널』 창간호, 1849</cite>
     </div>
     <ul class="bullet-list">
-      <li>당시 대부분의 제조업자는 디자인을 <strong>기계화된 생산의 여러 측면 중 하나</strong>, 최악의 경우 부차적인 것으로만 보았다.</li>
-      <li>전문 산업디자이너 대신 <strong>기술전문가나 재료 전문가</strong>가 디자인을 수행했고, 실무에는 이론적·철학적 기초가 거의 없었다.</li>
-      <li>콜의 진단은 정확했다. 문제는 디자인을 <strong>과정</strong>이 아니라 물품의 장식으로 오해한 것이었다.</li>
-      <li>그가 말한 과정은 <strong>개념 → 계획 → 궁극적 실현</strong>이다.</li>
-    </ul>
+        <li>당시 제조업자들은 디자인을 <strong>기계화된 생산의 한 측면</strong>, 최악의 경우 부차적인 것으로 보았다.</li>
+        <li>전문 산업디자이너 대신 <strong>기술·재료 전문가</strong>가 디자인을 수행했다.</li>
+        <li>실무에 이론적·철학적 기초가 거의 없었다.</li>
+        <li>문제는 디자인을 <strong>과정</strong>이 아니라 물품의 장식으로 오해한 것이었다.</li>
+        <li>그 과정은 <strong>개념 → 계획 → 궁극적 실현</strong>이다.</li>
+      </ul>
   </div>
 </section>
 
@@ -2552,15 +2592,15 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>나쁜 디자인을 전시한 박물관</h3><span class="tag">1852</span></div>
     <ul class="bullet-list">
-      <li>왕립위원회는 박람회 수익금 중 <strong>5천 파운드</strong>로 전시품 일부를 사들여 디자인 연구용 컬렉션을 만들었다.</li>
-      <li><strong>1852</strong> 말 말보로 하우스에 제작품 박물관(Museum of Manufactures)이 개관했다. 훗날의 빅토리아 앤 앨버트 박물관(V&amp;A)이다.</li>
-      <li>전시용 교육 물품은 <strong>A.W.N. 퓨진과 리처드 레드그레이브</strong>가 선별했고, 헨리 콜이 초대 총괄 관리자가 되었다.</li>
-      <li>콜은 <strong>"잘못된 원리에 입각한 장식"</strong>이라는 제목으로 형편없이 디자인된 물품들도 전시하기 시작했다.</li>
-      <li><strong>'공포의 방(Chamber of Horrors)'</strong>으로 알려진 이 공간의 목적은 둘이었다.</li>
-      <li>제조업자에게 <strong>창피를 줘</strong> 더 나은 것을 만들게 하려는 것.</li>
-      <li>대중에게 <strong>좋은 디자인과 나쁜 디자인의 차이</strong>를 알려주려는 것.</li>
-      <li>디자인은 취향의 문제가 아니라 <strong>학습과 훈련으로 개선할 수 있는 기술</strong>이라는 전제가 이 박물관의 존재 이유였다.</li>
-    </ul>
+        <li>박람회 수익금 중 <strong>5천 파운드</strong>로 전시품을 사들여 디자인 연구용 컬렉션을 만들었다.</li>
+        <li><strong>1852</strong> 말 말보로 하우스에 제작품 박물관(Museum of Manufactures) 개관 — 훗날의 빅토리아 앤 앨버트 박물관(V&amp;A).</li>
+        <li>전시용 교육 물품 선별은 <strong>A.W.N. 퓨진과 리처드 레드그레이브</strong>. 초대 총괄 관리자는 헨리 콜.</li>
+        <li>콜은 <strong>"잘못된 원리에 입각한 장식"</strong>이라는 제목으로 형편없는 물품도 전시했다.</li>
+        <li><strong>'공포의 방(Chamber of Horrors)'</strong>으로 알려진 이 공간의 목적은 둘이었다.</li>
+        <li>제조업자에게 <strong>창피를 줘</strong> 더 나은 것을 만들게 하기.</li>
+        <li>대중에게 <strong>좋은 디자인과 나쁜 디자인의 차이</strong>를 알려주기.</li>
+        <li>디자인은 취향이 아니라 <strong>학습과 훈련으로 개선할 수 있는 기술</strong>이라는 전제.</li>
+      </ul>
   </div>
 </section>
 
@@ -2569,12 +2609,12 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>서른일곱 가지 규칙</h3><span class="tag">1856</span></div>
     <ul class="bullet-list">
-      <li>오웬 존스는 『장식의 문법』(1856)에서 이집트·그리스·무어·중국 등 세계 각지의 장식 원리를 <strong>37개 명제</strong>로 정리했다.</li>
-      <li>핵심은 <strong>"장식은 평면의 논리를 따라야 하며, 자연물을 사실적으로 흉내 내면 안 된다"</strong>는 것이었다.</li>
-      <li>벽지의 꽃무늬가 진짜 꽃처럼 입체적으로 보이면 <strong>오히려 나쁜 디자인</strong>이라는 주장이다.</li>
-      <li>이 책은 존스가 직접 관찰한 <strong>스페인 알함브라 궁전</strong>의 이슬람 타일 무늬에서 큰 영향을 받았다.</li>
-      <li>유럽 바깥의 장식 전통을 이론적 근거로 끌어온 <strong>드문 사례</strong>다.</li>
-    </ul>
+        <li>오웬 존스 『장식의 문법』(1856) — 이집트·그리스·무어·중국 등의 장식 원리를 <strong>37개 명제</strong>로 정리.</li>
+        <li>핵심은 <strong>"장식은 평면의 논리를 따른다"</strong>.</li>
+        <li>자연물을 사실적으로 흉내 내면 안 된다. 벽지 꽃무늬가 입체로 보이면 <strong>나쁜 디자인</strong>.</li>
+        <li>존스가 직접 관찰한 <strong>스페인 알함브라 궁전</strong>의 이슬람 타일 무늬에서 큰 영향.</li>
+        <li>유럽 바깥의 장식 전통을 이론적 근거로 끌어온 <strong>드문 사례</strong>.</li>
+      </ul>
   </div>
 </section>
 
@@ -2583,12 +2623,12 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>건축을 네 가지 원초적 기술로 되짚다</h3><span class="tag">SEMPER</span></div>
     <ul class="bullet-list">
-      <li>독일 건축이론가 고트프리트 젬퍼는 저서 <strong>『양식론』</strong>(1860~1863)에서 건축의 기원을 네 요소로 환원했다.</li>
-      <li><strong>화덕 · 지붕 · 담장 · 흙기단.</strong></li>
-      <li>각 요소는 서로 다른 원초적 기술에서 나왔다고 보았다 — <strong>도자기 · 목공 · 직조 · 석공</strong>.</li>
-      <li><strong>재료와 기법이 형태를 결정한다</strong>는 관점은 이후 기능주의 이론의 중요한 밑거름이 된다.</li>
-      <li>젬퍼는 대박람회를 직접 참관하고 이 이론을 다듬었다. 각국의 공예품을 비교하며 얻은 통찰이다.</li>
-    </ul>
+        <li>독일 건축이론가 고트프리트 젬퍼, <strong>『양식론』</strong>(1860~1863).</li>
+        <li>건축의 기원을 네 요소로 환원 — <strong>화덕 · 지붕 · 담장 · 흙기단</strong>.</li>
+        <li>각각 다른 원초적 기술에서 나왔다 — <strong>도자기 · 목공 · 직조 · 석공</strong>.</li>
+        <li><strong>재료와 기법이 형태를 결정한다</strong> — 이후 기능주의 이론의 밑거름.</li>
+        <li>대박람회를 직접 참관하고 각국 공예품을 비교하며 다듬은 이론이다.</li>
+      </ul>
   </div>
 </section>
 
@@ -2610,15 +2650,15 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>일회성 행사에서 지속적인 시스템으로</h3><span class="tag">INSTITUTION</span></div>
     <ul class="bullet-list">
-      <li><strong>1857</strong> 말보로 하우스의 전시품들은 새로 지은 사우스켄싱턴 박물관의 핵심 컬렉션이 되었다.</li>
-      <li>박람회 수익 <strong>18만 6천 파운드</strong>로 사들인 땅에는 V&amp;A·자연사박물관·과학박물관·로열앨버트홀·임페리얼칼리지가 차례로 들어섰다.</li>
-      <li><strong>'앨버토폴리스'</strong>라 불리는 문화·교육 단지다.</li>
-      <li><strong>1837</strong> 서머싯 하우스에 설립된 관영디자인학교도 이곳으로 옮겨와 예술훈련소로 개명했고, 이후 왕립예술대학(RCA)이 되었다.</li>
-      <li>박물관의 디자인 연구 컬렉션이 <strong>영국 디자인 교육의 결정적 요소</strong>가 된 것이다.</li>
-      <li><strong>1860년대</strong> 콜은 박물관 관리자가 되었다. 그의 지도 아래 박물관은 디자인 원리를 더 널리 알리며 근대 디자인 실무를 정립하는 데 이바지했다.</li>
-      <li>그럼에도 평가는 냉정하다 — 이것은 <strong>"인간이 산업화에 지불한 비용"</strong>에 불과했다.</li>
-      <li>제조상품의 천박함은 차세대 디자인 개혁가들의 행동에 <strong>박차</strong>를 가하게 만들었다 (→ 5주차).</li>
-    </ul>
+        <li><strong>1857</strong> 말보로 하우스의 전시품이 새 사우스켄싱턴 박물관의 핵심 컬렉션이 된다.</li>
+        <li>수익 <strong>18만 6천 파운드</strong>로 산 땅에 V&amp;A·자연사박물관·과학박물관·로열앨버트홀·임페리얼칼리지가 들어섰다.</li>
+        <li><strong>'앨버토폴리스'</strong>라 불리는 문화·교육 단지다.</li>
+        <li><strong>1837</strong> 서머싯 하우스의 관영디자인학교도 이곳으로 옮겨 예술훈련소로 개명, 이후 왕립예술대학(RCA).</li>
+        <li>박물관의 디자인 연구 컬렉션이 <strong>영국 디자인 교육의 결정적 요소</strong>가 된다.</li>
+        <li><strong>1860년대</strong> 콜이 박물관 관리자로. 근대 디자인 실무를 정립하는 데 이바지했다.</li>
+        <li>그럼에도 평가는 냉정하다 — <strong>"인간이 산업화에 지불한 비용"</strong>.</li>
+        <li>제조상품의 천박함이 차세대 개혁가들에게 <strong>박차</strong>를 가했다 (→ 5주차).</li>
+      </ul>
   </div>
 </section>
 
@@ -2627,12 +2667,12 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>박람회보다 먼저 시작된 불만</h3><span class="tag">CRITIC</span></div>
     <ul class="bullet-list">
-      <li><strong>1836</strong> 건축가 오거스터스 퓨진은 대박람회 이전에 이미 저서 『대조』에서 기계로 찍어낸 값싼 장식을 비판했다.</li>
-      <li>그는 중세 고딕 공예의 <strong>정직함</strong>을 이상으로 내세웠다.</li>
-      <li>대박람회 안에 <strong>'중세 궁정(Medieval Court)'</strong>이라는 전시관을 직접 꾸며, 기계 생산품 옆에 손으로 만든 고딕풍 가구·금속공예를 나란히 세웠다.</li>
-      <li>퓨진의 중세 취향은 혼자 생긴 것이 아니다. <strong>19세기 초 낭만주의</strong>가 중세를 이상화한 흐름의 디자인 쪽 갈래가 고딕 복고다.</li>
-      <li>퓨진의 비판은 몇 년 뒤 존 러스킨과 윌리엄 모리스로 이어지는 <strong>디자인 개혁 계보의 실질적 출발점</strong>으로 평가된다 (→ 5주차).</li>
-    </ul>
+        <li><strong>1836</strong> 건축가 오거스터스 퓨진, 저서 『대조』에서 기계로 찍어낸 값싼 장식을 비판.</li>
+        <li>중세 고딕 공예의 <strong>정직함</strong>을 이상으로 내세웠다.</li>
+        <li>대박람회 안에 <strong>'중세 궁정(Medieval Court)'</strong>을 직접 꾸며, 기계 생산품 옆에 손으로 만든 고딕풍 가구·금속공예를 세웠다.</li>
+        <li><strong>19세기 초 낭만주의</strong>의 중세 이상화, 그 디자인 쪽 갈래가 고딕 복고다.</li>
+        <li>존 러스킨과 윌리엄 모리스로 이어지는 <strong>디자인 개혁 계보의 실질적 출발점</strong> (→ 5주차).</li>
+      </ul>
   </div>
 </section>
 
@@ -2641,16 +2681,16 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>장식은 무엇을 가리고 있었나</h3><span class="tag">DISHONEST DESIGN</span></div>
     <ul class="bullet-list">
-      <li>박람회 전시물 대부분은 꽃줄로 장식되거나 큰 패턴으로 마감됐다.</li>
-      <li>장식적 과다함을 드러내지 않은 <strong>유일한 전시물은 산업기계와 농기구</strong>였다. 본래 실용적이고 기능 중심으로 디자인된 것들이다.</li>
-      <li>이탈리아 미술비평가 마리오 프라즈는 이런 빅토리안 실내의 질식할 것 같은 어수선함을 <strong>'공간 공포(horror vacui)'</strong>라 불렀다.</li>
-      <li>로코코·바로크·신고전주의부터 아시리아·켈트 양식까지 끌어다 쓰는 <strong>복고주의</strong> 제품 전반을 가리키는 말이 되었다.</li>
-      <li>근본적인 문제는 따로 있었다. 장식은 <strong>저급한 기량을 가리거나 질 낮은 재료를 숨기기 위해</strong> 빈번하게 사용됐다.</li>
-      <li>제조업자들은 기계를 더 싸고 빠르게 상품을 찍어내는 수단으로만 보았다. 수공예를 피상적으로 모방했을 뿐 <strong>산업생산에 맞는 방식</strong>을 실현하지 못했다.</li>
-      <li><strong>"과도할수록 더 좋다"</strong>가 당시의 지배적 태도였고, 대중은 대체로 이를 잘 받아들였다.</li>
-      <li>공장에서 생산되어 살 만한 "사치스러운" 상품 앞에서 <strong>신고전주의의 절제</strong>는 오히려 단조롭고 유행이 지난 것으로 보였다.</li>
-    </ul>
-    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>영국은 산업혁명을 가장 먼저 겪은 나라였지만, 그것을 잇는 <strong>산업디자인의 청사진</strong>은 갖지 못했다. 기술이 앞서면 디자인도 저절로 따라오는 것은 아니다.</p></div>
+        <li>전시물 대부분은 꽃줄로 장식되거나 큰 패턴으로 마감됐다.</li>
+        <li>장식적 과다함이 없던 <strong>유일한 전시물은 산업기계와 농기구</strong>. 본래 기능 중심으로 설계된 것들이다.</li>
+        <li>미술비평가 마리오 프라즈는 빅토리안 실내의 어수선함을 <strong>'공간 공포(horror vacui)'</strong>라 불렀다.</li>
+        <li>로코코·바로크·신고전주의부터 아시리아·켈트까지 끌어다 쓰는 <strong>복고주의</strong> 전반을 가리키는 말이 됐다.</li>
+        <li>근본 문제는 따로 있었다 — 장식은 <strong>저급한 기량과 질 낮은 재료를 숨기는</strong> 데 쓰였다.</li>
+        <li>제조업자들은 기계를 <strong>싸고 빠른 수단</strong>으로만 보고 수공예를 피상적으로 모방했다.</li>
+        <li><strong>"과도할수록 더 좋다"</strong>가 지배적 태도였고 대중도 대체로 잘 받아들였다.</li>
+        <li>살 만한 "사치스러운" 상품 앞에서 <strong>신고전주의의 절제</strong>는 단조롭고 유행 지난 것으로 보였다.</li>
+      </ul>
+    <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>영국은 산업혁명을 가장 먼저 겪었지만 <strong>산업디자인의 청사진</strong>은 갖지 못했다. 기술이 앞서면 디자인도 따라오는가?</p></div>
   </div>
 </section>
 
@@ -2659,15 +2699,14 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>누가 이 물건들을 사고 있었나</h3><span class="tag">CONSUMER</span></div>
     <ul class="bullet-list">
-      <li>이 시대 변화에 가장 이득을 본 집단은 <strong>신흥 중산층</strong>이었다.</li>
-      <li>출세 지향적이고 자립적이며 고등교육을 받은 이들은 성장하는 도시에서 <strong>상업·공공서비스·의학·법률</strong>에 종사하며 번영했다.</li>
-      <li>이들이 물건을 사는 방식도 새로웠다 — <strong>우편 주문 카탈로그</strong>와 도시마다 새로 생긴 백화점.</li>
-      <li>적정 가격의 산업생산품을 과잉 구매하는 <strong>일차고객층</strong>이 형성됐다.</li>
-      <li>주택 소유가 늘면서 중산층은 자기만의 <strong>"누각"</strong>을 채울 목적으로 가구와 가정용품을 사들였다.</li>
-      <li>하지만 그 상품들의 디자인은 <strong>질과 취향 모두에서</strong> 아쉬운 점이 많았다.</li>
-      <li>디자인 개혁이 <strong>미학 논쟁이 아니라 시장의 문제</strong>였던 이유가 여기 있다.</li>
-      <li>새로운 소비자와 새로운 유통 경로가 먼저 생겨났고, 그것을 채울 물건의 수준이 뒤따라가지 못했다.</li>
-    </ul>
+        <li>가장 이득을 본 집단은 <strong>신흥 중산층</strong>.</li>
+        <li>출세 지향적·자립적·고등교육. 도시의 <strong>상업 · 공공서비스 · 의학 · 법률</strong> 종사자들.</li>
+        <li>새로운 구매 경로 — <strong>우편 주문 카탈로그</strong>와 도시마다 생긴 백화점.</li>
+        <li>적정 가격의 산업생산품을 과잉 구매하는 <strong>일차고객층</strong>이 형성됐다.</li>
+        <li>주택 소유가 늘며 자기만의 <strong>"누각"</strong>을 채울 가구와 가정용품을 사들였다.</li>
+        <li>그 상품들의 디자인은 <strong>질과 취향 모두</strong> 아쉬운 점이 많았다.</li>
+        <li>디자인 개혁은 <strong>미학 논쟁이 아니라 시장의 문제</strong>였다.</li>
+      </ul>
   </div>
 </section>
 
@@ -2682,12 +2721,12 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>무엇이 그릴 가치가 있는가를 정하는 곳</h3><span class="tag">SALON</span></div>
       <ul class="bullet-list">
-        <li>19세기 프랑스 미술의 관문은 <strong>살롱</strong>이었다. 정부가 주최하는 공식 전시로, 여기 걸려야 화가로 인정받았다.</li>
-        <li>무엇을 걸지는 <strong>아카데미</strong>가 정했다. 심사위원단이 출품작을 보고 당락을 매겼다.</li>
+        <li>19세기 프랑스 미술의 관문은 <strong>살롱</strong> — 정부 주최 공식 전시. 여기 걸려야 화가로 인정받았다.</li>
+        <li>무엇을 걸지는 <strong>아카데미</strong>가 정했다. 심사위원단이 당락을 매겼다.</li>
         <li>아카데미에는 <strong>주제의 위계</strong>가 있었다.</li>
-        <li>맨 위가 <strong>역사화</strong> — 신화·성경·역사의 장면. 크게 그리고 값도 높았다.</li>
-        <li>그 아래로 초상 · 풍속 · 풍경 · 정물 순이었다. <strong>정물이 맨 아래</strong>였다.</li>
-        <li>위계의 기준은 솜씨가 아니라 <strong>주제의 격</strong>이었다.</li>
+        <li>맨 위가 <strong>역사화</strong> — 신화·성경·역사. 크게 그리고 값도 높았다.</li>
+        <li>아래로 초상 · 풍속 · 풍경 · <strong>정물</strong> 순.</li>
+        <li>기준은 솜씨가 아니라 <strong>주제의 격</strong>이었다.</li>
         <li>같은 시기 런던에서는 헨리 콜이 <strong>박물관으로</strong> 좋은 디자인과 나쁜 디자인을 가르고 있었다.</li>
       </ul>
     </div>
@@ -2699,15 +2738,14 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>있는 그대로라는 뜻</h3><span class="tag">REALISM</span></div>
     <ul class="bullet-list">
-      <li><strong>사실주의(realism)</strong> — real(있는 그대로) + -ism(주의).</li>
-      <li>눈앞에 실제로 있는 것만 그리자는 주장이다.</li>
-      <li>신고전주의는 <strong>이상적인 형태</strong>를 그렸다.</li>
-      <li>낭만주의는 <strong>격정과 상상</strong>을 그렸다.</li>
-      <li>사실주의는 둘 다 거부하고 <strong>동시대의 평범한 것</strong>으로 갔다.</li>
-      <li>귀스타브 쿠르베가 했다고 전해지는 말 — "나에게 <strong>천사를 보여달라, 그러면 천사를 그리겠다</strong>."</li>
-      <li>신화와 종교를 그리라는 아카데미의 요구에 대한 거절이다.</li>
-      <li>1850년대에 화가가 <strong>노동과 시골</strong>을 그리기 시작한다.</li>
-    </ul>
+        <li><strong>사실주의(realism)</strong> — real(있는 그대로) + -ism(주의).</li>
+        <li>눈앞에 실제로 있는 것만 그리자는 주장이다.</li>
+        <li>신고전주의는 <strong>이상적인 형태</strong>를 그렸다.</li>
+        <li>낭만주의는 <strong>격정과 상상</strong>을 그렸다.</li>
+        <li>사실주의는 둘 다 거부하고 <strong>동시대의 평범한 것</strong>으로 갔다.</li>
+        <li>귀스타브 쿠르베가 했다고 전해지는 말 — "<strong>천사를 보여달라, 그러면 천사를 그리겠다</strong>."</li>
+        <li>1850년대, 화가가 <strong>노동과 시골</strong>을 그리기 시작한다.</li>
+      </ul>
   </div>
 </section>
 
@@ -2717,14 +2755,14 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>얼굴이 보이지 않는 노동</h3><span class="tag">COURBET</span></div>
       <ul class="bullet-list">
-        <li><strong>1849</strong> 쿠르베가 고향 근처 길가에서 본 두 사람을 그렸다.</li>
-        <li>늙은 남자와 소년이 길 닦을 <strong>돌을 깨고</strong> 있다.</li>
-        <li>둘 다 <strong>얼굴이 보이지 않는다</strong>. 영웅도 아니고 우화도 아니다.</li>
-        <li>화면은 가로 <strong>약 2.6미터</strong> — 역사화에나 쓰던 규모다.</li>
+        <li><strong>1849</strong> 쿠르베가 고향 근처 길가에서 본 두 사람.</li>
+        <li>늙은 남자와 소년이 길 닦을 <strong>돌을 깬다</strong>.</li>
+        <li>둘 다 <strong>얼굴이 보이지 않는다</strong>. 영웅도 우화도 아니다.</li>
+        <li>화면은 가로 <strong>약 2.6미터</strong> — 역사화의 규모다.</li>
         <li>평범한 노동을 그 크기로 그린 것이 문제였다.</li>
-        <li><strong>1945</strong> 드레스덴 공습 때 소실됐다. 지금은 사진으로만 남아 있다.</li>
+        <li><strong>1945</strong> 드레스덴 공습 때 소실. 지금은 사진으로만 남았다.</li>
       </ul>
-      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>1851년 실링 데이에 수정궁을 채운 그 계층이, 같은 시기 <strong>그림의 주인공</strong>이 되고 있었다.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>1851년 실링 데이에 수정궁을 채운 그 계층이 <strong>그림의 주인공</strong>이 되고 있었다.</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w04-ah-stonebreakers.webp" alt="길가에서 돌을 깨는 늙은 남자와 소년. 둘 다 얼굴이 보이지 않는다" loading="lazy">
@@ -2743,13 +2781,12 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>역사화의 크기에 마을 사람을 넣다</h3><span class="tag">1850</span></div>
       <ul class="bullet-list">
-        <li><strong>1850</strong> 쿠르베는 고향 오르낭에서 치른 장례식을 그렸다.</li>
+        <li><strong>1850</strong> 쿠르베가 고향 오르낭에서 치른 장례식을 그렸다.</li>
         <li>화면은 가로 <strong>약 6.6미터</strong>. 역사화의 크기다.</li>
-        <li>그 안에 있는 것은 왕도 성인도 아닌 <strong>마을 사람 마흔여 명</strong>이다.</li>
+        <li>그 안에 있는 것은 왕도 성인도 아닌 <strong>마을 사람 마흔여 명</strong>.</li>
         <li>초상화처럼 <strong>하나하나 알아볼 수 있게</strong> 그렸다.</li>
         <li>비평가들은 <strong>추하다</strong>고 했다. 이상화하지 않았기 때문이다.</li>
-        <li>쿠르베는 크기와 주제의 짝을 일부러 어긋내 <strong>위계를 공격</strong>했다.</li>
-        <li>무엇을 크게 그릴 것인가는 <strong>무엇이 중요한가</strong>에 대한 판단이다.</li>
+        <li>크기와 주제의 짝을 일부러 어긋내 <strong>위계를 공격</strong>했다.</li>
       </ul>
     </div>
   </div>
@@ -2762,11 +2799,10 @@ body.export-clean main{inset:0;}
       <div class="section-head"><h3>파리가 런던에 답하다</h3><span class="tag">PARIS 1855</span></div>
       <ul class="bullet-list">
         <li><strong>1855</strong> 파리가 런던에 답했다. 프랑스의 첫 만국박람회다.</li>
-        <li>회장은 샹젤리제에 세운 <strong>산업궁(Palais de l'Industrie)</strong>이었다.</li>
-        <li>철골과 유리로 지었지만 겉은 <strong>석조로 감쌌다</strong>.</li>
-        <li>구조를 그대로 드러낸 수정궁과 정반대의 선택이다.</li>
+        <li>회장은 샹젤리제에 세운 <strong>산업궁</strong>(Palais de l'Industrie).</li>
+        <li>철골과 유리로 짓고 겉은 <strong>석조로 감쌌다</strong> — 구조를 드러낸 수정궁과 정반대의 선택.</li>
         <li>런던에 없던 것이 하나 붙었다 — <strong>미술전</strong>.</li>
-        <li>회화는 아베뉘 몽테뉴에 따로 지은 미술관에 걸렸다. <strong>앵그르와 들라크루아</strong>에게는 개인 전시실을 내줬다.</li>
+        <li>회화는 아베뉘 몽테뉴의 별도 미술관에. <strong>앵그르와 들라크루아</strong>는 개인 전시실.</li>
         <li>산업 생산품과 회화를 <strong>한 행사 안에</strong> 놓은 첫 박람회다.</li>
       </ul>
     </div>
@@ -2782,14 +2818,14 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>낙선한 화가가 박람회 옆에 세운 집</h3><span class="tag">PAVILLON DU RÉALISME</span></div>
     <ul class="bullet-list">
-      <li>쿠르베는 1855년 박람회 미술전에 작품을 냈고, <strong>「화가의 아틀리에」를 비롯한 몇 점이 거부</strong>됐다.</li>
-      <li>그는 박람회장 근처 땅을 빌려 <strong>가건물을 직접 세웠다</strong>.</li>
-      <li>간판에 붙인 이름이 <strong>「사실주의 관(Pavillon du Réalisme)」</strong>이다.</li>
-      <li>자기 그림 <strong>40여 점</strong>을 걸고 입장료를 받았다.</li>
-      <li>문 앞에는 <strong>「사실주의 선언」</strong>이라는 팸플릿을 놓았다.</li>
-      <li>화가가 스스로 연 <strong>최초의 개인전</strong>으로 꼽힌다.</li>
-      <li>승인받는 대신 <strong>전시 자체를 만들어버린 것</strong>이다.</li>
-    </ul>
+        <li>쿠르베가 1855년 미술전에 낸 작품 중 <strong>「화가의 아틀리에」를 비롯한 몇 점이 거부</strong>됐다.</li>
+        <li>그는 박람회장 근처 땅을 빌려 <strong>가건물을 직접 세웠다</strong>.</li>
+        <li>간판에 붙인 이름 — <strong>「사실주의 관(Pavillon du Réalisme)」</strong>.</li>
+        <li>자기 그림 <strong>40여 점</strong>을 걸고 입장료를 받았다.</li>
+        <li>문 앞에는 <strong>「사실주의 선언」</strong> 팸플릿.</li>
+        <li>화가가 스스로 연 <strong>최초의 개인전</strong>으로 꼽힌다.</li>
+        <li>승인받는 대신 <strong>전시 자체를 만들어버린 것</strong>이다.</li>
+      </ul>
   </div>
 </section>
 
@@ -2803,13 +2839,12 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>작가가 자기 작업을 직접 설명하다</h3><span class="tag">1855</span></div>
       <ul class="bullet-list">
-        <li>사실주의 관의 중심에 걸린 그림이다. 가로 <strong>약 6미터</strong>가 넘는다.</li>
-        <li>부제가 길다 — <strong>"나의 7년간 예술적·도덕적 삶을 요약하는 사실적 알레고리"</strong>.</li>
-        <li>가운데 <strong>쿠르베 자신</strong>이 풍경을 그리고 있다. 옆에 벌거벗은 모델과 구경하는 아이가 있다.</li>
-        <li>왼쪽은 그가 그려온 사람들, <strong>오른쪽은 그를 지지한 친구와 후원자들</strong>이다.</li>
-        <li><strong>"사실적 알레고리"</strong>는 말이 안 되는 조합이다. 알레고리는 사실이 아니기 때문이다.</li>
-        <li>쿠르베는 <strong>자기 작업을 설명하는 장치</strong>를 그림 안에 만들어 넣었다.</li>
-        <li>승인해줄 제도가 없으면 작가가 직접 설명해야 한다. 전시도 해설도 그가 만들었다.</li>
+        <li>사실주의 관의 중심에 걸린 그림. 가로 <strong>약 6미터</strong>가 넘는다.</li>
+        <li>부제 — <strong>"나의 7년간 예술적·도덕적 삶을 요약하는 사실적 알레고리"</strong>.</li>
+        <li>가운데 <strong>쿠르베 자신</strong>이 풍경을 그린다. 옆에 벌거벗은 모델과 구경하는 아이.</li>
+        <li>왼쪽은 그가 그려온 사람들, <strong>오른쪽은 그를 지지한 친구와 후원자들</strong>.</li>
+        <li><strong>"사실적 알레고리"</strong>는 성립하지 않는 조합이다. 알레고리는 사실이 아니다.</li>
+        <li>자기 작업을 설명하는 장치를 <strong>그림 안에</strong> 만들어 넣었다.</li>
       </ul>
     </div>
   </div>
@@ -2830,12 +2865,12 @@ body.export-clean main{inset:0;}
       </div>
     </div>
     <ul class="bullet-list" style="margin-top:1.3rem;">
-      <li>둘 다 <strong>취향을 판정하는 장치</strong>다. 하나는 가르쳐서, 하나는 걸러서.</li>
-      <li>19세기 중반에 박람회와 박물관은 물건과 그림을 모아 보여주는 데 그치지 않았다.</li>
-      <li><strong>무엇이 좋은 것인지 공식적으로 정하는 자리</strong>가 되었다.</li>
-      <li>디자인 개혁이 박물관과 학교로 간 이유가 여기 있다 — <strong>취향은 제도로 만들 수 있다</strong>고 믿었다.</li>
-      <li>쿠르베의 답은 반대였다. 제도 밖에 <strong>자기 전시장</strong>을 세웠다.</li>
-    </ul>
+        <li>둘 다 <strong>취향을 판정하는 장치</strong>다. 하나는 가르쳐서, 하나는 걸러서.</li>
+        <li>19세기 중반, 박람회와 박물관은 모아 보여주는 데 그치지 않았다.</li>
+        <li><strong>무엇이 좋은 것인지 공식적으로 정하는 자리</strong>가 되었다.</li>
+        <li>디자인 개혁이 박물관과 학교로 간 이유 — <strong>취향은 제도로 만들 수 있다</strong>는 믿음.</li>
+        <li>쿠르베의 답은 반대였다. 제도 밖에 <strong>자기 전시장</strong>을 세웠다.</li>
+      </ul>
   </div>
 </section>
 
@@ -2844,16 +2879,15 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>산업혁명의 정신적 고향이 옮겨가다</h3><span class="tag">AMERICAN SYSTEM</span></div>
     <ul class="bullet-list">
-      <li>18세기 중반 산업혁명이 태동한 곳은 영국이었지만, 이내 영국을 따라잡고 <strong>산업혁명의 정신적 고향이 된 곳은 미국</strong>이었다.</li>
-      <li><strong>1831</strong> 프랑스 귀족 알렉시스 드 토크빌이 미국을 9개월간 조사했다.</li>
-      <li><strong>1835</strong> 『미국의 민주주의』 — "미국인은 모든 게 끊임없이 변하는 듯하고 모든 변화가 진보를 이루는 듯한 경이의 땅에 산다."</li>
-      <li>이어서 — "미국인이 보기에, <strong>존재하지 않는 건 아직 시도되지 않은 것에 불과하다.</strong>"</li>
-      <li><strong>1838</strong> 새 특허법은 특허를 받기 전까지 저작권을 주장하지 못한다는 원칙을 세워, 원작 디자인을 모방하기 어렵게 만들었다.</li>
-      <li>1838년까지 승인된 특허가 5백 건 정도였는데 법안 통과 몇 년 만에 <strong>1만 건</strong>을 넘겼다.</li>
-      <li>디자인 연구개발에 <strong>장기 투자할 이유</strong>가 생긴 것이다.</li>
-      <li>나사 표준을 정하고 100만분의 1인치를 재던 영국 엔지니어 <strong>조지프 휘트워스</strong>는 뉴욕 만국산업박람회(1853~54) 정부 보고서에 이렇게 적었다.</li>
-      <li>"미국인들은 거의 모든 산업부문에서 기계의 힘을 끌어들인다. <strong>수작업 노동을 대체할 수 있다면 어디에서든 보편적으로 기계에 의지한다.</strong>"</li>
-    </ul>
+        <li>산업혁명은 18세기 중반 영국에서 태동했지만, <strong>정신적 고향이 된 곳은 미국</strong>이었다.</li>
+        <li><strong>1831</strong> 프랑스 귀족 알렉시스 드 토크빌, 미국을 9개월간 조사.</li>
+        <li><strong>1835</strong> 『미국의 민주주의』 — "모든 게 끊임없이 변하고 모든 변화가 진보를 이루는 듯한 경이의 땅."</li>
+        <li>"미국인이 보기에, <strong>존재하지 않는 건 아직 시도되지 않은 것에 불과하다.</strong>"</li>
+        <li><strong>1838</strong> 새 특허법 — 특허 전에는 저작권을 주장하지 못하게 해 원작 디자인의 모방을 어렵게 만들었다.</li>
+        <li>승인 특허가 5백 건에서 몇 년 만에 <strong>1만 건</strong>을 넘겼다. 디자인 연구개발에 장기 투자할 이유가 생겼다.</li>
+        <li>나사 표준을 정하고 100만분의 1인치를 재던 영국 엔지니어 <strong>조지프 휘트워스</strong>, 뉴욕 만국산업박람회(1853~54) 보고서에 —</li>
+        <li>"미국인들은 <strong>수작업 노동을 대체할 수 있다면 어디에서든 보편적으로 기계에 의지한다.</strong>"</li>
+      </ul>
   </div>
 </section>
 
@@ -2863,16 +2897,17 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>유명한 시연, 그리고 밝혀진 진실</h3><span class="tag">ELI WHITNEY</span></div>
       <ul class="bullet-list">
-        <li><strong>1794</strong> 엘리 휘트니는 특허받은 조면기(목화씨를 빼내는 기계)로 미국 면공업혁명을 일으켰다.</li>
-        <li><strong>1798</strong> 프랑스와의 전쟁을 우려한 정부가 머스킷소총 4만 개를 조달하려 하자, 그는 28개월 내 10만 개 생산 계약을 따냈다.</li>
-        <li>코네티컷 햄든 강변에 병기창을 짓고 노동자 마을 <strong>휘트니빌</strong>까지 건설했다.</li>
-        <li><strong>미숙련공</strong>이 작업할 수 있도록 특수 설계한 수력 기계를 개발하고, 소총 제작을 별개의 구성요소로 나눴다.</li>
-        <li><strong>1801</strong> 1월, 애덤스 대통령과 제퍼슨 당선자 앞에서 나사드라이버 하나로 단일한 머스킷소총에 10개의 다른 잠금장치를 조립하며 부품호환성을 시연했다. 제퍼슨은 즉각 채택했다.</li>
+        <li><strong>1794</strong> 엘리 휘트니, 조면기(목화씨를 빼내는 기계) 특허로 미국 면공업혁명을 일으켰다.</li>
+        <li><strong>1798</strong> 정부의 머스킷소총 4만 개 조달 계획에 28개월 내 10만 개 생산 계약을 따냈다.</li>
+        <li>코네티컷 햄든 강변에 병기창, 노동자 마을 <strong>휘트니빌</strong>까지 건설.</li>
+        <li><strong>미숙련공</strong>용 수력 기계를 특수 설계하고, 소총 제작을 별개의 구성요소로 나눴다.</li>
+        <li><strong>1801</strong> 1월, 애덤스 대통령과 제퍼슨 당선자 앞 시연 — 나사드라이버 하나로 머스킷소총 한 자루에 다른 잠금장치 10개를 조립했다.</li>
+        <li>제퍼슨은 즉각 채택했다.</li>
         <li>그런데 <strong>그의 부품들은 기대만큼 호환되지 않았다.</strong></li>
-        <li>잠금 부재마다 특별한 표식이 있었다 — 호환이 제대로 됐다면 불필요했을 표식이다.</li>
-        <li>1만 개 납품에는 예상의 <strong>4배인 10년</strong>이 걸렸다.</li>
+        <li>잠금 부재마다 특별한 표식이 있었다 — 호환됐다면 불필요했을 표식이다.</li>
+        <li>1만 개 납품에 예상의 <strong>4배인 10년</strong>이 걸렸다.</li>
       </ul>
-      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>그럼에도 휘트니의 기여는 전무후무하다고 평가된다. <strong>미숙련공이라도 숙련 장인의 품질에 필적할 제품을 만들 수 있는 체계</strong>를 고안했기 때문이다. 시연은 과장이었지만 방향은 옳았다 — 디자인사에서 이런 경우를 어떻게 평가해야 할까?</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>그럼에도 기여는 전무후무하다 — <strong>미숙련공이 숙련 장인의 품질에 필적할 수 있는 체계</strong>를 고안했다. 시연은 과장이었지만 방향은 옳았다. 이런 경우를 어떻게 평가해야 할까?</p></div>
     </div>
     <figure class="artifact-photo">
       <img src="img/w04-01-024.webp" alt="스프링필드 병기창 1861년 모델 머스킷소총" loading="lazy">
@@ -2886,14 +2921,14 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>합리적 설계가 만든 승리, 그리고 학살</h3><span class="tag">ARMORY PRACTICE</span></div>
     <ul class="bullet-list">
-      <li>스프링필드 병기창의 발명가 <strong>토마스 블랜차드</strong>는 획기적인 공작기계 둘을 개발했다.</li>
-      <li><strong>1818</strong> '모방' 선반 — 표준모형의 윤곽선을 복제해 개머리판을 동시에 여러 개 생산했다.</li>
-      <li><strong>1822</strong> 두 번째 선반 — 총열을 회전시키며 팔각 단면을 깎아냈다.</li>
-      <li>이 발명들로 표준화 제품의 기계화된 대량제작이 <strong>"병기창 실무(armory practice)"</strong>라 불릴 만큼 생산과정이 합리화됐다.</li>
-      <li><strong>1861~65</strong> 미국 북부가 채택한 이 생산기법은 남북전쟁에서 북군에 더 풍부하고 믿을 만한 무기와 탄약을 공급하며 승리의 주요 동력이 되었다.</li>
-      <li>동시에 인류사에 어두운 새 장을 열었다 — <strong>남북전쟁은 세계 최초의 산업화된 전쟁</strong>이었다.</li>
-      <li>효율적으로 설계된 무기들의 도매제작은 군인들의 <strong>도매금 학살</strong>이라는 비극으로 이어졌다.</li>
-    </ul>
+        <li>스프링필드 병기창의 발명가 <strong>토마스 블랜차드</strong>, 획기적인 공작기계 둘.</li>
+        <li><strong>1818</strong> '모방' 선반 — 표준모형의 윤곽선을 복제해 개머리판을 여러 개 동시 생산.</li>
+        <li><strong>1822</strong> 두 번째 선반 — 총열을 회전시키며 팔각 단면을 깎아냈다.</li>
+        <li>표준화 제품의 기계화된 대량제작이 <strong>"병기창 실무(armory practice)"</strong>라 불릴 만큼 생산이 합리화됐다.</li>
+        <li><strong>1861~65</strong> 남북전쟁. 북군에 더 풍부하고 믿을 만한 무기·탄약을 공급해 승리의 주요 동력이 됐다.</li>
+        <li>동시에 <strong>세계 최초의 산업화된 전쟁</strong>이었다.</li>
+        <li>효율적으로 설계된 무기의 도매제작이 군인들의 <strong>도매금 학살</strong>로 이어졌다.</li>
+      </ul>
     <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>"<strong>디자인의 힘은 세심한 구축에 활용되던 만큼이나 때때로 무심한 파괴에도 활용되었다.</strong>" 잘 만든 디자인이 반드시 좋은 결과를 낳는가?</p></div>
   </div>
 </section>
@@ -2908,15 +2943,16 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>기계로 못 만드는 건 없다</h3><span class="tag">SAMUEL COLT</span></div>
       <ul class="bullet-list">
-        <li>젊은 시절 선원이던 <strong>새뮤얼 콜트</strong>는 항해 중 나무로 깎은 모형에서 출발해, 공이를 당기면 탄약통이 회전하는 연발권총을 완성했다.</li>
-        <li><strong>1835</strong> 영국, 이듬해 미국에서 특허를 받았다.</li>
-        <li>정부가 <strong>표준 미달</strong>로 거부한 권총들이 뜻밖의 교훈을 줬다. 그는 그것을 일반 대중에게, 정부가 1등급에 지불하려던 금액보다 비싸게 팔 수 있었다.</li>
-        <li><strong>1855</strong> 하트포드 병기창은 세계 최대의 민간 소유 병기창이 되었다.</li>
-        <li>감독관 엘리샤 킹 루트가 약 400개의 기기를 만들어, 1856년에는 <strong>매일 150개</strong>의 무기를 생산했고 부품의 약 80%를 기계로 제작했다.</li>
-        <li>콜트는 <strong>"기계로 생산하지 못하는 건 없다"</strong>고 선언했다.</li>
-        <li>성공의 절반은 <strong>마케팅</strong>이었다. 화학실험으로 관객을 웃기던 떠돌이 재주꾼 "닥터 코울트" 출신답게 그는 자기홍보에 능했다.</li>
-        <li>스스로를 '샘 콜트 대령'이라 칭하고, 하트포드 공장에 <strong>양파 모양 돔</strong>을 얹어 방문객의 시선을 끌었다.</li>
-        <li>회사 역사는 그를 판촉·홍보·제품표본화·광고·공보활동을 아우르는 <strong>"효과적인 마케팅 프로그램의 잠재력을 한껏 실현한 최초의 미국 제조업자"</strong> 중 한 사람으로 기록한다.</li>
+        <li>선원 출신 <strong>새뮤얼 콜트</strong>, 항해 중 나무로 깎은 모형에서 출발해 연발권총을 완성했다.</li>
+        <li>공이를 당기면 탄약통이 회전한다.</li>
+        <li><strong>1835</strong> 영국, 이듬해 미국에서 특허.</li>
+        <li>정부가 <strong>표준 미달</strong>로 거부한 권총을, 정부가 1등급에 주려던 값보다 비싸게 대중에게 팔았다.</li>
+        <li><strong>1855</strong> 하트포드 병기창, 세계 최대의 민간 소유 병기창이 된다.</li>
+        <li>감독관 엘리샤 킹 루트가 기기 약 400개를 제작. 1856년 <strong>매일 150개</strong> 생산, 부품 약 80%가 기계 제작.</li>
+        <li>콜트의 선언 — <strong>"기계로 생산하지 못하는 건 없다"</strong>.</li>
+        <li>성공의 절반은 <strong>마케팅</strong>. 떠돌이 재주꾼 "닥터 코울트" 출신답게 자기홍보에 능했다.</li>
+        <li>'샘 콜트 대령'을 자칭하고 하트포드 공장에 <strong>양파 모양 돔</strong>을 얹어 방문객의 시선을 끌었다.</li>
+        <li>회사 역사의 기록 — <strong>"효과적인 마케팅 프로그램의 잠재력을 한껏 실현한 최초의 미국 제조업자"</strong> 중 한 사람.</li>
       </ul>
     </div>
   </div>
@@ -2932,15 +2968,16 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>기계보다 먼저 바뀐 것은 파는 방법이었다</h3><span class="tag">SINGER</span></div>
       <ul class="bullet-list">
-        <li>기계제작자로 출발한 <strong>아이작 메리트 싱어</strong>는 기계화된 생산기법을 소비상품에 통째로 적용한 미국 최초의 디자인 기업가 중 한 명이다.</li>
-        <li><strong>1851</strong> 발판 재봉틀 특허를 받고 아이 엠 싱어사를 세웠다.</li>
+        <li>기계제작자 출신 <strong>아이작 메리트 싱어</strong>.</li>
+        <li>기계화된 생산기법을 소비상품에 통째로 적용한 미국 최초의 디자인 기업가 중 한 명이다.</li>
+        <li><strong>1851</strong> 발판 재봉틀 특허, 아이 엠 싱어사 설립.</li>
         <li><strong>1855</strong> 부터 이 기계는 전 세계로 팔려나갔다.</li>
-        <li><strong>1863</strong> 공장 안에 특별 설계한 기계를 대폭 늘리고 병기창 실무에 기초한 생산체계를 시행했다.</li>
-        <li>1880년대 초에는 자동·반자동 기계로 <strong>완전히 호환 가능한 부품</strong>을 만들어냈다.</li>
-        <li>그가 먼저 쓴 판매 기법이 <strong>할부신용판매</strong>다. 한 번에 못 살 만큼 비싼 기계를 매달 나눠 내고 집에 들이게 했다.</li>
-        <li>물건을 파는 방식 자체가 <strong>설계 대상</strong>이 된 것이다.</li>
+        <li><strong>1863</strong> 특별 설계한 기계를 대폭 늘리고 병기창 실무에 기초한 생산체계 시행.</li>
+        <li>1880년대 초 자동·반자동 기계로 <strong>완전히 호환 가능한 부품</strong>을 만들어냈다.</li>
+        <li>그가 먼저 쓴 판매 기법이 <strong>할부신용판매</strong>. 비싼 기계를 매달 나눠 내고 집에 들이게 했다.</li>
+        <li>물건을 파는 방식 자체가 <strong>설계 대상</strong>이 됐다.</li>
       </ul>
-      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>싱어는 만드는 방법과 파는 방법을 같이 바꿨다. 둘 중 어느 쪽이 이 기계를 세계 최대의 상품으로 만들었을까.</p></div>
+      <div class="think-block"><span class="mk" role="img" aria-label="THINK">?</span><p>만드는 방법과 파는 방법을 같이 바꿨다. 어느 쪽이 이 기계를 세계 최대의 상품으로 만들었을까?</p></div>
     </div>
   </div>
 </section>
@@ -2955,13 +2992,13 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>총 만들던 회사가 만든 자판</h3><span class="tag">REMINGTON</span></div>
       <ul class="bullet-list">
-        <li><strong>1816</strong> 레밍턴 앤 선즈는 엘리퍼릿 레밍턴이 정밀하기로 유명한 화승총을 만들려고 세운 총기회사다.</li>
+        <li><strong>1816</strong> 레밍턴 앤 선즈 — 엘리퍼릿 레밍턴이 정밀하기로 유명한 화승총을 만들려고 세운 총기회사.</li>
         <li>이 회사가 병기창 실무를 그대로 써서 <strong>최초의 상업용 타자기</strong>를 대량생산했다.</li>
-        <li><strong>모델 1번</strong>은 크리스토퍼 숄즈·칼로스 글리든·새뮤얼 소울이 1866년부터 73년까지 디자인했다.</li>
+        <li><strong>모델 1번</strong> — 크리스토퍼 숄즈·칼로스 글리든·새뮤얼 소울이 1866~73년 디자인.</li>
         <li><strong>1874</strong> 레밍턴 공장에서 대량생산에 들어갔다.</li>
-        <li>이 기계가 <strong>쿼티(QWERTY) 자판</strong>을 쓴 첫 상품이다. 지금 손끝에 있는 배열이 150년 전 총기공장의 결정이다.</li>
-        <li>사진의 꽃무늬 칠과 여닫는 뚜껑을 보라. <strong>재봉틀을 장식하던 방식</strong>을 그대로 가져다 썼다.</li>
-        <li>새로운 물건에는 아직 <strong>자기 형태가 없어서</strong>, 익숙한 물건의 옷을 빌려 입었다.</li>
+        <li><strong>쿼티(QWERTY) 자판</strong>을 쓴 첫 상품. 지금 손끝의 배열이 150년 전 총기공장의 결정이다.</li>
+        <li>꽃무늬 칠과 여닫는 뚜껑 — <strong>재봉틀을 장식하던 방식</strong>을 그대로 가져다 썼다.</li>
+        <li>새로운 물건에는 아직 <strong>자기 형태가 없었다</strong>.</li>
       </ul>
     </div>
   </div>
@@ -2977,12 +3014,12 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>재봉틀 기계로 자전거를 만들다</h3><span class="tag">POPE</span></div>
       <ul class="bullet-list">
-        <li><strong>포프 제작회사</strong>는 위드 재봉틀 공장의 기계를 빌려 자전거를 만들기 시작해, 결국 공장을 통째로 사들였다.</li>
+        <li><strong>포프 제작회사</strong>는 위드 재봉틀 공장의 기계를 빌려 자전거를 만들다 공장을 통째로 사들였다.</li>
         <li>특수기능과 절단도구를 갖춘 재봉틀 제작용 기계가 <strong>하이휠 자전거</strong>의 생산요건을 그대로 충족했기 때문이다.</li>
-        <li><strong>1881</strong> 잡지 『바이시클링 월드』는 포프의 생산방식을 「위대한 미국제조업」이라는 제목으로 소개했다.</li>
-        <li>컬럼비아는 <strong>시험과 품질제어, 지속적인 디자인 개선</strong>을 선구적으로 고수해 미국 최초의 주목할 만한 자전거 브랜드가 되었다.</li>
-        <li>병기창 실무의 원리를 군수품이 아니라 <strong>상업용 제품</strong>에 적용한 미국 최초의 기업 중 하나다.</li>
-        <li>총에서 재봉틀로, 재봉틀에서 자전거로 <strong>기술이 건너간 경로</strong>가 이 한 대에 다 들어 있다.</li>
+        <li><strong>1881</strong> 『바이시클링 월드』가 포프의 생산방식을 「위대한 미국제조업」으로 소개.</li>
+        <li>컬럼비아는 <strong>시험 · 품질제어 · 지속적인 디자인 개선</strong>으로 미국 최초의 주목할 만한 자전거 브랜드가 됐다.</li>
+        <li>병기창 실무를 군수품이 아니라 <strong>상업용 제품</strong>에 적용한 미국 최초의 기업 중 하나.</li>
+        <li>총 → 재봉틀 → 자전거. <strong>기술이 건너간 경로</strong>가 이 한 대에 다 들어 있다.</li>
       </ul>
     </div>
   </div>
@@ -3000,13 +3037,13 @@ body.export-clean main{inset:0;}
       <div class="tl-item"><div class="yr">1888</div><div class="tt">조지 이스트먼, 첫 코닥 카메라</div></div>
     </div>
     <ul class="bullet-list" style="margin-top:1.4rem;">
-      <li>이 발명품들은 수백만 사람의 일상을 바꿔놓았고, 동시에 <strong>세계가 미국을 부러워하는 새로운 근대의 전조</strong>가 되었다.</li>
-      <li>디자인 역사가 <strong>지크프리트 기디온</strong>의 요약 — "기업을 소유한 사람이라면 누구나 발명을 했다."</li>
-      <li>이어서 — "자기 상품을 보다 빠르고 완벽하게, 그리고 종종 더 아름답게 만들 <strong>방법과 수단을 물색</strong>했다."</li>
-      <li>이어서 — "<strong>옛 도구들은 익명적으로나 부지불식간에 현대적인 도구들로 변형되었다.</strong>"</li>
-      <li>한때 병기창 실무로 알려졌던 것이 이제는 <strong>"미국식 제작체계"</strong>로서 전 세계에 알려졌다.</li>
-      <li>디자인의 변혁적 능력은 군사적 목적보다 <strong>상업적 목적</strong>으로 쓰이기 시작했다.</li>
-    </ul>
+        <li>이 발명품들이 수백만 사람의 일상을 바꿨고, <strong>세계가 미국을 부러워하는 새 근대의 전조</strong>가 됐다.</li>
+        <li>디자인 역사가 <strong>지크프리트 기디온</strong> — "기업을 소유한 사람이라면 누구나 발명을 했다."</li>
+        <li>"자기 상품을 보다 빠르고 완벽하게, 종종 더 아름답게 만들 <strong>방법과 수단을 물색</strong>했다."</li>
+        <li>"<strong>옛 도구들은 익명적으로나 부지불식간에 현대적인 도구들로 변형되었다.</strong>"</li>
+        <li>한때 병기창 실무로 알려졌던 것이 이제 <strong>"미국식 제작체계"</strong>로 전 세계에 알려졌다.</li>
+        <li>디자인의 변혁적 능력이 군사적 목적보다 <strong>상업적 목적</strong>으로 쓰이기 시작했다.</li>
+      </ul>
   </div>
 </section>
 
@@ -5721,6 +5758,10 @@ body.export-clean main{inset:0;}
   nextBtn.addEventListener('click', next);
 
   document.addEventListener('keydown', function(e){
+    if(lbIsOpen()){
+      if(e.key==='Escape' || e.key==='Enter' || e.key===' '){ e.preventDefault(); lbClose(); }
+      return;
+    }
     if(menuOverlay.classList.contains('is-open')){
       if(e.key==='Escape' || e.key==='m' || e.key==='M') closeMenu();
       return;
@@ -5740,6 +5781,7 @@ body.export-clean main{inset:0;}
   }, {passive:true});
   document.addEventListener('touchend', function(e){
     if(touchX===null) return;
+    if(lbIsOpen()){ touchX=null; touchY=null; return; }
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
     // 가로가 세로보다 확실히 클 때만 넘긴다 — 폰에서 슬라이드를 세로로 읽는 동안
@@ -5747,6 +5789,35 @@ body.export-clean main{inset:0;}
     if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5){ dx<0 ? next() : prev(); }
     touchX=null; touchY=null;
   }, {passive:true});
+
+  // ---- 사진 클릭 확대 ----
+  var lb=document.getElementById('lightbox'),
+      lbImg=document.getElementById('lightboxImg'),
+      lbCap=document.getElementById('lightboxCap');
+  function lbIsOpen(){ return lb.classList.contains('is-open'); }
+  function lbOpen(img){
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    var fig = img.closest('figure');
+    var cap = fig ? fig.querySelector('figcaption') : null;
+    // figcaption 은 <span> 여럿이라 그냥 textContent 를 쓰면 "…그림CC0" 처럼 붙는다.
+    var parts = cap ? Array.prototype.map.call(cap.children, function(n){
+      return n.textContent.replace(/\s+/g,' ').trim(); }).filter(Boolean) : [];
+    if(cap && !parts.length) parts = [cap.textContent.replace(/\s+/g,' ').trim()];
+    lbCap.textContent = parts.join(' · ');
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden','false');
+  }
+  function lbClose(){
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden','true');
+    lbImg.removeAttribute('src');
+  }
+  document.addEventListener('click', function(e){
+    var img = e.target.closest && e.target.closest('.artifact-photo img, .hero-photo img');
+    if(img){ e.preventDefault(); lbOpen(img); return; }
+    if(lbIsOpen()) lbClose();
+  });
 
   function toggleFullscreen(){
     try{
