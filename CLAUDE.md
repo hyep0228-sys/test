@@ -146,6 +146,28 @@ git add -A public/slides && git commit && git push origin main
 
 푸시하면 Vercel이 자동 배포한다. 라이브: https://design-history-app.vercel.app/slides/index.html
 
+**덱을 고쳤으면 대본과 PDF 도 같이 간다.** 세 곳이 어긋나기 쉽다(2026-09-11 에 실제로 어긋났다).
+
+1. 덱 `public/slides/index.html`
+2. 대본 아티팩트 — 화면 문안을 인용하므로 **바꾼 장의 회색 칸을 고쳐야 한다**
+3. 바탕화면 `~/Desktop/디자인사lecture/*.pdf` — 교수자가 실제로 보는 파일
+
+대본은 아티팩트(HTML)라 PDF 가 자동으로 안 나온다. **헤드리스 크롬으로 뽑는다.**
+아티팩트 본문에는 `<html><head>` 가 없으므로(발행할 때 씌워진다) 아래 껍데기를 입혀야 한다.
+
+```bash
+SRC=대본.html          # 아티팩트에 발행한 그 파일
+OUT=~/Desktop/디자인사lecture/디자인사_3주차_대본.pdf
+{ printf '%s' '<!doctype html><html><head><meta charset=utf8><style>:root{color-scheme:light}body{margin:0}</style><style>@page{size:A4;margin:13mm 12mm}.wrap{padding-top:0!important}.slide,.screen,.ask,.land,.aside,.thesis,.howto{break-inside:avoid}.block__head,h1,h2{break-after:avoid}</style></head><body>'
+  cat "$SRC"; printf '%s' '</body></html>'; } > /tmp/print.html
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+  --virtual-time-budget=20000 --no-pdf-header-footer --print-to-pdf="$OUT" file:///tmp/print.html
+```
+
+`.slide{break-inside:avoid}` 가 핵심이다. 이게 없으면 한 장의 설명이 페이지 중간에서 끊겨
+수업 중에 읽기 불편하다. 있으면 **번호 하나당 한 쪽**이 된다(3주차 48장 → 54쪽).
+`--virtual-time-budget` 은 구글 폰트가 받아지길 기다리는 시간이다. 짧으면 폰트가 깨진다.
+
 ## 실제로 겪은 함정 (반복 금지)
 
 1. **정규식이 다른 슬라이드를 잡는다.** 여러 슬라이드에 같은 클래스가 있으므로,
@@ -217,6 +239,11 @@ git add -A public/slides && git commit && git push origin main
 지금은 「1750년의 세계」(인구·동력·속도·주문생산)와 「한 세대에 겹친 세 개의 혁명」이 먼저 나온다.
 
 **다음 할 일**
+0. **4주차 차례다(2026-09-11 기준).** 3주차에 적용한 기준을 그대로 가져가면 된다 —
+   서술 줄이기, 볼드 한 불릿에 하나, 수업 순서 대신 시대로, 한자 금지.
+   **4주차는 볼드가 3주차보다 심하다**(불릿당 1.53, 볼드 2개 이상 불릿 45개. 3주차는 0.75/0개).
+   교재 4·5장은 이미 다 반영돼 있으니 **새 내용을 넣는 일이 아니라 문안을 다듬는 일**이다.
+   **4주차 대본은 아직 없다.** 3주차 대본(48장)이 형식의 본보기다.
 1. **5~7주차 이미지 보강.** (4주차는 2026-09-07 에 12장까지 채웠다) 3주차를 8/25 → 15/25 로 채운 방식이 기준이다.
    7주차가 가장 비어 있다(15장에 2장) — 베렌스의 AEG 제품·서체, 로스의 건축은 그림이 있어야 한다.
 2. 8장 이후 교재 PDF 를 받아 9주차 이후 보강. 바탕화면 「디자인의역사」 폴더에는 7장까지만 있다.
