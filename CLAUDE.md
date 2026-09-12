@@ -183,7 +183,7 @@
 | `stage--hero` + `.hero-photo` | 건축물 등 **한 장 크게** (972×648로 표시) |
 | `section-head has-era` + `.era-bar`/`.era-name` | 문명·시대 구분 헤더 (2주차 고대~르네상스에서 사용) |
 | `bullet-list` | 본문 불릿 |
-| `think-block` | `<span class="mk">THINK</span><p>…</p>` — **이 구조 꼭 지킬 것**. `<strong>THINK</strong>`로 쓰면 flex가 칼럼으로 깨진다 |
+| `think-block` | `<span class="mk" role="img" aria-label="THINK">?</span><p>…</p>` — **이 구조 꼭 지킬 것**. 화면에 뜨는 것은 「THINK」 글자가 아니라 **물음표**다(덱 25곳이 모두 이 꼴). `<strong>`으로 쓰면 flex가 칼럼으로 깨진다 |
 | `pullquote` + `<cite>` | 인용문 (`quote-block` 아님) |
 | `compare` / `compare--photo` | 2단 대비 |
 | `figure-grid` + `.figure-card.has-photo` | 3칸 카드 |
