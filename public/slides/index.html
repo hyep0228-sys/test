@@ -206,6 +206,10 @@ body.export-clean main{inset:0;}
   font-family:var(--f-body); font-size:var(--fs-subhead); color:var(--ink-soft); margin-top:.9rem; font-weight:400;
 }
 .subhead strong{color:var(--accent2); font-weight:600;}
+/* 주차 타이틀 부제 옆 기간 — 모노로 세워 사실임을 표시한다. */
+.subhead .years{font-family:var(--f-mono); font-size:.84em; letter-spacing:.03em;
+  color:var(--ink); margin-left:.6rem; white-space:nowrap;}
+.subhead .years::before{content:"·"; margin-right:.6rem; color:var(--ink-soft);}
 
 .era-chip{
   display:inline-flex; align-items:center; gap:.5rem; margin-top:1.6rem;
@@ -782,12 +786,12 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
-<section class="slide" data-era="origins" data-week="2" data-title="어디서부터 디자인으로 볼 것인가" data-dates="~18세기">
+<section class="slide" data-era="origins" data-week="2" data-title="어디서부터 디자인으로 볼 것인가" data-dates="260만 년 전~18세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--title">
     <div class="kicker">Week 02 · Origins</div>
     <h1 class="headline">어디서부터<br>디자인으로 볼 것인가?</h1>
-    <p class="subhead">디자인의 초기 기원과 장인정신</p>
+    <p class="subhead">디자인의 초기 기원과 장인정신<span class="years">260만 년 전~18세기</span></p>
     <p class="keywords-line"><b>keywords</b>장인정신 · 길드 · 표준화 · 취향</p>
   </div>
 </section>
@@ -1460,12 +1464,12 @@ body.export-clean main{inset:0;}
 </section>
 
 <!-- ============ WEEK 3 : ENLIGHTENMENT / INDUSTRIAL REVOLUTION ============ -->
-<section class="slide" data-era="enlightenment" data-week="3" data-title="디자인은 언제 미술과 분리되었는가" data-dates="18세기">
+<section class="slide" data-era="enlightenment" data-week="3" data-title="디자인은 언제 미술과 분리되었는가" data-dates="1750~1860">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--title">
     <div class="kicker">Week 03 · Separation</div>
     <h1 class="headline">디자인은 언제부터<br>미술과 분리되었는가?</h1>
-    <p class="subhead">이성의 시대와 산업혁명</p>
+    <p class="subhead">이성의 시대와 산업혁명<span class="years">1750~1860</span></p>
     <p class="keywords-line"><b>keywords</b>분업 · 증기기관 · 특허 · 공장제</p>
   </div>
 </section>
@@ -2413,12 +2417,12 @@ body.export-clean main{inset:0;}
 </section>
 
 <!-- ============ WEEK 4 : MECHANIZED PRODUCTION / GREAT EXHIBITION ============ -->
-<section class="slide" data-era="expo" data-week="4" data-title="기계 생산은 시각문화를 어떻게 바꿨는가" data-dates="1851~">
+<section class="slide" data-era="expo" data-week="4" data-title="기계 생산은 시각문화를 어떻게 바꿨는가" data-dates="1840~1890">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--title">
     <div class="kicker">Week 04 · Mass Production</div>
     <h1 class="headline">기계 생산은 시각문화를<br>어떻게 변화시켰는가?</h1>
-    <p class="subhead">합리화된 생산과 만국박람회</p>
+    <p class="subhead">합리화된 생산과 만국박람회<span class="years">1840~1890</span></p>
     <p class="keywords-line"><b>keywords</b>대박람회 · 부품호환성 · 디자인개혁 · 대량생산</p>
   </div>
 </section>
@@ -3146,7 +3150,7 @@ body.export-clean main{inset:0;}
   <div class="stage stage--title">
     <div class="kicker">Week 05 · Reform</div>
     <h1 class="headline">좋은 디자인이란<br>무엇인가?</h1>
-    <p class="subhead">개혁의 바람 — 미술공예운동</p>
+    <p class="subhead">개혁의 바람 — 미술공예운동<span class="years">1860~1910</span></p>
     <p class="keywords-line"><b>keywords</b>수공예 · 러스킨 · 사회개혁 · 패턴디자인</p>
   </div>
 </section>
@@ -3512,7 +3516,7 @@ body.export-clean main{inset:0;}
   <div class="stage stage--title">
     <div class="kicker">Week 06 · Ornament</div>
     <h1 class="headline">장식은<br>디자인의 본질인가?</h1>
-    <p class="subhead">아르누보</p>
+    <p class="subhead">아르누보<span class="years">1890~1910</span></p>
     <p class="keywords-line"><b>keywords</b>곡선 · 자포니즘 · 총체예술 · 장식</p>
   </div>
 </section>
@@ -3757,7 +3761,7 @@ body.export-clean main{inset:0;}
   <div class="stage stage--title">
     <div class="kicker">Week 07 · Theory → Practice</div>
     <h1 class="headline">이론은 어떻게<br>실천이 되는가?</h1>
-    <p class="subhead">이론에서 실천까지</p>
+    <p class="subhead">이론에서 실천까지<span class="years">1900~1914</span></p>
     <p class="keywords-line"><b>keywords</b>독일공작연맹 · 표준화 · 기업디자인 · 형태와기능</p>
   </div>
 </section>
@@ -4010,12 +4014,12 @@ body.export-clean main{inset:0;}
 </section>
 
 <!-- ============ WEEK 9 : FORDISM ============ -->
-<section class="slide" data-era="fordism" data-week="9" data-title="디자인이 소비를 만드는가 — 포디즘" data-dates="1900~1930s">
+<section class="slide" data-era="fordism" data-week="9" data-title="디자인이 소비를 만드는가 — 포디즘" data-dates="1900~1930년대">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--title">
     <div class="kicker">Week 09 · Consumption</div>
     <h1 class="headline">디자인이 소비를 만드는가,<br>소비가 디자인을 만드는가?</h1>
-    <p class="subhead">미국식 시스템과 포디즘</p>
+    <p class="subhead">미국식 시스템과 포디즘<span class="years">1900~1930년대</span></p>
     <p class="keywords-line"><b>keywords</b>조립라인 · 계획적진부화 · 대량소비 · 산업디자이너</p>
   </div>
 </section>
@@ -4203,7 +4207,7 @@ body.export-clean main{inset:0;}
   <div class="stage stage--title">
     <div class="kicker">Week 10 · Reduction</div>
     <h1 class="headline">형태는 의미를<br>대체할 수 있는가?</h1>
-    <p class="subhead">환원주의와 모더니즘</p>
+    <p class="subhead">환원주의와 모더니즘<span class="years">1919~1933</span></p>
     <p class="keywords-line"><b>keywords</b>기능주의 · 바우하우스 · 예비과정 · 국제주의양식</p>
   </div>
 </section>
@@ -4468,12 +4472,12 @@ body.export-clean main{inset:0;}
 </section>
 
 <!-- ============ WEEK 11 : ART DECO ============ -->
-<section class="slide" data-era="deco" data-week="11" data-title="양식은 어떻게 대중의 욕망이 되는가 — 아르데코" data-dates="1920s~30s">
+<section class="slide" data-era="deco" data-week="11" data-title="양식은 어떻게 대중의 욕망이 되는가 — 아르데코" data-dates="1920~1940">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--title">
     <div class="kicker">Week 11 · Desire</div>
     <h1 class="headline">양식은 어떻게<br>대중의 욕망이 되는가?</h1>
-    <p class="subhead">아르데코와 모던 스타일</p>
+    <p class="subhead">아르데코와 모던 스타일<span class="years">1920~1940</span></p>
     <p class="keywords-line"><b>keywords</b>유선형 · 기하학 · 사치와장식 · 대중문화</p>
   </div>
 </section>
@@ -4654,12 +4658,12 @@ body.export-clean main{inset:0;}
 </section>
 
 <!-- ============ WEEK 12 : POSTWAR / GOOD DESIGN ============ -->
-<section class="slide" data-era="gooddesign" data-week="12" data-title="좋은 디자인은 무엇으로 정의되는가" data-dates="1940~1960s">
+<section class="slide" data-era="gooddesign" data-week="12" data-title="좋은 디자인은 무엇으로 정의되는가" data-dates="1940~1960년대">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--title">
     <div class="kicker">Week 12 · Postwar</div>
     <h1 class="headline">좋은 디자인은<br>무엇으로 정의되는가?</h1>
-    <p class="subhead">전쟁·전후 디자인과 굿 디자인</p>
+    <p class="subhead">전쟁·전후 디자인과 굿 디자인<span class="years">1940~1960년대</span></p>
     <p class="keywords-line"><b>keywords</b>굿디자인 · 시스템디자인 · 대량생산가구 · 디자인이데올로기</p>
   </div>
 </section>
@@ -4898,7 +4902,7 @@ body.export-clean main{inset:0;}
   <div class="stage stage--title">
     <div class="kicker">Week 13 · Korea</div>
     <h1 class="headline">한국 디자인은<br>어떻게 근대를 구성했는가?</h1>
-    <p class="subhead">한국 근현대 디자인사</p>
+    <p class="subhead">한국 근현대 디자인사<span class="years">1900~현재</span></p>
     <p class="keywords-line"><b>keywords</b>국가주도진흥 · 상업미술 · 압축성장 · 한글타이포</p>
   </div>
 </section>
@@ -5079,7 +5083,7 @@ body.export-clean main{inset:0;}
   <div class="stage stage--title">
     <div class="kicker">Week 14 · Digital &amp; AI</div>
     <h1 class="headline">AI 시대,<br>디자이너의 역할은 무엇인가?</h1>
-    <p class="subhead">디지털 전환에서 AI까지</p>
+    <p class="subhead">디지털 전환에서 AI까지<span class="years">1984~현재</span></p>
     <p class="keywords-line"><b>keywords</b>UX디자인 · 생성형AI · 저작권 · 디자인씽킹</p>
   </div>
 </section>
