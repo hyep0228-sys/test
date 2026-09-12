@@ -442,6 +442,9 @@ body.export-clean main{inset:0;}
 .think-block p{font-size:.95rem; line-height:1.55;}
 
 .map-note{font-family:var(--f-mono); font-size:.75rem; color:var(--ink-soft); margin-top:1rem;}
+/* 덱에서 바깥으로 나가는 링크. 프로젝터용 모노톤이라 색 대신 밑줄로 표시하고,
+   iframe(허브 앱 LECTURE 모달) 안에서 눌러도 새 탭으로 열리게 target 을 둔다. */
+.map-note a{color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px;}
 
 .table-wrap{overflow-x:auto; margin-top:1.4rem;}
 .stage--hero{display:flex; flex-direction:column; min-height:0; max-height:100%;}
@@ -1815,6 +1818,7 @@ body.export-clean main{inset:0;}
         <li>조각가 <strong>존 플랙스먼 John Flaxman</strong> 같은 디자이너가 원형을 만들고, 공장이 그것을 반복 생산했다.</li>
       </ul>
       <p class="map-note">조각가가 원형을 만들고 공장이 그것을 반복해 찍는다.<br>→ 원형을 만드는 사람과 제작하는 사람이 분리.<br>→ 미술가의 조형 능력이 제조업 안으로 들어오면서, 구상과 제작이 서로 다른 역할로 나뉨.</p>
+      <p class="map-note" style="margin-top:.9rem;">웨지우드는 지금도 같은 재스퍼웨어를 만들어 판다 — <a href="https://www.wedgwood.com/en-us/pages/jasperware" target="_blank" rel="noopener">wedgwood.com</a> · 한국 공식 스토어 <a href="https://www.wedgwoodmall.com/" target="_blank" rel="noopener">wedgwoodmall.com</a></p>
     </div>
   </div>
 </section>
