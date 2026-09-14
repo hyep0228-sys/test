@@ -139,8 +139,20 @@ button{font-family:inherit;}
   font-size:1.6rem; line-height:1; color:#e8e2d6; background:none;
   border:1px solid rgba(232,226,214,.35); cursor:pointer;
 }
+/* 캐러셀 사진을 확대했을 때만 뜨는 앞뒤 버튼 */
+.lightbox__nav{
+  position:absolute; top:50%; transform:translateY(-50%); width:3rem; height:3rem; border-radius:50%;
+  font-size:1.8rem; line-height:1; color:#e8e2d6; background:rgba(20,17,12,.55);
+  border:1px solid rgba(232,226,214,.35); cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.lightbox__nav:hover{border-color:#e8e2d6;}
+.lightbox__nav--prev{left:2.6vmin;}
+.lightbox__nav--next{right:2.6vmin;}
+.lightbox__count{font-family:var(--f-mono); font-size:.72rem; color:#e8e2d6; margin:0;}
+.lightbox [hidden]{display:none;}
 @media (max-width:700px){
   .lightbox img{max-width:98vw; max-height:74vh;}
+  .lightbox__nav{top:auto; bottom:4vmin; transform:none; width:2.8rem; height:2.8rem;}
 }
 
 /* ============ MENU OVERLAY ============ */
@@ -584,7 +596,10 @@ body.export-clean main{inset:0;}
   <button class="lightbox__close" id="lightboxClose" aria-label="닫기">&times;</button>
   <img id="lightboxImg" alt="">
   <p class="lightbox__cap" id="lightboxCap"></p>
-  <p class="lightbox__hint">아무 곳이나 누르거나 ESC</p>
+  <p class="lightbox__count" id="lightboxCount" hidden></p>
+  <p class="lightbox__hint" id="lightboxHint">아무 곳이나 누르거나 ESC</p>
+  <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="이전 사진" hidden>‹</button>
+  <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="다음 사진" hidden>›</button>
 </div>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -5884,6 +5899,8 @@ body.export-clean main{inset:0;}
   document.addEventListener('keydown', function(e){
     if(lbIsOpen()){
       if(e.key==='Escape' || e.key==='Enter' || e.key===' '){ e.preventDefault(); lbClose(); }
+      else if(lbCarousel && (e.key==='ArrowRight' || e.key==='ArrowDown' || e.key==='PageDown')){ e.preventDefault(); lbStep(1); }
+      else if(lbCarousel && (e.key==='ArrowLeft' || e.key==='ArrowUp' || e.key==='PageUp')){ e.preventDefault(); lbStep(-1); }
       return;
     }
     if(menuOverlay.classList.contains('is-open')){
@@ -5905,7 +5922,11 @@ body.export-clean main{inset:0;}
   }, {passive:true});
   document.addEventListener('touchend', function(e){
     if(touchX===null) return;
-    if(lbIsOpen()){ touchX=null; touchY=null; return; }
+    if(lbIsOpen()){
+      var ldx = e.changedTouches[0].clientX - touchX, ldy = e.changedTouches[0].clientY - touchY;
+      if(lbCarousel && Math.abs(ldx) > 50 && Math.abs(ldx) > Math.abs(ldy) * 1.5){ lbStep(ldx<0 ? 1 : -1); }
+      touchX=null; touchY=null; return;
+    }
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
     // 가로가 세로보다 확실히 클 때만 넘긴다 — 폰에서 슬라이드를 세로로 읽는 동안
@@ -5975,7 +5996,12 @@ body.export-clean main{inset:0;}
   // ---- 사진 클릭 확대 ----
   var lb=document.getElementById('lightbox'),
       lbImg=document.getElementById('lightboxImg'),
-      lbCap=document.getElementById('lightboxCap');
+      lbCap=document.getElementById('lightboxCap'),
+      lbPrev=document.getElementById('lightboxPrev'),
+      lbNext=document.getElementById('lightboxNext'),
+      lbCount=document.getElementById('lightboxCount'),
+      lbHint=document.getElementById('lightboxHint'),
+      lbCarousel=null;   // 캐러셀 사진을 확대했으면 그 figure — 앞뒤 버튼이 이걸 넘긴다
   function lbIsOpen(){ return lb.classList.contains('is-open'); }
   function lbOpen(img){
     lbImg.src = img.currentSrc || img.src;
@@ -5989,11 +6015,29 @@ body.export-clean main{inset:0;}
     lbCap.textContent = parts.join(' · ');
     lb.classList.add('is-open');
     lb.setAttribute('aria-hidden','false');
+    lbCarousel = img.closest('.carousel');
+    var multi = !!lbCarousel;
+    lbPrev.hidden = lbNext.hidden = lbCount.hidden = !multi;
+    if(multi){
+      var all = lbCarousel.querySelectorAll('.carousel__stage img');
+      lbCount.textContent = (Array.prototype.indexOf.call(all, img) + 1) + ' / ' + all.length;
+    }
+    lbHint.textContent = multi ? '‹ › 또는 ← → 로 넘기기 · 아무 곳이나 누르거나 ESC' : '아무 곳이나 누르거나 ESC';
   }
+  // 확대한 채로 캐러셀을 넘긴다 — 슬라이드의 캐러셀도 같이 넘어가서, 닫으면 마지막에 본 사진이 떠 있다.
+  function lbStep(dir){
+    if(!lbCarousel) return;
+    var fig = lbCarousel;
+    carouselStep(fig, dir);
+    lbOpen(fig.querySelector('.carousel__stage img.is-on'));
+  }
+  lbPrev.addEventListener('click', function(e){ e.stopPropagation(); lbStep(-1); });
+  lbNext.addEventListener('click', function(e){ e.stopPropagation(); lbStep(1); });
   function lbClose(){
     lb.classList.remove('is-open');
     lb.setAttribute('aria-hidden','true');
     lbImg.removeAttribute('src');
+    lbCarousel = null;
   }
   document.addEventListener('click', function(e){
     var img = e.target.closest && e.target.closest('.artifact-photo img, .hero-photo img');
