@@ -295,6 +295,21 @@ body.export-clean main{inset:0;}
 .dual-tl .wk{font-family:var(--f-mono); font-size:.58rem; color:var(--paper); background:var(--ink); padding:.08rem .3rem; flex:none;}
 .dual-tl .hd{padding:.3rem .7rem .5rem; font-family:var(--f-mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); border-bottom:2px solid var(--ink);}
 .dual-tl .hd.a{text-align:right;} .dual-tl .hd.e{text-align:center;}
+
+/* 주차 정리 연표 — 위 줄·아래 줄을 같은 연대 칸에 맞춰, 같은 시기에 무엇이 겹쳤는지 세로로 읽힌다(2026-09-14, 3주차) */
+.wk-tl-scroll{overflow-x:auto; margin-top:.6rem;}
+.wk-tl{display:grid; grid-template-columns:6.6rem repeat(10, minmax(0,1fr)); column-gap:.35rem;}
+.wk-tl__hd{font-family:var(--f-mono); font-size:.66rem; letter-spacing:.06em; color:var(--ink-soft); line-height:1.35; padding-right:.4rem;}
+.wk-tl__hd--top{align-self:end; padding-bottom:.5rem;}
+.wk-tl__hd--bot{align-self:start; padding-top:.5rem;}
+.wk-tl__cell{display:flex; flex-direction:column; gap:.55rem; font-size:.84rem; line-height:1.3; color:var(--ink);}
+.wk-tl__cell--top{justify-content:flex-end; padding-bottom:.7rem;}
+.wk-tl__cell--bot{justify-content:flex-start; padding-top:.7rem;}
+.wk-tl__cell b{display:block; font-family:var(--f-mono); font-size:.8rem; font-weight:600;}
+.wk-tl__axis{border-top:2px solid var(--ink); position:relative; font-family:var(--f-mono); font-size:.66rem; color:var(--ink-soft); padding-top:.3rem; text-align:left;}
+.wk-tl__axis::before{content:""; position:absolute; top:-5px; left:0; width:8px; height:8px; border-radius:50%; background:var(--ink);}
+.wk-tl__axis--label{border-top:none;}
+.wk-tl__axis--label::before{display:none;}
 .aim-lead{font-size:clamp(1.02rem,1.7vw,1.26rem); line-height:1.5; color:var(--ink); margin-top:1.4rem;}
 .q-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1rem;}
 .q-row div{background:var(--paper); padding:.8rem .95rem; font-size:.9rem; line-height:1.45; color:var(--ink); display:flex; align-items:center; gap:.5rem;}
@@ -547,6 +562,7 @@ body.export-clean main{inset:0;}
   .artifact-photo .stack-2 > img{max-height:none;}
   .artifact-photo .stack-2 .pair img{max-height:none;}
   .carousel__stage{height:auto; aspect-ratio:4/3;}
+  .wk-tl{min-width:880px;}
   .hero-photo img{max-height:none;}
 
   /* 다단을 1단으로 */
@@ -2469,6 +2485,19 @@ body.export-clean main{inset:0;}
       <li><strong>디자인사</strong> — 물건을 '제조하는 방식'의 변화를 기준으로 시대 분류</li>
       <li><strong>본 과정의 접근</strong> — 디자인사의 생산 방식을 기본 축으로 삼되, 특정 형태가 등장한 배경을 입체적으로 설명하기 위해 미술사의 양식적 흐름(폼페이·다비드·버크·프리드리히 등)을 상호보완적으로 적용함</li>
     </ul>
+  </div>
+</section>
+
+<section class="slide" data-era="enlightenment" data-week="3" data-title="한눈에 보는 연표" data-dates="1705~1851">
+  <div class="motif" aria-hidden="true"></div>
+  <div class="stage">
+    <div class="section-head"><h3>기술과 사상은 같은 시대에 나란히 움직였다</h3><span class="tag">TIMELINE</span></div>
+    <div class="wk-tl-scroll"><div class="wk-tl">
+      <div class="wk-tl__hd wk-tl__hd--top">기술·생산·디자인</div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1705</b>뉴커먼 증기기관</span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1764</b>제니 방적기</span><span><b>1769</b>와트 증기기관 개량</span></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1774</b>웨지우드 재스퍼웨어</span><span><b>1779</b>아이언브리지</span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1802</b>포츠머스 생산라인</span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1841</b>휘트워스 나사 표준</span><span><b>1851</b>런던 대박람회</span></div>
+      <div class="wk-tl__axis wk-tl__axis--label"></div><div class="wk-tl__axis">1700년대</div><div class="wk-tl__axis">1740년대</div><div class="wk-tl__axis">1750년대</div><div class="wk-tl__axis">1760년대</div><div class="wk-tl__axis">1770년대</div><div class="wk-tl__axis">1780년대</div><div class="wk-tl__axis">1790년대</div><div class="wk-tl__axis">1800년대</div><div class="wk-tl__axis">1810년대</div><div class="wk-tl__axis">1840~50년대</div>
+      <div class="wk-tl__hd wk-tl__hd--bot">사회·사상·미술</div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1748</b>폼페이 발굴</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1751</b>『백과전서』</span><span><b>1757</b>버크 「숭고」</span></div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1776</b>『국부론』</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1789</b>프랑스 혁명</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1791</b>프랑스 길드 폐지</span></div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1818</b>프리드리히 「안개 바다 위의 방랑자」</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1845</b>엥겔스 『영국 노동계급의 상태』</span></div>
+    </div></div>
+    <p class="map-note" style="margin-top:1.6rem;">→ 와트의 증기기관 개량(1769)과 『국부론』(1776), 재스퍼웨어(1774)와 프랑스 혁명(1789)이 한 세대 안에 겹친다.</p>
   </div>
 </section>
 
