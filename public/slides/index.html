@@ -393,6 +393,9 @@ body.export-clean main{inset:0;}
 }
 .slide::before{top:14px; left:14px; border-top:1px solid var(--rule); border-left:1px solid var(--rule);}
 .slide::after{bottom:14px; right:14px; border-bottom:1px solid var(--rule); border-right:1px solid var(--rule);}
+/* 시간이 밀리면 건너뛰어도 되는 장 — 오른쪽 아래 괘선 대신 작은 점. 교수자만 아는 표시다(2026-09-14).
+   어느 장인지는 대본의 「생략 가능」과 같다. 바꾸면 둘 다 고칠 것. */
+.slide[data-skip]::after{border:none; width:7px; height:7px; border-radius:50%; background:#b9b9b9; bottom:18px; right:18px;}
 
 @media (max-width:760px){
   .two-col,.compare{grid-template-columns:1fr;}
@@ -1680,7 +1683,7 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
-<section class="slide" data-era="enlightenment" data-week="3" data-title="그랜드 투어 — 취향을 수입하다" data-dates="18세기">
+<section class="slide" data-skip data-era="enlightenment" data-week="3" data-title="그랜드 투어 — 취향을 수입하다" data-dates="18세기">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
     <div class="section-head"><h3>그랜드 투어와 양식의 확산</h3><span class="tag">GRAND TOUR</span></div>
@@ -2134,7 +2137,7 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
-<section class="slide" data-era="enlightenment" data-week="3" data-title="장식도 기계가 찍는다" data-dates="1750s~">
+<section class="slide" data-skip data-era="enlightenment" data-week="3" data-title="장식도 기계가 찍는다" data-dates="1750s~">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
     <div class="section-head"><h3>장식도 대량생산되기 시작하다</h3><span class="tag">ORNAMENT</span></div>
@@ -2162,7 +2165,7 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
-<section class="slide" data-era="enlightenment" data-week="3" data-title="가스등이 만든 밤" data-dates="1807~1812">
+<section class="slide" data-skip data-era="enlightenment" data-week="3" data-title="가스등이 만든 밤" data-dates="1807~1812">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
     <div class="section-head"><h3>밤이 열리자 진열창이 생겼다</h3><span class="tag">GAS LIGHT</span></div>
@@ -2234,7 +2237,7 @@ body.export-clean main{inset:0;}
   </div>
 </section>
 
-<section class="slide" data-era="enlightenment" data-week="3" data-title="이미지가 신문에 실리다" data-dates="1790s~1842">
+<section class="slide" data-skip data-era="enlightenment" data-week="3" data-title="이미지가 신문에 실리다" data-dates="1790s~1842">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
     <div class="section-head"><h3>그림과 글자를 한 판에 짜다</h3><span class="tag">WOOD ENGRAVING</span></div>
