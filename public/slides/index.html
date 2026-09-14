@@ -306,6 +306,7 @@ body.export-clean main{inset:0;}
 .wk-tl__cell--top{justify-content:flex-end; padding-bottom:.7rem;}
 .wk-tl__cell--bot{justify-content:flex-start; padding-top:.7rem;}
 .wk-tl__cell b{display:block; font-family:var(--f-mono); font-size:.8rem; font-weight:600;}
+.wk-tl__cell i{display:block; font-style:normal; font-size:.72rem; line-height:1.3; color:var(--ink-soft); margin-top:.12rem;}
 .wk-tl__axis{border-top:2px solid var(--ink); position:relative; font-family:var(--f-mono); font-size:.66rem; color:var(--ink-soft); padding-top:.3rem; text-align:left;}
 .wk-tl__axis::before{content:""; position:absolute; top:-5px; left:0; width:8px; height:8px; border-radius:50%; background:var(--ink);}
 .wk-tl__axis--label{border-top:none;}
@@ -854,8 +855,9 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>도구는 언제부터 '디자인'인가</h3><span class="tag">ORIGINS</span></div>
     <ul class="bullet-list">
-      <li>이 시대에는 아직 '디자이너'라는 직업이 없다. 하지만 돌을 깨는 방식에는 <strong>기능, 형태, 계획</strong>이라는 세 층위가 조금씩 쌓여간다.</li>
-      <li>이어지는 여섯 단계로 이 변화를 순서대로 따라간다 — 최소한의 가공에서 시작해, 대칭과 표준화, 미리 계획된 제작, 이미지를 통한 소통, 저장과 표시, 마지막으로 공동체 단위의 건설까지.</li>
+      <li>이 시대에는 '디자이너'라는 직업이 없다</li>
+      <li>그래도 돌을 깨는 방식에 <strong>기능 · 형태 · 계획</strong>이 조금씩 쌓인다</li>
+      <li>여섯 단계 — 최소 가공 → 대칭과 표준화 → 계획된 제작 → 이미지 소통 → 저장과 표시 → 공동체 건설</li>
     </ul>
     <div class="chip-grid" style="margin-top:1.6rem;">
       <span class="chip">올도완 석기</span>
@@ -881,16 +883,19 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split img-left">
     <figure class="artifact-photo">
-      <img src="img/w02-01-001.webp" alt="구석기시대 뗀석기" loading="lazy">
-      <figcaption><span class="who">올도완 계열 뗀석기</span><span>출처 미확인</span></figcaption>
+      <img src="img/w02-oldowan-olduvai.webp" alt="올두바이 협곡에서 나온 올도완 초퍼 — 한쪽 모서리만 떼어낸 둥근 돌" loading="lazy">
+      <figcaption><span class="who">올도완 초퍼, 탄자니아 올두바이 협곡</span><span>Archaeomoonwalker, CC BY 3.0</span></figcaption>
     </figure>
     <div>
       <div class="section-head"><h3>가장 오래된 도구, 최소한의 가공</h3><span class="tag">OLDOWAN</span></div>
       <ul class="bullet-list">
-        <li>올도완 석기(약 260만~170만 년 전)는 알려진 가장 오래된 석기 산업이다. 몸돌에서 몇 번만 떼어내 날카로운 날을 만든 <strong>초퍼(chopper)·초핑툴</strong>이 대표적이다.</li>
-        <li>가공은 최소한이었다. 필요한 날만 만들고 나머지는 원래 돌의 형태 그대로 두었다 — <strong>기능에 필요한 만큼만 손대는</strong> 태도가 이미 여기서 시작된다.</li>
-        <li>아직 표준화된 형태는 없다. 도구마다 생김새가 제각각이고, 목적(자르기·찍기·긁기)에 따라 그때그때 필요한 만큼만 다듬었다.</li>
+        <li><strong>약 260만~170만 년 전</strong> 올도완 석기 — 알려진 가장 오래된 석기 산업</li>
+        <li>만든 이 → 호모 하빌리스 등 초기 인류로 본다</li>
+        <li>몸돌에서 몇 번만 떼어낸 날 → <strong>초퍼 · 초핑툴</strong></li>
+        <li>필요한 날만 만들고 나머지는 원래 돌 그대로 → 기능에 필요한 만큼만 손댐</li>
+        <li>아직 표준화된 형태는 없음 → 목적(자르기 · 찍기 · 긁기)마다 그때그때 다듬음</li>
       </ul>
+      <p class="map-note">→ 도구의 첫 조건은 기능이었다 — 무엇이 필요한가.</p>
     </div>
   </div>
 </section>
@@ -899,12 +904,15 @@ body.export-clean main{inset:0;}
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split">
     <div>
-      <div class="section-head"><h3>손안에 맞도록 설계된 첫 형태</h3><span class="tag">ACHEULEAN</span></div>
+      <div class="section-head"><h3>손안에 맞도록 다듬은 형태</h3><span class="tag">ACHEULEAN</span></div>
       <ul class="bullet-list">
-        <li>아슐리안 주먹도끼(약 170만~20만 년 전)는 양면을 모두 가공해 <strong>좌우대칭에 가까운 눈물방울 모양</strong>을 만든다. 올도완보다 훨씬 많은 계획이 필요하다.</li>
-        <li>같은 시기·같은 지역에서 나온 주먹도끼들은 크기와 비례가 놀랍도록 비슷하다 — 학자들은 이를 <strong>표준화된 형태 규범</strong>이 이미 존재했다는 근거로 본다.</li>
-        <li>날이 아닌 뭉툭한 밑동이 손바닥에 맞도록 다듬어진 사례도 많다. 100만 년 넘게 거의 같은 형태가 반복 제작되었다는 점에서, <strong>인류 최초의 '표준 디자인'</strong>으로 불리기도 한다.</li>
+        <li><strong>약 170만~20만 년 전</strong> 아슐리안 주먹도끼 — 호모 에렉투스와 연결된다</li>
+        <li>양면 가공 → 좌우대칭에 가까운 눈물방울 모양, 올도완보다 많은 계획이 필요</li>
+        <li>같은 시기 · 같은 지역의 주먹도끼 → 크기와 비례가 비슷 → <strong>형태 규범</strong>이 공유됐다는 근거</li>
+        <li>날이 아닌 뭉툭한 밑동 → 손바닥에 맞게 다듬음</li>
+        <li>100만 년 넘게 거의 같은 형태 → '인류 최초의 표준 디자인'으로 불리기도 한다</li>
       </ul>
+      <p class="map-note">→ 자르는 데 필요한 것 이상으로 다듬었다.<br>→ 어떤 형태가 좋은지에 대한 판단이 여러 사람 사이에 공유됐다.</p>
     </div>
     <figure class="artifact-photo">
       <div class="two-up">
@@ -930,7 +938,7 @@ body.export-clean main{inset:0;}
     </div>
     <figure class="artifact-photo">
       <img src="img/w02-01-003.webp" alt="1797년 존 프리어가 도해한 아슐리안형 주먹도끼" loading="lazy">
-      <figcaption><span class="who">존 프리어, 1797년 도해</span><span>Public Domain</span></figcaption>
+      <figcaption><span class="who">존 프리어 John Frere, 1797년 도해</span><span>Public Domain</span></figcaption>
     </figure>
   </div>
 </section>
@@ -945,10 +953,12 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>미리 계획된 몸돌, 원하는 모양의 조각</h3><span class="tag">LEVALLOIS</span></div>
       <ul class="bullet-list">
-        <li>르발루아 기법(약 30만~3만 년 전, 중기 구석기)은 몸돌(core)을 미리 정교하게 다듬어, <strong>마지막 한 번의 타격으로 원하는 모양의 격지(flake)</strong>가 떨어져 나오게 만드는 방식이다.</li>
-        <li>원하는 결과물의 형태를 <strong>어느 정도 예상하고</strong>, 그 결과가 나오도록 몸돌의 형태와 타격 순서를 미리 준비한다. <strong>결과를 예상하는 것</strong>과 <strong>제작 순서를 계획하는 것</strong>이 여기서 결합된다.</li>
-        <li>하나의 몸돌에서 정해진 규격의 격지를 여러 개 반복해서 떼어낼 수 있었다. 도구 제작이 '우연히 깨진 돌 고르기'에서 <strong>계획적인 생산 공정</strong>으로 바뀐 것이다.</li>
+        <li><strong>약 30만~3만 년 전</strong> 르발루아 기법 — 네안데르탈인과 초기 호모 사피엔스가 썼다</li>
+        <li>몸돌을 미리 다듬음 → 마지막 한 번의 타격으로 원하는 모양의 격지</li>
+        <li>결과를 어느 정도 예상하기 + 제작 순서를 미리 계획하기</li>
+        <li>한 몸돌에서 정해진 규격의 격지를 여러 개 떼어냄</li>
       </ul>
+      <p class="map-note">→ '우연히 깨진 돌 고르기'에서 <strong>계획적인 생산 공정</strong>으로.</p>
     </div>
   </div>
 </section>
@@ -959,14 +969,27 @@ body.export-clean main{inset:0;}
     <div>
       <div class="section-head"><h3>벽이 캔버스가 되다</h3><span class="tag">CAVE ART</span></div>
       <ul class="bullet-list">
-        <li>프랑스 <strong>라스코</strong>(약 1만7천 년 전), <strong>쇼베</strong>(약 3만6천 년 전), 스페인 <strong>알타미라</strong>(약 1만4천~2만 년 전) 동굴에는 들소·말·사슴을 그린 대규모 벽화가 남아 있다.</li>
-        <li>화가들은 동굴 벽의 굴곡을 동물 몸통의 형태로 그대로 활용했다 — 평평한 캔버스가 아니라 <strong>3차원 공간을 고려한 배치</strong>라는 점에서 초기 공간 디자인의 사례로 읽힌다.</li>
-        <li>안료를 입으로 불어 손 모양을 남긴 스텐실(음화 손자국)도 함께 발견된다. 정확히 어떤 의미였는지는 알 수 없다. 다만 <strong>이미지를 통해 의미를 공유하고 전달하려 했을 가능성</strong>을 생각해볼 수 있다는 점에서, 가장 이른 시각 커뮤니케이션의 사례로 꼽힌다.</li>
+        <li>프랑스 쇼베(약 3만6천 년 전) · 라스코(<strong>약 1만7천 년 전</strong>), 스페인 알타미라(약 1만4천~2만 년 전) → 들소 · 말 · 사슴 벽화</li>
+        <li>벽의 굴곡을 동물 몸통으로 활용 → <strong>3차원 공간</strong>을 고려한 배치</li>
+        <li>안료를 입으로 불어 남긴 손 모양 <strong>스텐실</strong></li>
+        <li>정확한 의미는 알 수 없음 → 이미지로 뜻을 나누려 했을 가능성</li>
       </ul>
+      <p class="map-note">→ 가장 이른 시각 커뮤니케이션의 사례로 꼽힌다.<br>→ 디자인의 대상이 물건에서 이미지와 공간으로 넓어진다.</p>
     </div>
-    <figure class="artifact-photo">
-      <img src="img/w02-lascaux-horse.webp" alt="라스코 동굴의 말 그림 — 갈기와 몸통을 황토색으로 칠하고 윤곽을 검게 그렸다" loading="lazy">
+    <figure class="artifact-photo carousel">
+      <div class="carousel__stage">
+        <img class="is-on" src="img/w02-lascaux-horse.webp" alt="라스코 동굴의 말 그림 — 갈기와 몸통을 황토색으로 칠하고 윤곽을 검게 그렸다" data-who="라스코 동굴의 말 — 약 1만7천 년 전" data-lic="Public Domain">
+        <img src="img/w02-cave-altamira.webp" alt="알타미라 동굴 천장의 들소 — 붉은 몸통과 검은 윤곽" data-who="알타미라 동굴의 들소, 스페인" data-lic="Public Domain">
+        <img src="img/w02-cave-chauvet.webp" alt="쇼베 동굴의 말 무리 벽화 — 검은 선으로 겹쳐 그린 말 머리들" data-who="쇼베 동굴 벽화, 프랑스 — 박물관 복제" data-lic="HTO, Public Domain">
+        <img src="img/w02-cave-hands.webp" alt="동굴 벽에 안료를 불어 남긴 수많은 손 모양 스텐실" data-who="손 스텐실, 아르헨티나 쿠에바 데 라스 마노스" data-lic="Mariano, Public Domain">
+      </div>
       <figcaption><span class="who">라스코 동굴의 말 — 약 1만7천 년 전</span><span>Public Domain</span></figcaption>
+      <div class="carousel__bar">
+        <button class="carousel__btn" data-dir="-1" aria-label="이전 사진">‹</button>
+        <span class="carousel__dots" aria-hidden="true"></span>
+        <span class="carousel__count">1 / 4</span>
+        <button class="carousel__btn" data-dir="1" aria-label="다음 사진">›</button>
+      </div>
     </figure>
   </div>
 </section>
@@ -974,40 +997,58 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="origins" data-week="2" data-title="신석기 혁명: 농경·정주·토기" data-dates="1만~5천 년 전">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage stage--split img-left">
-    <figure class="artifact-photo">
-      <img src="img/w02-01-006.webp" alt="신석기시대 토기" loading="lazy">
+    <figure class="artifact-photo carousel">
+      <div class="carousel__stage">
+        <img class="is-on" src="img/w02-01-006.webp" alt="신석기시대 토기" data-who="신석기시대 토기" data-lic="CC0">
+        <img src="img/w02-neo-seal.webp" alt="차탈회위크에서 나온 점토 인장 — 소용돌이 무늬를 새긴 납작한 돌" data-who="점토 인장, 튀르키예 차탈회위크 — 아나톨리아 문명 박물관" data-lic="Dosseman, CC BY-SA 4.0">
+      </div>
       <figcaption><span class="who">신석기시대 토기</span><span>CC0</span></figcaption>
+      <div class="carousel__bar">
+        <button class="carousel__btn" data-dir="-1" aria-label="이전 사진">‹</button>
+        <span class="carousel__dots" aria-hidden="true"></span>
+        <span class="carousel__count">1 / 2</span>
+        <button class="carousel__btn" data-dir="1" aria-label="다음 사진">›</button>
+      </div>
     </figure>
     <div>
       <div class="section-head"><h3>저장할 수 있어야 정착할 수 있다</h3><span class="tag">NEOLITHIC</span></div>
       <ul class="bullet-list">
-        <li>약 1만~5천 년 전 농경이 시작되며 정주 생활이 가능해졌다. 수확한 곡물을 남겨두려면 <strong>저장 기술</strong>이 필요했다 — 토기는 이 필요에서 나왔다.</li>
-        <li>진흙을 불에 구워 방수·밀폐가 되는 그릇을 만드는 기술은, 액체와 곡물을 담고 <strong>운반·비축</strong>할 수 있게 해 잉여 생산물의 축적을 가능하게 했다.</li>
-        <li>이 시기 각지에서 발견되는 점토 인장(스탬프 실)은 소유물에 표시를 남기는 관습을 보여준다 — <strong>'이것은 누구의 것이다'를 시각 기호로 남긴다</strong>는 점에서, 오늘날의 상표와 <strong>비교해 생각해볼 수 있는 초기의 소유 표시</strong>다.</li>
+        <li><strong>약 1만 1,700년 전</strong> 빙하기가 끝나고 기후가 안정 → 농경이 시작된다</li>
+        <li>농경 → 정주 → 수확한 곡물을 남겨두려면 <strong>저장</strong>이 필요</li>
+        <li>토기 → 방수 · 밀폐 그릇 → 운반 · 비축 → 잉여 생산물 축적</li>
+        <li>점토 인장 → '누구의 것인가'를 시각 기호로 → 상표와 비교해 볼 수 있는 초기 소유 표시</li>
       </ul>
+      <p class="map-note">→ 남는 것이 생기자 저장과 소유가 새 문제가 됐다.</p>
     </div>
   </div>
 </section>
 
-<section class="slide" data-era="origins" data-week="2" data-title="거석 기념물과 초기 도시" data-dates="5천~3천 년 전">
+<section class="slide" data-era="origins" data-week="2" data-title="거석 기념물과 초기 도시" data-dates="기원전 9600~2000년">
   <div class="motif" aria-hidden="true"></div>
-  <div class="stage">
-    <div class="section-head"><h3>개인이 아니라 공동체가 만든 구조물</h3><span class="tag">MEGALITH</span></div>
-    <div class="two-col">
-      <div class="artifact-photo" style="margin-bottom:0;">
-        <img src="img/w02-gobekli.webp" alt="괴베클리 테페의 T자형 석주 — 팔과 여우 부조가 새겨져 있다" loading="lazy" style="max-height:32vh;">
-        <figcaption><span class="who">괴베클리 테페, 튀르키예</span><span>사진 Berthold Steinhilber</span></figcaption>
-      </div>
-      <div class="artifact-photo" style="margin-bottom:0;">
-        <img src="img/w02-02-008.webp" alt="스톤헨지" loading="lazy" style="max-height:32vh;">
-        <figcaption><span class="who">스톤헨지, 잉글랜드</span><span>CC BY-SA 4.0</span></figcaption>
-      </div>
+  <div class="stage stage--split">
+    <div>
+      <div class="section-head"><h3>개인이 아니라 공동체가 만든 구조물</h3><span class="tag">MEGALITH</span></div>
+      <ul class="bullet-list">
+        <li><strong>기원전 9600~8000년경</strong> 튀르키예 괴베클리 테페 → 농경 이전의 T자형 석주 구조물</li>
+        <li><strong>기원전 8000년경</strong> 예리코 → 석조 탑과 성벽, '공공 디자인'과 '도시 계획'의 원형</li>
+        <li><strong>기원전 3000~2000년경</strong> 영국 스톤헨지 → 수십 km 밖에서 옮긴 거석 · 하지의 해 뜨는 방향에 맞춘 배치</li>
+      </ul>
+      <p class="map-note">→ 정착 전에도 대규모 협업 건설이 가능했다.<br>→ 여러 사람을 조직하는 일이 디자인의 문제가 된다.</p>
     </div>
-    <ul class="bullet-list" style="margin-top:1.4rem;">
-      <li>튀르키예 <strong>괴베클리 테페</strong>(약 기원전 9600~8000년)는 농경이 시작되기도 전에 세워진 거대한 T자형 석주 구조물이다. 정착 생활 이전에도 대규모 협업 건설이 가능했다는 뜻이다.</li>
-      <li>영국 <strong>스톤헨지</strong>(약 기원전 3000~2000년)의 거석들은 수십 킬로미터 밖에서 옮겨왔다. 하지 때 태양이 특정 위치로 뜨도록 배치된 구조는 <strong>천문 관측과 건축이 결합</strong>된 초기 사례로 꼽힌다.</li>
-      <li>예리코(요르단강 서안) 유적에는 기원전 8000년경의 석조 탑과 성벽이 남아 있다 — 알려진 가장 오래된 방어용 도시 구조물 중 하나로, <strong>'공공 디자인'과 '도시 계획'의 원형</strong>으로 다뤄진다.</li>
-    </ul>
+    <figure class="artifact-photo carousel">
+      <div class="carousel__stage">
+        <img class="is-on" src="img/w02-gobekli-d.webp" alt="괴베클리 테페 D구역의 T자형 석주 — 표면에 새긴 동물 부조" data-who="괴베클리 테페 D구역의 석주, 튀르키예" data-lic="Dosseman, CC BY-SA 4.0">
+        <img src="img/w02-jericho-tower.webp" alt="예리코 원형 석탑의 단면 모형 — 돌을 쌓은 탑 안쪽의 계단" data-who="예리코 원형 석탑 모형" data-lic="Hanay, CC BY-SA 3.0">
+        <img src="img/w02-02-008.webp" alt="스톤헨지" data-who="스톤헨지, 잉글랜드" data-lic="CC BY-SA 4.0">
+      </div>
+      <figcaption><span class="who">괴베클리 테페 D구역의 석주, 튀르키예</span><span>Dosseman, CC BY-SA 4.0</span></figcaption>
+      <div class="carousel__bar">
+        <button class="carousel__btn" data-dir="-1" aria-label="이전 사진">‹</button>
+        <span class="carousel__dots" aria-hidden="true"></span>
+        <span class="carousel__count">1 / 3</span>
+        <button class="carousel__btn" data-dir="1" aria-label="다음 사진">›</button>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -1018,7 +1059,7 @@ body.export-clean main{inset:0;}
     <div class="timeline-row">
       <div class="tl-item"><div class="yr">올도완</div><div class="tt">260만~170만 년 전 — 최소 가공, <strong>기능의 발견</strong></div></div>
       <div class="tl-item"><div class="yr">아슐리안</div><div class="tt">170만~20만 년 전 — 좌우대칭, <strong>형태의 표준화</strong></div></div>
-      <div class="tl-item"><div class="yr">르발루아</div><div class="tt">30만~3만 년 전 — 프리폼 설계, <strong>계획된 생산</strong></div></div>
+      <div class="tl-item"><div class="yr">르발루아</div><div class="tt">30만~3만 년 전 — 미리 다듬은 몸돌, <strong>계획된 생산</strong></div></div>
       <div class="tl-item"><div class="yr">동굴 예술</div><div class="tt">4만~1만 년 전 — 이미지, <strong>시각 커뮤니케이션</strong></div></div>
       <div class="tl-item"><div class="yr">신석기</div><div class="tt">1만~5천 년 전 — 토기·인장, <strong>저장과 소유의 표시</strong></div></div>
       <div class="tl-item"><div class="yr">거석·도시</div><div class="tt">5천~3천 년 전 — 공공 구조물, <strong>협업 설계</strong></div></div>
@@ -2552,9 +2593,9 @@ body.export-clean main{inset:0;}
   <div class="stage">
     <div class="section-head"><h3>기술과 사상은 같은 시대에 나란히 움직였다</h3><span class="tag">TIMELINE</span></div>
     <div class="wk-tl-scroll"><div class="wk-tl">
-      <div class="wk-tl__hd wk-tl__hd--top">기술·생산·디자인</div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1705</b>뉴커먼 증기기관</span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1764</b>제니 방적기</span><span><b>1769</b>와트 증기기관 개량</span></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1774</b>웨지우드 재스퍼웨어</span><span><b>1779</b>아이언브리지</span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1802</b>포츠머스 생산라인</span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1841</b>휘트워스 나사 표준</span><span><b>1851</b>런던 대박람회</span></div>
+      <div class="wk-tl__hd wk-tl__hd--top">기술·생산·디자인</div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1705</b>뉴커먼 증기기관<i>광산 배수</i></span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1764</b>제니 방적기<i>방적의 기계화</i></span><span><b>1769</b>와트 증기기관 개량<i>효율 향상</i></span></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1774</b>웨지우드 재스퍼웨어<i>표준 몰드 생산</i></span><span><b>1779</b>아이언브리지<i>주철 구조</i></span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1802</b>포츠머스 생산라인<i>공정 순서 배치</i></span></div><div class="wk-tl__cell wk-tl__cell--top"></div><div class="wk-tl__cell wk-tl__cell--top"><span><b>1841</b>휘트워스 나사 표준<i>부품 호환</i></span><span><b>1851</b>런던 대박람회<i>산업의 전시</i></span></div>
       <div class="wk-tl__axis wk-tl__axis--label"></div><div class="wk-tl__axis">1700년대</div><div class="wk-tl__axis">1740년대</div><div class="wk-tl__axis">1750년대</div><div class="wk-tl__axis">1760년대</div><div class="wk-tl__axis">1770년대</div><div class="wk-tl__axis">1780년대</div><div class="wk-tl__axis">1790년대</div><div class="wk-tl__axis">1800년대</div><div class="wk-tl__axis">1810년대</div><div class="wk-tl__axis">1840~50년대</div>
-      <div class="wk-tl__hd wk-tl__hd--bot">사회·사상·미술</div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1748</b>폼페이 발굴</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1751</b>『백과전서』</span><span><b>1757</b>버크 「숭고」</span></div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1776</b>『국부론』</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1789</b>프랑스 혁명</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1791</b>프랑스 길드 폐지</span></div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1818</b>프리드리히 「안개 바다 위의 방랑자」</span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1845</b>엥겔스 『영국 노동계급의 상태』</span></div>
+      <div class="wk-tl__hd wk-tl__hd--bot">사회·사상·미술</div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1748</b>폼페이 발굴<i>고대 양식의 원천</i></span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1751</b>『백과전서』<i>기술의 기록 · 공개</i></span><span><b>1757</b>버크 「숭고」<i>압도적 대상의 미</i></span></div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1776</b>『국부론』<i>분업의 이론화</i></span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1789</b>프랑스 혁명<i>신분 질서 붕괴</i></span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1791</b>프랑스 길드 폐지<i>장인 체계 해체</i></span></div><div class="wk-tl__cell wk-tl__cell--bot"></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1818</b>프리드리히 「안개 바다 위의 방랑자」<i>개인의 감정</i></span></div><div class="wk-tl__cell wk-tl__cell--bot"><span><b>1845</b>엥겔스 『영국 노동계급의 상태』<i>산업도시의 기록</i></span></div>
     </div></div>
     <p class="map-note" style="margin-top:1.6rem;">→ 와트의 증기기관 개량(1769)과 『국부론』(1776), 재스퍼웨어(1774)와 프랑스 혁명(1789)이 한 세대 안에 겹친다.</p>
   </div>
