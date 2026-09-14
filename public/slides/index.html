@@ -95,7 +95,8 @@ button{font-family:inherit;}
 .progress{position:relative; flex:1; height:3px; background:var(--paper-3); border-radius:2px;}
 .progress__fill{position:absolute; inset:0; width:0%; background:var(--accent); border-radius:2px; transition:width .35s ease, background .25s;}
 .progress__ticks{position:absolute; inset:0;}
-.progress__ticks i{position:absolute; top:-3px; width:1px; height:9px; background:var(--rule);}
+/* 주차 경계 — 모노톤 팔레트의 유일한 예외. 강의 중 멀리서도 보이라고 노란 점으로 찍는다(2026-09-14, 교수자 요청). */
+.progress__ticks i{position:absolute; top:50%; width:7px; height:7px; border-radius:50%; background:#f2c230; box-shadow:0 0 0 1px rgba(0,0,0,.18); transform:translate(-50%,-50%);}
 .counter{font-size:.76rem; color:var(--ink-soft); min-width:4rem; text-align:right; font-variant-numeric:tabular-nums;}
 
 .nav-btn{
