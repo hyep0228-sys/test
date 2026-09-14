@@ -16,9 +16,10 @@ export default function LectureMaterialButton({
   const [panel, setPanel] = useState(null); // null | "note" | "question"
   // 패널은 기본이 좁아서 길게 쓰기가 답답하다. 크게 열면 덱과 반씩 나눠 갖는다.
   const [panelBig, setPanelBig] = useState(false);
-  // 어디까지 썼는지 보이게 글자 수를 센다. 칸 자체는 defaultValue 로 두고
-  // 길이만 따로 추적한다 — 매 글자마다 다시 그리게 만들 필요가 없다.
-  const [noteLength, setNoteLength] = useState((initialNote ?? "").length);
+  // 메모 칸은 상태로 쥔다. 예전에는 defaultValue 로 두었는데, React 19 는 form action 이
+  // 끝나면 비제어 칸을 초기값으로 되돌려서 「저장」을 누르는 순간 쓴 글이 사라져 보였다
+  // (패널을 닫았다 열어도 페이지를 처음 받았을 때의 메모로 돌아갔다). 저장해도 DB 에는 들어갔다.
+  const [noteText, setNoteText] = useState(initialNote ?? "");
   const [page, setPage] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [questions, setQuestions] = useState(initialQuestions ?? []);
@@ -189,17 +190,17 @@ export default function LectureMaterialButton({
                           이제 스크롤은 이 칸 하나뿐이고 버튼은 늘 바닥에 있다. */}
                       <textarea
                         name="text"
-                        defaultValue={initialNote ?? ""}
+                        value={noteText}
                         rows={3}
                         maxLength={NOTE_MAX_LENGTH}
-                        onChange={(e) => setNoteLength(e.target.value.length)}
+                        onChange={(e) => setNoteText(e.target.value)}
                         className="w-full border border-line bg-white px-3 py-2 rounded text-sm flex-1 min-h-0 resize-none leading-relaxed"
                         placeholder="자유롭게 메모해보세요"
                       />
                       <p className="text-[11px] text-mute text-right mt-1 shrink-0">
-                        {noteLength >= NOTE_MAX_LENGTH
+                        {noteText.length >= NOTE_MAX_LENGTH
                           ? `최대 ${NOTE_MAX_LENGTH.toLocaleString()}자`
-                          : `${noteLength.toLocaleString()}자`}
+                          : `${noteText.length.toLocaleString()}자`}
                       </p>
                       <div className="flex items-center gap-2 mt-2 shrink-0">
                         <button
