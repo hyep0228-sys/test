@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Page from "@/components/Page";
 import ArchiveList from "@/components/ArchiveList";
+import DownloadNotesButton from "@/components/DownloadNotesButton";
 
 /**
  * MY ARCHIVE — 학생이 이 수업에서 남긴 것을 한 곳에서 다시 보는 화면.
@@ -93,15 +94,27 @@ export default async function ArchivePage() {
     }))
     .filter((r) => r.note || r.questions.length > 0 || r.quiz);
 
+  const downloadNotes = (weeks ?? [])
+    .filter((w) => noteByWeek.get(w.id)?.text?.trim())
+    .map((w) => {
+      const n = noteByWeek.get(w.id);
+      return { weekId: w.id, title: w.short_title, text: n.text, updatedAt: n.updated_at };
+    });
+
   const noteCount = (notes ?? []).length;
   const questionCount = (questions ?? []).length;
 
   return (
     <Page>
-      <h1 className="font-display text-3xl sm:text-4xl mb-1">MY ARCHIVE</h1>
-      <p className="text-mute text-sm mb-8 sm:mb-10">
-        메모 {noteCount}개 · 질문 {questionCount}개 · 퀴즈 {doneWeeks.size}주차 완료
-      </p>
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 mb-8 sm:mb-10">
+        <div>
+          <h1 className="font-display text-3xl sm:text-4xl mb-1">MY ARCHIVE</h1>
+          <p className="text-mute text-sm">
+            메모 {noteCount}개 · 질문 {questionCount}개 · 퀴즈 {doneWeeks.size}주차 완료
+          </p>
+        </div>
+        <DownloadNotesButton notes={downloadNotes} />
+      </div>
 
       {rows.length === 0 ? (
         <div className="border border-line rounded-2xl bg-white p-6 sm:p-8">
