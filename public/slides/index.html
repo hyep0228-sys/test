@@ -418,6 +418,20 @@ body.export-clean main{inset:0;}
   display:flex; justify-content:space-between; gap:1rem; line-height:1.4;
 }
 .artifact-photo figcaption .who{color:var(--ink);}
+
+/* 캐러셀 — 한 칸에 사진 여러 장. 칸 높이를 고정해 사진이 바뀌어도 fitActive 가 다시 줄이지 않는다.
+   조작: 사진 아래 ‹ › 버튼, 키보드 ↑ ↓, 폰에서는 사진 위를 옆으로 밀기(장 넘김 대신). */
+.carousel__stage{position:relative; height:52vh; display:flex; align-items:center; justify-content:center;}
+.carousel__stage img{display:none; max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;}
+.carousel__stage img.is-on{display:block;}
+.carousel__bar{display:flex; align-items:center; justify-content:center; gap:.9rem; margin-top:.5rem; font-family:var(--f-mono); font-size:.72rem; color:var(--ink-soft);}
+.carousel__btn{width:30px; height:30px; border:1px solid var(--rule); border-radius:50%; background:var(--paper); color:var(--ink); cursor:pointer; font-size:1rem; line-height:1; display:flex; align-items:center; justify-content:center;}
+.carousel__btn:hover{border-color:var(--ink);}
+.carousel__btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+.carousel__dots{display:flex; gap:.35rem;}
+.carousel__dots i{width:6px; height:6px; border-radius:50%; background:var(--rule);}
+.carousel__dots i.is-on{background:var(--ink);}
+.export-clean .carousel__bar{display:none;}
 @media (max-width:900px){
   .stage--split, .stage--split.img-left{grid-template-columns:1fr;}
   .stage--split.img-left .artifact-photo{order:0;}
@@ -517,6 +531,7 @@ body.export-clean main{inset:0;}
   .artifact-photo .two-up img{max-height:38vh; max-width:48%;}
   .artifact-photo .stack-2 > img{max-height:none;}
   .artifact-photo .stack-2 .pair img{max-height:none;}
+  .carousel__stage{height:auto; aspect-ratio:4/3;}
   .hero-photo img{max-height:none;}
 
   /* 다단을 1단으로 */
@@ -1721,9 +1736,22 @@ body.export-clean main{inset:0;}
       </ul>
       <p class="map-note">→ 국가의 권력과 정체성을 하나의 시각 언어로 통일.</p>
     </div>
-    <figure class="artifact-photo">
-      <img src="img/w03-empire.webp" alt="페르시에와 퐁텐이 설계한 튈르리 궁 극장 로비 천장 도판 — 그리스식 뇌문, 종려잎, 원형 장미 문양" loading="lazy">
-      <figcaption><span class="who">페르시에·퐁텐, 튈르리 궁 천장 도판 · 『실내장식 도집』</span><span>CC0</span></figcaption>
+    <figure class="artifact-photo carousel">
+      <div class="carousel__stage">
+        <img class="is-on" src="img/w03-empire-rome-arch.webp" alt="로마 포룸의 셉티미우스 세베루스 개선문 — 아치 세 개와 기둥, 위쪽 비문" data-who="셉티미우스 세베루스 개선문, 로마, 203년" data-lic="Jebulon, CC0">
+        <img src="img/w03-empire-carrousel.webp" alt="파리 카루젤 개선문 — 아치 세 개와 붉은 대리석 기둥, 꼭대기의 전차 조각" data-who="카루젤 개선문, 파리, 1806~1808년 · 페르시에·퐁텐 설계" data-lic="Tim Adams, CC BY 3.0">
+        <img src="img/w03-empire-malmaison.webp" alt="말메종 성 회의실 — 줄무늬 천으로 벽과 천장을 덮은 방, 붉은 의자와 녹색 탁자" data-who="말메종 성 회의실 — 천막처럼 꾸민 방" data-lic="Chatsam, CC BY-SA 4.0">
+        <img src="img/w03-empire-throne.webp" alt="나폴레옹 1세의 입법원 옥좌 — 등받이 위 월계관, 날개 달린 괴수 팔걸이, 금박" data-who="나폴레옹 1세의 입법원 옥좌 — 월계관 장식" data-lic="푸아예·자코브-데말테르·피코, Public Domain">
+        <img src="img/w03-empire-sphinx.webp" alt="앙피르 소파의 팔걸이 끝 금도금 스핑크스 장식" data-who="스핑크스 팔걸이 앙피르 소파(복제), 모스크바 페트롭스키 궁" data-lic="shakko, CC0">
+        <img src="img/w03-empire.webp" alt="페르시에와 퐁텐이 설계한 튈르리 궁 극장 로비 천장 도판 — 그리스식 뇌문, 종려잎, 원형 장미 문양" data-who="페르시에·퐁텐, 튈르리 궁 천장 도판 · 『실내장식 도집』" data-lic="CC0">
+      </div>
+      <figcaption><span class="who">셉티미우스 세베루스 개선문, 로마, 203년</span><span>Jebulon, CC0</span></figcaption>
+      <div class="carousel__bar">
+        <button class="carousel__btn" data-dir="-1" aria-label="이전 사진">‹</button>
+        <span class="carousel__dots" aria-hidden="true"></span>
+        <span class="carousel__count">1 / 6</span>
+        <button class="carousel__btn" data-dir="1" aria-label="다음 사진">›</button>
+      </div>
     </figure>
   </div>
 </section>
@@ -1746,7 +1774,7 @@ body.export-clean main{inset:0;}
 <section class="slide" data-era="enlightenment" data-week="3" data-title="루나 소사이어티" data-dates="1760s~1790s">
   <div class="motif" aria-hidden="true"></div>
   <div class="stage">
-    <div class="section-head"><h3>과학·기술·제조가 연결되다</h3><span class="tag">LUNAR SOCIETY</span></div>
+    <div class="section-head"><h3>Lunar Society</h3><span class="tag">과학·기술·제조가 연결되다</span></div>
     <ul class="bullet-list">
         <li>1760년대부터 버밍엄 근처에서 열 명 남짓이 <strong>보름달이 뜨는 밤</strong>마다 모임</li>
         <li>가로등이 없던 시절, 달빛이 있어야 밤에 집으로 돌아갈 수 있었음 → <strong>루나 소사이어티(Lunar Society)</strong></li>
@@ -1815,13 +1843,14 @@ body.export-clean main{inset:0;}
       <figcaption><span class="who">웨지우드 앤 선즈, 포틀랜드 화병 복제, 1880년경</span><span>Chazen Museum, CC0</span></figcaption>
     </figure>
     <div>
-      <div class="section-head"><h3>재스퍼웨어 — 고전을 표준 몰드로</h3><span class="tag">PRODUCT</span></div>
+      <div class="section-head"><h3>재스퍼웨어 Jasperware* — 고전을 표준 몰드로</h3><span class="tag">PRODUCT</span></div>
       <ul class="bullet-list">
         <li>웨지우드는 고대 로마의 <strong>카메오 유리</strong>에서 영감을 받아, 고전적 장식을 도자기 몰드로 찍어낼 수 있는 형태로 바꿨다. 대표적인 사례가 포틀랜드 화병이다.</li>
         <li>조각가 <strong>존 플랙스먼 John Flaxman</strong> 같은 디자이너가 원형을 만들고, 공장이 그것을 반복 생산했다.</li>
       </ul>
       <p class="map-note">조각가가 원형을 만들고 공장이 그것을 반복해 찍는다.<br>→ 원형을 만드는 사람과 제작하는 사람이 분리.<br>→ 미술가의 조형 능력이 제조업 안으로 들어오면서, 구상과 제작이 서로 다른 역할로 나뉨.</p>
       <p class="map-note" style="margin-top:.9rem;">웨지우드는 지금도 같은 재스퍼웨어를 만들어 판다 — <a href="https://www.wedgwood.com/en-us/pages/jasperware" target="_blank" rel="noopener">wedgwood.com</a> · 한국 공식 스토어 <a href="https://www.wedgwoodmall.com/" target="_blank" rel="noopener">wedgwoodmall.com</a></p>
+      <p class="map-note" style="border-top:1px solid var(--rule); padding-top:.6rem; margin-top:1.4rem;">* 재스퍼 jasper — 붉은색·녹색 등을 띠는 불투명한 광물(벽옥). 웨지우드가 1774년 말 완성한 유약 없는 석기에 이 돌의 이름을 붙였다.</p>
     </div>
   </div>
 </section>
@@ -5884,6 +5913,64 @@ body.export-clean main{inset:0;}
     if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5){ dx<0 ? next() : prev(); }
     touchX=null; touchY=null;
   }, {passive:true});
+
+  // ---- 캐러셀 ----
+  // 한 칸에 사진 여러 장. ‹ › 버튼, 키보드 ↑ ↓, 폰에서는 사진 위를 옆으로 밀면 사진이 바뀐다.
+  // ← → · 스페이스 · 리모컨은 그대로 슬라이드를 넘긴다. figcaption 을 사진마다 갈아끼워서
+  // 라이트박스도 지금 보이는 사진의 캡션을 쓴다.
+  function carouselStep(fig, dir){
+    var imgs = fig.querySelectorAll('.carousel__stage img');
+    if(!imgs.length) return;
+    var cur = 0;
+    imgs.forEach(function(im,i){ if(im.classList.contains('is-on')) cur = i; });
+    var n = (cur + dir + imgs.length) % imgs.length;
+    imgs.forEach(function(im,i){ im.classList.toggle('is-on', i===n); });
+    var cap = fig.querySelector('figcaption');
+    if(cap){
+      cap.innerHTML = '';
+      var who = document.createElement('span'); who.className = 'who'; who.textContent = imgs[n].getAttribute('data-who') || '';
+      var lic = document.createElement('span'); lic.textContent = imgs[n].getAttribute('data-lic') || '';
+      cap.appendChild(who); cap.appendChild(lic);
+    }
+    var cnt = fig.querySelector('.carousel__count');
+    if(cnt) cnt.textContent = (n+1) + ' / ' + imgs.length;
+    fig.querySelectorAll('.carousel__dots i').forEach(function(d,i){ d.classList.toggle('is-on', i===n); });
+  }
+  document.querySelectorAll('.carousel').forEach(function(fig){
+    var dots = fig.querySelector('.carousel__dots');
+    var imgs = fig.querySelectorAll('.carousel__stage img');
+    if(dots) imgs.forEach(function(im,i){ var d=document.createElement('i'); if(i===0) d.className='is-on'; dots.appendChild(d); });
+    fig.querySelectorAll('.carousel__btn').forEach(function(b){
+      b.addEventListener('click', function(e){ e.stopPropagation(); carouselStep(fig, parseInt(b.getAttribute('data-dir'),10)); });
+    });
+  });
+  function activeCarousel(){
+    var s = document.querySelector('.slide.is-active');
+    return s ? s.querySelector('.carousel') : null;
+  }
+  document.addEventListener('keydown', function(e){
+    if(lbIsOpen() || menuOverlay.classList.contains('is-open')) return;
+    if(e.key!=='ArrowUp' && e.key!=='ArrowDown') return;
+    var fig = activeCarousel();
+    if(!fig) return;
+    e.preventDefault();
+    carouselStep(fig, e.key==='ArrowDown' ? 1 : -1);
+  });
+  // 사진 위에서 옆으로 밀면 장이 아니라 사진을 넘긴다 — 캡처 단계에서 가로채 아래 스와이프 처리에 안 닿게 한다.
+  var cTouch = null;
+  document.addEventListener('touchstart', function(e){
+    var fig = e.target.closest && e.target.closest('.carousel__stage');
+    cTouch = fig ? {fig: fig.closest('.carousel'), x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY} : null;
+  }, {capture:true, passive:true});
+  document.addEventListener('touchend', function(e){
+    if(!cTouch) return;
+    var dx = e.changedTouches[0].clientX - cTouch.x, dy = e.changedTouches[0].clientY - cTouch.y;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5){
+      e.stopPropagation();
+      carouselStep(cTouch.fig, dx<0 ? 1 : -1);
+    }
+    cTouch = null;
+  }, {capture:true, passive:true});
 
   // ---- 사진 클릭 확대 ----
   var lb=document.getElementById('lightbox'),
