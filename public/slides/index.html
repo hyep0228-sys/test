@@ -381,6 +381,11 @@ body.export-clean main{inset:0;}
 .chip--key{border-color:var(--ink); font-weight:600;}
 .review-group{margin-bottom:1.3rem;}
 .review-group h4{font-family:var(--f-mono); font-size:.74rem; color:var(--ink-soft); margin-bottom:.5rem; letter-spacing:.04em;}
+/* 1부 복습(197번)은 줄이 일곱이라 기본 간격이면 1024 너비에서 화면이 축소된다 — 이 장만 좁힌다. */
+.slide[data-week="8"] .review-group{margin-bottom:.95rem;}
+.slide[data-week="8"] .review-group h4{margin-bottom:.38rem;}
+.slide[data-week="8"] .chip-grid{gap:.45rem;}
+.slide[data-week="8"] .chip{padding:.33rem .66rem; font-size:.78rem;}
 
 .mini-timeline{display:flex; align-items:flex-end; gap:2px; height:52px; margin-top:2rem;}
 .mini-timeline i{flex:1; display:block; border-radius:1px 1px 0 0; opacity:.85;}
