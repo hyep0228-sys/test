@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, useActionState } from "react";
 import { saveLectureNote, submitLectureQuestion } from "@/app/actions/lectureNotes";
+import QuestionThread from "@/components/QuestionThread";
 import { NOTE_MAX_LENGTH } from "@/lib/lectureNotes";
 
 const noteInitialState = { saved: false, error: null };
@@ -36,7 +37,8 @@ export default function LectureMaterialButton({
 
   useEffect(() => {
     if (questionState?.submitted) {
-      setQuestions((prev) => [questionState.submitted, ...prev]);
+      // 방금 올린 질문에는 아직 답글이 없다. 스레드가 빈 배열을 받게 맞춰준다.
+      setQuestions((prev) => [{ ...questionState.submitted, replies: [] }, ...prev]);
       questionFormRef.current?.reset();
     }
   }, [questionState]);
@@ -276,7 +278,14 @@ export default function LectureMaterialButton({
                                   {q.page_no}페이지
                                 </p>
                               )}
-                              <p>{q.question}</p>
+                              {/* 교수님 답변이 오면 여기 말풍선으로 붙는다. 이어서 물을 수도 있다. */}
+                              <QuestionThread
+                                questionId={q.id}
+                                question={q.question}
+                                questionAt={q.created_at}
+                                askedByMe
+                                replies={q.replies ?? []}
+                              />
                             </div>
                           ))}
                         </div>

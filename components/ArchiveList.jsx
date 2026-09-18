@@ -1,4 +1,5 @@
 import Link from "next/link";
+import QuestionThread from "@/components/QuestionThread";
 
 function formatDate(iso) {
   const d = new Date(iso);
@@ -69,11 +70,18 @@ export default function ArchiveList({ rows }) {
                       key={q.id}
                       className="text-sm border-l-2 border-line pl-3"
                     >
-                      <p className="whitespace-pre-wrap">{q.question}</p>
-                      <p className="text-mute text-xs mt-1">
+                      <p className="text-mute text-xs mb-1">
                         {q.page_no ? `${q.page_no}페이지 · ` : ""}
                         {formatDate(q.created_at)}
                       </p>
+                      {/* 교수님 답변과 이어 묻기는 스레드가 맡는다. */}
+                      <QuestionThread
+                        questionId={q.id}
+                        question={q.question}
+                        questionAt={q.created_at}
+                        askedByMe
+                        replies={q.replies ?? []}
+                      />
                     </li>
                   ))}
                 </ul>

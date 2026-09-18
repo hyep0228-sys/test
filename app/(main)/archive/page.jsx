@@ -57,8 +57,28 @@ export default async function ArchivePage() {
 
   const noteByWeek = new Map((notes ?? []).map((n) => [n.week_id, n]));
 
+  // 교수님 답변을 질문 아래 채팅처럼 붙인다. 내 질문의 답글만 온다(RLS).
+  const { data: replyRows } = (questions ?? []).length
+    ? await supabase
+        .from("question_replies")
+        .select("id, question_id, author_id, body, created_at, profiles(role, nickname)")
+        .in(
+          "question_id",
+          (questions ?? []).map((q) => q.id)
+        )
+        .order("created_at", { ascending: true })
+    : { data: [] };
+
+  const repliesByQuestion = new Map();
+  for (const r of replyRows ?? []) {
+    if (!repliesByQuestion.has(r.question_id))
+      repliesByQuestion.set(r.question_id, []);
+    repliesByQuestion.get(r.question_id).push(r);
+  }
+
   const questionsByWeek = new Map();
-  for (const q of questions ?? []) {
+  for (const raw of questions ?? []) {
+    const q = { ...raw, replies: repliesByQuestion.get(raw.id) ?? [] };
     if (!questionsByWeek.has(q.week_id)) questionsByWeek.set(q.week_id, []);
     questionsByWeek.get(q.week_id).push(q);
   }

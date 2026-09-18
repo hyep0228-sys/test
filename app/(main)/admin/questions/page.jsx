@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import Page from "@/components/Page";
 import QuestionFilters from "@/components/QuestionFilters";
 import QuestionResolveButton from "@/components/QuestionResolveButton";
+import QuestionThread from "@/components/QuestionThread";
 
 // 필터를 걸면 대개 몇십 건이다. 상한에 걸리면 화면에서 알려주고 필터를 권한다.
 const MAX_ROWS = 300;
@@ -54,6 +55,25 @@ export default async function AdminQuestionsPage({ searchParams }) {
   const weekTitleById = new Map((weeks ?? []).map((w) => [w.id, w.short_title]));
   const rows = questions ?? [];
 
+  // 답글은 화면에 뜬 질문 것만 받는다. 질문이 없으면 아예 묻지 않는다.
+  const { data: replies } = rows.length
+    ? await supabase
+        .from("question_replies")
+        .select("id, question_id, author_id, body, created_at, profiles(role, nickname)")
+        .in(
+          "question_id",
+          rows.map((q) => q.id)
+        )
+        .order("created_at", { ascending: true })
+    : { data: [] };
+
+  const repliesByQuestion = new Map();
+  for (const r of replies ?? []) {
+    if (!repliesByQuestion.has(r.question_id))
+      repliesByQuestion.set(r.question_id, []);
+    repliesByQuestion.get(r.question_id).push(r);
+  }
+
   return (
     <Page width="wide">
       <p className="mb-6">
@@ -88,9 +108,13 @@ export default async function AdminQuestionsPage({ searchParams }) {
                 <span className="shrink-0">{formatDate(q.created_at)}</span>
               </div>
 
-              <p className={`text-sm ${q.resolved_at ? "text-mute" : ""}`}>
-                {q.question}
-              </p>
+              <QuestionThread
+                questionId={q.id}
+                question={q.question}
+                questionAt={q.created_at}
+                replies={repliesByQuestion.get(q.id) ?? []}
+                viewerIsProfessor
+              />
 
               <div className="flex items-center justify-between gap-3 mt-3">
                 <p className="text-xs text-mute min-w-0 truncate">

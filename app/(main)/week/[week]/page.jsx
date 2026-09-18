@@ -67,13 +67,31 @@ export default async function WeekOverviewPage({ params }) {
     ]);
   const completedKeys = (completions ?? []).map((c) => c.activity);
 
+  // 교수자 답변을 질문 옆에 채팅처럼 붙여 보여준다. 내 질문의 답글만 온다(RLS).
+  const questionList = questionRows ?? [];
+  const { data: replyRows } = questionList.length
+    ? await supabase
+        .from("question_replies")
+        .select("id, question_id, author_id, body, created_at, profiles(role, nickname)")
+        .in(
+          "question_id",
+          questionList.map((q) => q.id)
+        )
+        .order("created_at", { ascending: true })
+    : { data: [] };
+
+  const questionsWithReplies = questionList.map((q) => ({
+    ...q,
+    replies: (replyRows ?? []).filter((r) => r.question_id === q.id),
+  }));
+
   return (
     <Page>
       <WeekActivityGrid
         week={week}
         completedKeys={completedKeys}
         note={noteRow?.text ?? ""}
-        questions={questionRows ?? []}
+        questions={questionsWithReplies}
         discussionCount={discussionCount ?? 0}
         isProfessor={isProfessor}
       />
