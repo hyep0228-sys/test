@@ -72,6 +72,15 @@ export default async function AdminPage() {
           </p>
         </Link>
         <Link
+          href="/admin/quiz"
+          className="border border-line rounded-xl p-4 bg-white hover:border-ink transition-colors"
+        >
+          <p className="font-medium text-sm">퀴즈 통계</p>
+          <p className="text-mute text-xs mt-1">
+            문항별 정답률과 오답이 몰린 보기
+          </p>
+        </Link>
+        <Link
           href="/admin/slides"
           className="border border-line rounded-xl p-4 bg-white hover:border-ink transition-colors"
         >
