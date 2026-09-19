@@ -499,6 +499,10 @@ body.export-clean main{inset:0;}
 /* 덱에서 바깥으로 나가는 링크. 프로젝터용 모노톤이라 색 대신 밑줄로 표시하고,
    iframe(허브 앱 LECTURE 모달) 안에서 눌러도 새 탭으로 열리게 target 을 둔다. */
 .map-note a{color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px;}
+/* 주석 — 처음 나오는 장소·기관 이름을 화면 맨 아래에서 풀어준다(2026-09-19, 교수자 요청). 본문의 이름 뒤에 <sup class="gl">*</sup>, 장 맨 아래에 <p class="gloss">* 이름 — 설명</p> */
+.gl{font-size:.68em; color:var(--ink-soft); margin-left:.1em; font-weight:400;}
+.gloss{font-size:.72rem; line-height:1.55; color:var(--ink-soft); margin-top:1rem; padding-top:.5rem; border-top:1px solid var(--rule);}
+.gloss b{color:var(--ink); font-weight:600;}
 
 .table-wrap{overflow-x:auto; margin-top:1.4rem;}
 .stage--hero{display:flex; flex-direction:column; min-height:0; max-height:100%;}
@@ -2958,13 +2962,14 @@ body.export-clean main{inset:0;}
       <div class="section-head"><h3>나쁜 디자인을 전시한 박물관</h3><span class="tag">1852</span></div>
       <ul class="bullet-list">
         <li><strong>1851</strong> 박람회 수익금 5천 파운드로 전시품을 사들여 연구용 컬렉션을 만들었다.</li>
-        <li><strong>1852</strong> 말보로 하우스에 제작품 박물관 개관 — 훗날의 빅토리아 앤 앨버트 박물관.</li>
+        <li><strong>1852</strong> 말보로 하우스<sup class="gl">*</sup>에 제작품 박물관 개관 — 훗날의 빅토리아 앤 앨버트 박물관.</li>
         <li>전시품 선별은 오거스터스 퓨진 Augustus Pugin 과 리처드 레드그레이브, 총괄은 헨리 콜.</li>
         <li>콜은 <strong>"잘못된 원리에 입각한 장식"</strong>이라는 제목으로 형편없는 물품도 걸었다.</li>
         <li>사람들은 이 방을 <strong>'공포의 방'</strong>이라 불렀다.</li>
         <li>목적은 둘 — 제조업자에게 창피를 주기 · 대중에게 좋고 나쁨의 차이를 알려주기.</li>
       </ul>
       <p class="map-note">→ 디자인은 타고난 취향이 아니라 배워서 나아지는 기술이라는 전제다.<br>→ 그래서 개혁은 박물관과 학교로 갔다.</p>
+      <p class="gloss">* <b>말보로 하우스</b> Marlborough House — 런던 세인트제임스 궁 옆의 저택(1711). 1852년 제작품 박물관의 첫 전시장이었고, 1853~61년에는 디자인 학교(뒤의 왕립예술대학)가 썼다.</p>
   </div>
 </section>
 
@@ -2981,10 +2986,11 @@ body.export-clean main{inset:0;}
         <li>유럽 바깥의 장식 전통을 이론의 근거로 삼은 <strong>드문 사례</strong>다.</li>
       </ul>
       <p class="map-note">→ 좋은 장식과 나쁜 장식을 가르는 기준이 책으로 나왔다.<br>→ 박물관과 학교가 이 책으로 가르쳤다.</p>
+      <p class="gloss">* <b>무어 양식</b> — 중세 이베리아반도(지금의 스페인·포르투갈)를 다스린 이슬람 세력의 건축·장식 양식. 알함브라 궁전이 대표작이다.<br>* <b>아라베스크</b> arabesque — '아라비아풍'이라는 뜻. 덩굴과 잎을 곡선으로 끝없이 이어 반복하는 이슬람 미술의 장식 무늬.</p>
     </div>
     <figure class="artifact-photo">
       <img src="img/w04-jones-moresque.webp" alt="오웬 존스 『장식의 문법』의 무어 양식 도판 — 기하 격자와 아라베스크 무늬" loading="lazy">
-      <figcaption><span class="who">『장식의 문법』 무어 양식 도판, 1868년판</span><span>Owen Jones, Public Domain</span></figcaption>
+      <figcaption><span class="who">『장식의 문법』 무어 양식* 도판 — 기하 격자 위의 아라베스크*, 1868년판</span><span>Owen Jones, Public Domain</span></figcaption>
     </figure>
   </div>
 </section>
@@ -3008,13 +3014,14 @@ body.export-clean main{inset:0;}
   <div class="stage">
       <div class="section-head"><h3>행사가 끝나자 제도가 남았다</h3><span class="tag">INSTITUTION</span></div>
       <ul class="bullet-list">
-        <li><strong>1857</strong> 말보로 하우스의 전시품이 사우스켄싱턴 박물관의 핵심 컬렉션이 된다.</li>
+        <li><strong>1857</strong> 말보로 하우스의 전시품이 사우스켄싱턴<sup class="gl">*</sup> 박물관의 핵심 컬렉션이 된다.</li>
         <li>박람회 흑자 <strong>18만 6천 파운드</strong>로 산 땅에 박물관과 학교가 들어섰다.</li>
         <li>이 일대를 <strong>'앨버토폴리스'</strong>라 부른다 — V&amp;A · 자연사박물관 · 과학박물관 · 로열앨버트홀 · 임페리얼칼리지.</li>
-        <li><strong>1837</strong> 세운 관영디자인학교가 이곳으로 옮겨 뒤에 왕립예술대학이 된다.</li>
+        <li><strong>1837</strong> 서머싯 하우스<sup class="gl">*</sup>에 세운 관영디자인학교가 이곳으로 옮겨 뒤에 왕립예술대학이 된다.</li>
         <li><strong>1860년대</strong> 콜이 박물관 관리자가 되어 근대 디자인 실무를 정립하는 데 이바지했다.</li>
       </ul>
       <p class="map-note">→ 박람회의 돈이 박물관과 학교로 바뀌었다.<br>→ 그럼에도 제조 상품의 천박함은 "인간이 산업화에 지불한 비용"이라 불렸다.</p>
+      <p class="gloss">* <b>사우스켄싱턴</b> South Kensington — 런던 하이드파크 남쪽 지역. 박람회 흑자로 산 땅이 여기다.<br>* <b>서머싯 하우스</b> Somerset House — 런던 템스강변의 18세기 관청 건물. 디자인 학교가 1837년 처음 문을 연 곳이다.</p>
   </div>
 </section>
 
