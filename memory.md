@@ -143,9 +143,14 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 
 **4주차 문항 7개는 2026-09-18 에 넣었다.** 덱 100~137장에서 뽑았고 정답 위치를 처음부터 흩었다
 (수정궁 공법·수련 잎·실링 데이·공포의 방·장식의 문법·사실주의 관·쿼티 자판).
-**`supabase` CLI 는 쓰지 못했다** — `migration list` 가 맥 키체인 비밀번호를 묻고 멈춘다.
-그래서 `SUPABASE_SERVICE_ROLE_KEY` 로 PostgREST 에 직접 넣었고,
+행 자체는 `SUPABASE_SERVICE_ROLE_KEY` 로 PostgREST 에 직접 넣었고,
 `supabase/migrations/20260918000001_quiz_week4.sql` 은 기록·복구용으로 남겼다.
+
+**`supabase` CLI 는 쓸 수 있다 — 멈추는 것은 맥 키체인 잠금이지 DB 비밀번호가 아니다(2026-09-18).**
+새 세션에서 `supabase` 명령을 처음 돌리면 맥이 「Supabase CLI 키 접근을 허용하겠냐」고 묻는다.
+**여기 넣을 것은 맥 로그인 비밀번호이고, 「항상 허용」을 누르면 그 뒤로는 안 묻는다.**
+2026-09-18 세션이 이걸 DB 비밀번호로 착각해 교수자를 Supabase 대시보드로 보냈다 — 헛걸음이었다.
+`db push` 는 스키마를 바꾸므로 **에이전트가 자동으로 못 돌린다.** 교수자가 `! npx supabase db push` 로 직접 돌리면 된다.
 그 파일은 **4주차에 문항이 하나도 없을 때만** 넣도록 감쌌으니 나중에 `db push` 가 돌아도 두 벌이 되지 않는다.
 
 ## 공지 (2026-09-05)
@@ -180,7 +185,7 @@ PostgREST 임베드(`quiz_answers.select("quiz_questions(week_id)")`) 대신 쓴
 - **학생도 이어서 물을 수 있다.** 교수자 답변과 학생 되묻기가 한 스레드에 쌓인다.
 - 보는 사람 — **그 질문을 쓴 학생과 교수자 둘뿐이다.** 다른 학생에게는 안 보인다(RLS 가 막는다).
 - 테이블 `question_replies`(`supabase/migrations/20260918000002_question_replies.sql`).
-  **CLI 가 키체인 비밀번호를 물어 멈추므로 교수자가 Supabase 대시보드 SQL Editor 에 붙여넣어 만들었다.**
+  `supabase db push` 로 적용했다(2026-09-18).
 - 상수는 `lib/questionReplies.js` 에 둔다 — **`use server` 파일은 async 함수만 내보낼 수 있다.**
   액션에 `export const` 를 두었다가 빌드가 5개 오류로 깨졌다(`lib/lectureNotes.js` 와 같은 이유).
 - 테이블이 없는 동안에도 화면은 안 깨진다 — 조회가 실패하면 답글 0개로 그린다.
