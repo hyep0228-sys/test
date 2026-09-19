@@ -133,9 +133,9 @@ export default async function AdminQuizPage() {
           학생이 어디서 막혔는지가 곧 중간·기말에서 다시 물어야 할 대목이다. */}
       {hardest.length > 0 && (
         <div className="border border-line rounded-xl bg-white p-4 mb-10">
-          <p className="text-sm font-medium mb-1">문항 난이도 순</p>
+          <p className="text-sm font-medium mb-1">오답률 높은 순</p>
           <p className="text-xs text-mute mb-3">
-            정답률이 낮은 문항부터 — 시험 출제 때 다시 물을 대목입니다.
+            많이 틀린 문항부터 — 시험 출제 때 다시 물을 대목입니다.
           </p>
           <ul className="space-y-1.5">
             {hardest.map(({ q, s, rate }) => (
@@ -148,8 +148,10 @@ export default async function AdminQuizPage() {
                 </span>
                 <span className="min-w-0 flex-1 truncate">{q.question}</span>
                 <span className="shrink-0 tabular-nums">
-                  정답 {rate}%
-                  <span className="text-mute ml-1">({s.correct}/{s.total})</span>
+                  오답 {100 - rate}%
+                  <span className="text-mute ml-1">
+                    · 정답 {rate}% ({s.correct}/{s.total})
+                  </span>
                 </span>
               </li>
             ))}
